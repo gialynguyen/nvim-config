@@ -12,4 +12,4 @@ vim.keymap.set("n", "<c-]>", "<cmd>lua vim.diagnostic.goto_next()<CR>", { norema
 
 vim.keymap.set("n", "<leader>db", "<cmd>Dashboard<CR>")
 
-vim.keymap.set("n", "<leader>x", require("lsp_lines").toggle)
+-- vim.keymap.set("n", "<leader>x", require("lsp_lines").toggle)

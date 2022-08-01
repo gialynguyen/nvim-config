@@ -84,8 +84,13 @@ packer.startup(function()
 	use "williamboman/nvim-lsp-installer"
 	use "hrsh7th/cmp-nvim-lsp"
 	use "hrsh7th/nvim-cmp"
-	use "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
 	use "L3MON4D3/LuaSnip"
+	-- use {
+	-- 	"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+	-- 	config = function()
+	-- 		require("lsp_lines").setup()
+	-- 	end,
+	-- }
 	use "saadparwaiz1/cmp_luasnip"
 	use {
 		"neovim/nvim-lspconfig",
@@ -100,7 +105,20 @@ packer.startup(function()
 	use "voldikss/vim-floaterm"
 
 	use "lukas-reineke/indent-blankline.nvim"
+
+	use {
+		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+		config = function()
+			require("lsp_lines").setup()
+		end,
+	}
 end)
+
+vim.diagnostic.config {
+	virtual_text = false,
+}
+
+vim.keymap.set("", "<Leader>x", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
 
 require("telescope").setup {
 	defaults = {
@@ -270,18 +288,28 @@ vim.api.nvim_create_user_command("NullLsDisable", disable_null_ls, {})
 local null_ls = require "null-ls"
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
+local should_enable_eslint = function(utils)
+	return utils.root_has_file { "node_modules/.bin/eslint" }
+end
+
 null_ls.setup {
 	sources = {
-		null_ls.builtins.diagnostics.eslint,
+		null_ls.builtins.diagnostics.eslint.with {
+			condition = should_enable_eslint,
+		},
 		null_ls.builtins.formatting.autopep8,
-		null_ls.builtins.formatting.eslint,
+		null_ls.builtins.formatting.eslint.with {
+			condition = should_enable_eslint,
+		},
 		null_ls.builtins.formatting.gofmt,
 		null_ls.builtins.formatting.prettier,
 		null_ls.builtins.formatting.rustfmt,
 		null_ls.builtins.formatting.stylua,
 		null_ls.builtins.completion.spell,
 		null_ls.builtins.code_actions.gitsigns,
-		null_ls.builtins.code_actions.eslint,
+		null_ls.builtins.code_actions.eslint.with {
+			condition = should_enable_eslint,
+		},
 	},
 	on_attach = function(client, bufnr)
 		if vim.g.disable_null_ls == "true" then
@@ -291,7 +319,7 @@ null_ls.setup {
 		end
 		if client.supports_method "textDocument/formatting" then
 			vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
-			vim.api.nvim_create_autocmd("BufWritePost", {
+			vim.api.nvim_create_autocmd("BufWritePre", {
 				group = augroup,
 				buffer = bufnr,
 				callback = function()
@@ -345,7 +373,9 @@ cmp.setup {
 	sources = { { name = "nvim_lsp" }, { name = "luasnip" } },
 }
 
-require("lsp_lines").setup {}
+-- vim.diagnostic.config {
+-- 	update_in_insert = true,
+-- }
 
 require("gitsigns").setup {
 	signs = {
