@@ -85,12 +85,15 @@ packer.startup(function()
 	use "hrsh7th/cmp-nvim-lsp"
 	use "hrsh7th/nvim-cmp"
 	use "L3MON4D3/LuaSnip"
-	-- use {
-	-- 	"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-	-- 	config = function()
-	-- 		require("lsp_lines").setup()
-	-- 	end,
-	-- }
+
+	use {
+		"kyazdani42/nvim-tree.lua",
+		requires = {
+			"kyazdani42/nvim-web-devicons", -- optional, for file icons
+		},
+		-- tag = "nightly", -- optional, updated every week. (see issue #1193)
+	}
+
 	use "saadparwaiz1/cmp_luasnip"
 	use {
 		"neovim/nvim-lspconfig",
@@ -467,5 +470,7 @@ require("session_manager").setup {
 	autosave_only_in_session = false, -- Always autosaves session. If true, only autosaves after a session is active.
 	max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
 }
+
+require("nvim-tree").setup()
 
 require("nvim-ts-autotag").setup()
