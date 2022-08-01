@@ -73,6 +73,10 @@ packer.startup(function()
 	}
 
 	use {
+		"windwp/nvim-ts-autotag",
+	}
+
+	use {
 		"nvim-lualine/lualine.nvim",
 		requires = { "kyazdani42/nvim-web-devicons", opt = true },
 	}
@@ -432,4 +436,10 @@ require("session_manager").setup {
 	},
 	autosave_only_in_session = false, -- Always autosaves session. If true, only autosaves after a session is active.
 	max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
+}
+
+require("nvim-treesitter.configs").setup {
+	autotag = {
+		enable = true,
+	},
 }
