@@ -438,8 +438,4 @@ require("session_manager").setup {
 	max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
 }
 
-require("nvim-treesitter.configs").setup {
-	autotag = {
-		enable = true,
-	},
-}
+require("nvim-ts-autotag").setup()
