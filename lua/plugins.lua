@@ -55,6 +55,8 @@ packer.startup(function()
 
 	use "junegunn/vim-slash"
 
+	use "mg979/vim-visual-multi"
+
 	use {
 		"ckipp01/stylua-nvim",
 		run = "cargo install stylua",

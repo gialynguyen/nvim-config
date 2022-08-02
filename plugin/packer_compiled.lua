@@ -251,6 +251,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/gialynguyen/.local/share/nvim/site/pack/packer/start/vim-sneak",
     url = "https://github.com/justinmk/vim-sneak"
+  },
+  ["vim-visual-multi"] = {
+    loaded = true,
+    path = "/Users/gialynguyen/.local/share/nvim/site/pack/packer/start/vim-visual-multi",
+    url = "https://github.com/mg979/vim-visual-multi"
   }
 }
 
