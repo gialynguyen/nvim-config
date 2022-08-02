@@ -10,6 +10,7 @@ local servers = {
 	"sumneko_lua",
 	"tailwindcss",
 	"tsserver",
+	"flow",
 }
 
 local has_formatter = { "gopls", "html", "rust_analyzer", "sumneko_lua", "tsserver", "cssls", "cssmodules_ls" }
@@ -26,21 +27,23 @@ local setup_server = {
 	end,
 }
 
+local lspconfig = require "lspconfig"
+
 require("nvim-lsp-installer").on_server_ready(function(server)
 	local opts = {
 		on_attach = function(client, bufnr)
 			vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-			local opts = { buffer = bufnr, noremap=true, silent=true }
+			local opts = { buffer = bufnr, noremap = true, silent = true }
 
-			vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-			vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-			vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
-			vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-			vim.keymap.set('n', '<leader>gf', vim.lsp.buf.range_formatting, opts)
+			vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+			vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
+			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+			vim.keymap.set("n", "<leader>gf", vim.lsp.buf.range_formatting, opts)
 
 			local should_format = true
 			for _, value in pairs(has_formatter) do
@@ -57,5 +60,19 @@ require("nvim-lsp-installer").on_server_ready(function(server)
 	if setup_server[server.name] then
 		setup_server[server.name](opts)
 	end
+
+	if (server.name == 'tsserver') then
+		opts.root_dir = function(fname)
+			return lspconfig.util.root_pattern('tsconfig.json')(fname)
+			or not lspconfig.util.root_pattern('.flowconfig')(fname)
+			and lspconfig.util.root_pattern('package.json', 'jsconfig.json', '.git')(fname)
+		end
+
+		server:setup(opts)
+		return
+
+	end
 	server:setup(opts)
 end)
+
+lspconfig.flow.setup {}

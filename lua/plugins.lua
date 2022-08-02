@@ -1,4 +1,18 @@
 local packer = require "packer"
+local fn = vim.fn
+
+local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+if fn.empty(fn.glob(install_path)) > 0 then
+	---@diagnostic disable-next-line: lowercase-global
+	packer_bootstrap = fn.system {
+		"git",
+		"clone",
+		"--depth",
+		"1",
+		"https://github.com/wbthomason/packer.nvim",
+		install_path,
+	}
+end
 
 vim.cmd [[packadd packer.nvim]]
 
@@ -115,10 +129,19 @@ packer.startup(function()
 			require("lsp_lines").setup()
 		end,
 	}
+
+	if packer_bootstrap then
+		require("packer").sync()
+	end
 end)
 
 vim.diagnostic.config {
 	virtual_text = false,
+	signs = true,
+	float = {
+		header = false,
+		source = "always",
+	},
 }
 
 vim.keymap.set("", "<Leader>x", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
@@ -167,6 +190,11 @@ require("telescope").setup {
 			override_generic_sorter = true, -- override the generic sorter
 			override_file_sorter = true, -- override the file sorter
 			case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+		},
+		live_grep_raw = {
+			vimgrep_argument = {
+				"rg",
+			},
 		},
 	},
 }
@@ -280,10 +308,10 @@ local async_formatting = function(bufnr)
 	)
 end
 
-vim.g.disable_null_ls = "false"
+local is_disable_null_ls = 0
 
 local disable_null_ls = function()
-	vim.g.disable_null_ls = "true"
+	is_disable_null_ls = 1
 end
 
 vim.api.nvim_create_user_command("NullLsDisable", disable_null_ls, {})
@@ -308,25 +336,22 @@ null_ls.setup {
 		null_ls.builtins.formatting.prettier,
 		null_ls.builtins.formatting.rustfmt,
 		null_ls.builtins.formatting.stylua,
-		null_ls.builtins.completion.spell,
+		-- null_ls.builtins.completion.spell,
 		null_ls.builtins.code_actions.gitsigns,
 		null_ls.builtins.code_actions.eslint.with {
 			condition = should_enable_eslint,
 		},
 	},
 	on_attach = function(client, bufnr)
-		if vim.g.disable_null_ls == "true" then
-			do
-				return
-			end
-		end
 		if client.supports_method "textDocument/formatting" then
 			vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				group = augroup,
 				buffer = bufnr,
 				callback = function()
-					async_formatting(bufnr)
+					if is_disable_null_ls == 0 then
+						async_formatting(bufnr)
+					end
 				end,
 			})
 		end
@@ -372,13 +397,10 @@ cmp.setup {
 			end
 		end, { "i", "s" }),
 		["<C-c>"] = cmp.mapping.abort(),
+		["<C-e>"] = cmp.mapping.close(),
 	},
-	sources = { { name = "nvim_lsp" }, { name = "luasnip" } },
+	sources = { { name = "nvim_lsp" }, { name = "luasnip" }, { name = "buffer" }, { name = "path" } },
 }
-
--- vim.diagnostic.config {
--- 	update_in_insert = true,
--- }
 
 require("gitsigns").setup {
 	signs = {
@@ -471,6 +493,15 @@ require("session_manager").setup {
 	max_path_length = 80, -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
 }
 
-require("nvim-tree").setup()
+require("nvim-tree").setup {
+	view = {
+		adaptive_size = true,
+		mappings = {
+			list = {
+				{ key = "u", action = "dir_up" },
+			},
+		},
+	},
+}
 
 require("nvim-ts-autotag").setup()

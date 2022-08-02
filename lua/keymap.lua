@@ -7,9 +7,13 @@ vim.keymap.set("n", "<leader>re", require("telescope.builtin").oldfiles)
 
 vim.keymap.set("n", "<leader>dd", "<cmd>Telescope diagnostics<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<c-[>", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<c-]>", "<cmd>lua vim.diagnostic.goto_next()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>]", "<cmd>lua vim.diagnostic.goto_next()<CR>", { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>db", "<cmd>Dashboard<CR>")
 
--- vim.keymap.set("n", "<leader>x", require("lsp_lines").toggle)
+vim.keymap.set("n", "<leader>x", require("lsp_lines").toggle)
+
+vim.keymap.set("n", "<c-b>", "<cmd>NvimTreeToggle<CR>")
+vim.keymap.set("n", "<c-f>", "<cmd>NvimTreeFindFile<CR>")
+vim.keymap.set("n", "<c-l>", "<cmd>NvimTreeFocus<CR>")
