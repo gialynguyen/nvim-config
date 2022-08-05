@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/Users/gialynguyen/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
+  ["cmp-tabnine"] = {
+    loaded = true,
+    path = "/Users/gialynguyen/.local/share/nvim/site/pack/packer/start/cmp-tabnine",
+    url = "https://github.com/tzachar/cmp-tabnine"
+  },
   cmp_luasnip = {
     loaded = true,
     path = "/Users/gialynguyen/.local/share/nvim/site/pack/packer/start/cmp_luasnip",

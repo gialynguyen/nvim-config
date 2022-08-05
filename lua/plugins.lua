@@ -100,7 +100,7 @@ packer.startup(function()
 	use "hrsh7th/cmp-nvim-lsp"
 	use "hrsh7th/nvim-cmp"
 	use "L3MON4D3/LuaSnip"
-
+	use { "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" }
 	use {
 		"kyazdani42/nvim-tree.lua",
 		requires = {
@@ -363,6 +363,22 @@ null_ls.setup {
 
 local lspkind = require "lspkind"
 local luasnip = require "luasnip"
+-- local tabnine = require "cmp_tabnine.config"
+--
+-- tabnine.setup {
+-- 	max_lines = 1000,
+-- 	max_num_results = 20,
+-- 	sort = true,
+-- 	run_on_every_keystroke = true,
+-- 	snippet_placeholder = "..",
+-- 	ignored_file_types = {
+-- 		-- default is not to ignore
+-- 		-- uncomment to ignore in lua:
+-- 		-- lua = true
+-- 	},
+-- 	show_prediction_strength = false,
+-- }
+--
 require("luasnip.loaders.from_vscode").lazy_load()
 
 local cmp = require "cmp"
@@ -383,7 +399,7 @@ cmp.setup {
 		},
 	},
 	mapping = cmp.mapping.preset.insert {
-		["<C-l>"] = cmp.mapping.complete(),
+		["<C-s>"] = cmp.mapping.complete(),
 		["<CR>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true },
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
@@ -402,7 +418,13 @@ cmp.setup {
 		["<C-c>"] = cmp.mapping.abort(),
 		["<C-e>"] = cmp.mapping.close(),
 	},
-	sources = { { name = "nvim_lsp" }, { name = "luasnip" }, { name = "buffer" }, { name = "path" } },
+	sources = {
+		{ name = "luasnip" },
+		{ name = "nvim_lsp" },
+		{ name = "cmp_tabnine" },
+		{ name = "buffer" },
+		{ name = "path" },
+	},
 }
 
 require("gitsigns").setup {
