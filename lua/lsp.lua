@@ -37,11 +37,11 @@ require("nvim-lsp-installer").on_server_ready(function(server)
 
 			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-			vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+			-- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+			-- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-			vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-			vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
+			-- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+			-- vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 			vim.keymap.set("n", "<leader>gf", vim.lsp.buf.range_formatting, opts)
 
@@ -61,16 +61,15 @@ require("nvim-lsp-installer").on_server_ready(function(server)
 		setup_server[server.name](opts)
 	end
 
-	if (server.name == 'tsserver') then
+	if server.name == "tsserver" then
 		opts.root_dir = function(fname)
-			return lspconfig.util.root_pattern('tsconfig.json')(fname)
-			or not lspconfig.util.root_pattern('.flowconfig')(fname)
-			and lspconfig.util.root_pattern('package.json', 'jsconfig.json', '.git')(fname)
+			return lspconfig.util.root_pattern "tsconfig.json"(fname)
+				or not lspconfig.util.root_pattern ".flowconfig"(fname)
+					and lspconfig.util.root_pattern("package.json", "jsconfig.json", ".git")(fname)
 		end
 
 		server:setup(opts)
 		return
-
 	end
 	server:setup(opts)
 end)

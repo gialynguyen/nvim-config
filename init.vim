@@ -54,7 +54,7 @@ packadd gruvbox-material
 packadd nvim-autopairs
 packadd vim-sandwich
 
-lua require('Comment').setup()
+let g:loaded_matchit = 1
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 if exists('+termguicolors')
@@ -69,4 +69,11 @@ let g:gruvbox_material_better_performance = 1
 colorscheme gruvbox-material
 let g:gruvbox_material_enable_italic = 1
 
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
+map ' <Plug>Sneak_,
+
 runtime OPT packs.vim
+
