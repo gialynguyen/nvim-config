@@ -8,10 +8,6 @@ lua require('plugins')
 lua require('keymap')
 lua require('lsp')
 
-inoremap <C-a> <ESC>la
-inoremap <C-e> <ESC>
-vnoremap <C-e> <ESC>
-
 " Buffer navigation
 nnoremap <leader>q :bp<cr>:bd #<cr>
 nnoremap <leader>h :bprevious<CR>
@@ -40,6 +36,15 @@ let g:floaterm_keymap_next   = '<F5>'
 
 nnoremap <silent><leader>gt <Cmd>FloatermNew --title=lazy-git lazygit<CR>
 inoremap <silent><leader>gt <Cmd>FloatermNew --title=lazy-git lazygit<CR>
+
+autocmd TermEnter term://*toggleterm#*
+      \ tnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+
+" By applying the mappings this way you can pass a count to your
+" mapping to open a specific window.
+" For example: 2<C-t> will open terminal 2
+nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
 
 runtime OPT nvim-treesitter.vim
 runtime OPT telescope.nvim
@@ -74,6 +79,10 @@ map F <Plug>Sneak_F
 map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 map ' <Plug>Sneak_,
+
+inoremap <C-a> <ESC>la
+inoremap <C-e> <ESC>
+vnoremap <C-e> <ESC>
 
 runtime OPT packs.vim
 

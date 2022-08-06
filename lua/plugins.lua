@@ -126,6 +126,10 @@ packer.startup(function()
 
 	use "lukas-reineke/indent-blankline.nvim"
 
+	use {"akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
+		require("toggleterm").setup()
+	end}
+
 	use {
 		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
 		config = function()
