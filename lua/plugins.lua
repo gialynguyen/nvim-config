@@ -126,9 +126,13 @@ packer.startup(function()
 
 	use "lukas-reineke/indent-blankline.nvim"
 
-	use {"akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
-		require("toggleterm").setup()
-	end}
+	use {
+		"akinsho/toggleterm.nvim",
+		tag = "v2.*",
+		config = function()
+			require("toggleterm").setup()
+		end,
+	}
 
 	use {
 		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -144,7 +148,7 @@ end)
 
 vim.diagnostic.config {
 	virtual_text = false,
-	signs = true,
+	signs = false,
 	float = {
 		header = false,
 		source = "always",
@@ -158,7 +162,6 @@ require("telescope").setup {
 		mappings = { n = { ["o"] = require("telescope.actions").select_default } },
 		initial_mode = "normal",
 		hidden = false,
-		file_ignore_patterns = { ".git/", "node_modules/", "target/" },
 	},
 	pickers = {
 		find_files = {
@@ -173,6 +176,7 @@ require("telescope").setup {
 			theme = "ivy",
 			hijack_netrw = true,
 			mappings = {},
+			-- file_ignore_patterns = { ".git/", "node_modules/", "target/" },
 		},
 		["ui-select"] = {
 			require("telescope.themes").get_dropdown {
@@ -252,10 +256,17 @@ require("lualine").setup {
 				sources = { "nvim_diagnostic" },
 				symbols = { error = " ", warn = " ", info = " " },
 				diagnostics_color = {
-					color_error = { fg = "#ec5f67" },
-					color_warn = { fg = "#ECBE7B" },
-					color_info = { fg = "#008080" },
+					error = { fg = "#ec5f67" },
+					warn = { fg = "#ECBE7B" },
+					info = { fg = "#008080" },
 				},
+				-- diagnostics_color = {
+				-- 	-- Same values as the general color option can be used here.
+				-- 	error = "DiagnosticError", -- Changes diagnostics' error color.
+				-- 	warn = "DiagnosticWarn", -- Changes diagnostics' warn color.
+				-- 	info = "DiagnosticInfo", -- Changes diagnostics' info color.
+				-- 	hint = "DiagnosticHint", -- Changes diagnostics' hint color.
+				-- },
 				colored = true, -- Displays diagnostics status in color if set to true.
 				update_in_insert = true, -- Update diagnostics in insert mode.
 				always_visible = false, -- Show diagnostics even if there are none.
@@ -292,12 +303,12 @@ local async_formatting = function(bufnr)
 		"textDocument/formatting",
 		vim.lsp.util.make_formatting_params {},
 		function(err, res, ctx)
-			if err then
-				local err_msg = type(err) == "string" and err or err.message
-				-- you can modify the log message / level (or ignore it completely)
-				vim.notify("formatting: " .. err_msg, vim.log.levels.WARN)
-				return
-			end
+			-- if err then
+			-- 	local err_msg = type(err) == "string" and err or err.message
+			-- 	-- you can modify the log message / level (or ignore it completely)
+			-- 	vim.notify("formatting: " .. err_msg, vim.log.levels.WARN)
+			-- 	return
+			-- end
 
 			-- don't apply results if buffer is unloaded or has been modified
 			if not vim.api.nvim_buf_is_loaded(bufnr) or vim.api.nvim_buf_get_option(bufnr, "modified") then
@@ -321,14 +332,32 @@ local disable_null_ls = function()
 	is_disable_null_ls = 1
 end
 
+local enable_null_ls = function()
+	is_disable_null_ls = 0
+end
+
 vim.api.nvim_create_user_command("NullLsDisable", disable_null_ls, {})
+vim.api.nvim_create_user_command("NullLsEnable", enable_null_ls, {})
 
 local null_ls = require "null-ls"
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
+
+local is_forced_enable_eslint = 0
+
+local force_enable_eslint = function()
+	is_forced_enable_eslint = 1
+end
+
+local force_disable_eslint = function()
+	is_forced_enable_eslint = 0
+end
 
 local should_enable_eslint = function(utils)
-	return utils.root_has_file { "node_modules/.bin/eslint" }
+	return utils.root_has_file { "node_modules/.bin/eslint" } or is_forced_enable_eslint == 1
 end
+
+vim.api.nvim_create_user_command("NullLsForceEnableEslint", force_enable_eslint, {})
+vim.api.nvim_create_user_command("NullLsForceDisableEslint", force_disable_eslint, {})
 
 null_ls.setup {
 	sources = {
@@ -338,12 +367,19 @@ null_ls.setup {
 		null_ls.builtins.formatting.autopep8,
 		null_ls.builtins.formatting.eslint.with {
 			condition = should_enable_eslint,
+			args = {
+				"--fix-dry-run",
+				"--format",
+				"json",
+				"--stdin",
+				"--stdin-filename",
+				"$FILENAME",
+			},
 		},
 		null_ls.builtins.formatting.gofmt,
 		null_ls.builtins.formatting.prettier,
 		null_ls.builtins.formatting.rustfmt,
 		null_ls.builtins.formatting.stylua,
-		-- null_ls.builtins.completion.spell,
 		null_ls.builtins.code_actions.gitsigns,
 		null_ls.builtins.code_actions.eslint.with {
 			condition = should_enable_eslint,
@@ -437,8 +473,9 @@ cmp.setup {
 	sources = {
 		{ name = "luasnip" },
 		{ name = "nvim_lsp" },
+		{ name = "nvim_lsp_signature_help" },
 		{ name = "cmp_tabnine" },
-		{ name = "buffer" },
+		-- { name = "buffer" },
 		{ name = "path" },
 	},
 }
@@ -542,6 +579,15 @@ require("nvim-tree").setup {
 				{ key = "u", action = "dir_up" },
 			},
 		},
+	},
+	filters = {
+		dotfiles = false,
+	},
+	git = {
+		enable = true,
+		ignore = false,
+		show_on_dirs = true,
+		timeout = 400,
 	},
 }
 

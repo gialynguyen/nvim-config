@@ -29,6 +29,8 @@ local setup_server = {
 
 local lspconfig = require "lspconfig"
 
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 require("nvim-lsp-installer").on_server_ready(function(server)
 	local opts = {
 		on_attach = function(client, bufnr)
@@ -68,18 +70,25 @@ require("nvim-lsp-installer").on_server_ready(function(server)
 					and lspconfig.util.root_pattern("package.json", "jsconfig.json", ".git")(fname)
 		end
 
+		opts.capabilities = capabilities
+
 		server:setup(opts)
 		return
 	end
 
 	if server.name == "volar" then
 		opts.filetypes = {
-			"typescript",
-			"javascript",
+			-- "typescript",
+			-- "javascript",
 			"vue",
 		}
+
+		server:setup(opts)
+		return
 	end
 	server:setup(opts)
 end)
 
-lspconfig.flow.setup {}
+lspconfig.flow.setup {
+	capabilities = capabilities,
+}

@@ -84,5 +84,6 @@ inoremap <C-a> <ESC>la
 inoremap <C-e> <ESC>
 vnoremap <C-e> <ESC>
 
-runtime OPT packs.vim
+let g:indent_blankline_char_list = ['¦', '┆', '┊']
 
+runtime OPT packs.vim

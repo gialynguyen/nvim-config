@@ -14,8 +14,8 @@ vim.g.mapleader = ","
 
 vim.opt.mouse = "a"
 vim.opt.inccommand = "nosplit"
-
-vim.cmd "sign define DiagnosticSignError text=● texthl=DiagnosticSignError"
-vim.cmd "sign define DiagnosticSignWarn text=● texthl=DiagnosticSignWarn"
-vim.cmd "sign define DiagnosticSignInfo text=● texthl=DiagnosticSignInfo"
-vim.cmd "sign define DiagnosticSignHint text=● texthl=DiagnosticSignHint"
+--
+-- vim.cmd "sign define DiagnosticSignError text=● texthl=DiagnosticSignError"
+-- vim.cmd "sign define DiagnosticSignWarn text=● texthl=DiagnosticSignWarn"
+-- vim.cmd "sign define DiagnosticSignInfo text=● texthl=DiagnosticSignInfo"
+-- vim.cmd "sign define DiagnosticSignHint text=● texthl=DiagnosticSignHint"
