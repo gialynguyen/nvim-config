@@ -5,8 +5,6 @@ runtime OPT colors.vim
 
 lua require('nvim')
 lua require('plugins')
-lua require('keymap')
-lua require('lsp')
 
 " Buffer navigation
 nnoremap <leader>q :bp<cr>:bd #<cr>
@@ -46,6 +44,11 @@ autocmd TermEnter term://*toggleterm#*
 nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
 
+autocmd TermEnter term://*toggleterm#*
+      \ tnoremap <silent><c-y> <Cmd>ToggleTermToggleAll<CR>
+nnoremap <silent><c-y> <Cmd>ToggleTermToggleAll<CR>
+inoremap <silent><c-y> <Esc><Cmd>ToggleTermToggleAll<CR>
+
 runtime OPT nvim-treesitter.vim
 runtime OPT telescope.nvim
 runtime OPT telescope-file-browser.nvim
@@ -53,7 +56,7 @@ runtime OPT lualine.nvim
 
 packadd vim-devicons
 packadd vim-matchup
-packadd vim-slash
+packadd is.vim
 packadd vim-sneak
 packadd gruvbox-material
 packadd nvim-autopairs
@@ -85,5 +88,8 @@ inoremap <C-e> <ESC>
 vnoremap <C-e> <ESC>
 
 let g:indent_blankline_char_list = ['¦', '┆', '┊']
+
+lua require('lsp')
+lua require('keymap')
 
 runtime OPT packs.vim

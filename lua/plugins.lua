@@ -53,7 +53,7 @@ packer.startup(function()
 
 	use "andymass/vim-matchup"
 
-	use "junegunn/vim-slash"
+	use "haya14busa/is.vim"
 
 	use "mg979/vim-visual-multi"
 
@@ -149,6 +149,7 @@ end)
 vim.diagnostic.config {
 	virtual_text = false,
 	signs = false,
+	underline = true,
 	float = {
 		header = false,
 		source = "always",

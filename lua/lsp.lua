@@ -39,7 +39,7 @@ require("nvim-lsp-installer").on_server_ready(function(server)
 
 			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-			vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+			-- vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 			-- vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 			-- vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
@@ -91,4 +91,21 @@ end)
 
 lspconfig.flow.setup {
 	capabilities = capabilities,
+}
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+lspconfig.emmet_ls.setup {
+	-- on_attach = on_attach,
+	capabilities = capabilities,
+	filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+	init_options = {
+		html = {
+			options = {
+				-- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+				["bem.enabled"] = true,
+			},
+		},
+	},
 }
