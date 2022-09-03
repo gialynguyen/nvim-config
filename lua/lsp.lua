@@ -109,3 +109,14 @@ lspconfig.emmet_ls.setup {
 		},
 	},
 }
+
+vim.diagnostic.config {
+	virtual_text = false,
+	signs = false,
+	underline = true,
+	virtual_lines = false,
+	-- float = {
+	-- 	header = false,
+	-- 	source = "always",
+	-- },
+}

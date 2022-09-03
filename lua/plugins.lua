@@ -39,6 +39,8 @@ packer.startup(function()
 		opt = false,
 	}
 
+	use "kyazdani42/nvim-web-devicons"
+
 	use "glepnir/dashboard-nvim"
 
 	use { "nvim-telescope/telescope-ui-select.nvim" }
@@ -46,8 +48,6 @@ packer.startup(function()
 	use "sainnhe/gruvbox-material"
 
 	use "nvim-treesitter/nvim-treesitter"
-
-	use "ryanoasis/vim-devicons"
 
 	use "justinmk/vim-sneak"
 
@@ -93,7 +93,7 @@ packer.startup(function()
 
 	use {
 		"nvim-lualine/lualine.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
+		-- requires = { "kyazdani42/nvim-web-devicons", opt = true },
 	}
 
 	use "williamboman/nvim-lsp-installer"
@@ -103,9 +103,9 @@ packer.startup(function()
 	use { "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" }
 	use {
 		"kyazdani42/nvim-tree.lua",
-		requires = {
-			"kyazdani42/nvim-web-devicons", -- optional, for file icons
-		},
+		-- requires = {
+		-- 	"kyazdani42/nvim-web-devicons", -- optional, for file icons
+		-- },
 		-- tag = "nightly", -- optional, updated every week. (see issue #1193)
 	}
 
@@ -124,13 +124,32 @@ packer.startup(function()
 
 	use "voldikss/vim-floaterm"
 
-	use "lukas-reineke/indent-blankline.nvim"
+	use {
+		"maxmellon/vim-jsx-pretty",
+	}
+
+	-- use "lukas-reineke/indent-blankline.nvim"
 
 	use {
 		"akinsho/toggleterm.nvim",
 		tag = "v2.*",
 		config = function()
 			require("toggleterm").setup()
+		end,
+	}
+
+	use {
+		"ray-x/guihua.lua",
+	}
+
+	use {
+		"ray-x/sad.nvim",
+	}
+
+	use {
+		"iamcco/markdown-preview.nvim",
+		run = function()
+			vim.fn["mkdp#util#install"]()
 		end,
 	}
 
@@ -145,18 +164,6 @@ packer.startup(function()
 		require("packer").sync()
 	end
 end)
-
-vim.diagnostic.config {
-	virtual_text = false,
-	signs = false,
-	underline = true,
-	float = {
-		header = false,
-		source = "always",
-	},
-}
-
-vim.keymap.set("", "<Leader>x", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
 
 require("telescope").setup {
 	defaults = {
@@ -217,6 +224,9 @@ require("telescope").load_extension "ui-select"
 require("telescope").load_extension "live_grep_args"
 
 require("nvim-treesitter.configs").setup {
+	context_commentstring = {
+		enable = true,
+	},
 	ensure_installed = {
 		"bash",
 		"cpp",
@@ -232,7 +242,10 @@ require("nvim-treesitter.configs").setup {
 		"typescript",
 		"yaml",
 	},
-	highlight = { enable = true },
+	highlight = { enable = true, additional_vim_regex_highlighting = true },
+	indent = {
+		enable = false,
+	},
 }
 
 require("lualine").setup {
@@ -551,11 +564,11 @@ db.custom_center = {
 }
 vim.keymap.set("n", "<Leader>o", ":DashboardNewFile<CR>", { silent = true })
 
-require("indent_blankline").setup {
-	-- for example, context is off by default, use this to turn it on
-	show_current_context = true,
-	show_current_context_start = true,
-}
+-- require("indent_blankline").setup {
+-- 	-- for example, context is off by default, use this to turn it on
+-- 	show_current_context = true,
+-- 	show_current_context_start = true,
+-- }
 
 local Path = require "plenary.path"
 require("session_manager").setup {
@@ -594,18 +607,12 @@ require("nvim-tree").setup {
 
 require("nvim-ts-autotag").setup()
 
-require("nvim-treesitter.configs").setup {
-	context_commentstring = {
-		enable = true,
-	},
-}
-
 local comment = require "Comment"
 
 comment.setup {
 	pre_hook = function(ctx)
 		-- Only calculate commentstring for tsx filetypes
-		if vim.bo.filetype == "typescriptreact" then
+		if vim.bo.filetype == "typescriptreact" or vim.bo.filetype == "javascriptreact" then
 			local U = require "Comment.utils"
 
 			-- Determine whether to use linewise or blockwise commentstring
@@ -625,4 +632,23 @@ comment.setup {
 			}
 		end
 	end,
+}
+
+require("sad").setup {
+	diff = "delta", -- you can use `diff`, `diff-so-fancy`
+	ls_file = "fd", -- also git ls_file
+	exact = false, -- exact match
+	vsplit = true, -- split sad window the screen vertically, when set to number
+	-- it is a threadhold when window is larger than the threshold sad will split vertically,
+	height_ratio = 0.6, -- height ratio of sad window when split horizontally
+	width_ratio = 0.6, -- height ratio of sad window when split vertically
+}
+
+use {
+	"iamcco/markdown-preview.nvim",
+	run = "cd app && npm install",
+	setup = function()
+		vim.g.mkdp_filetypes = { "markdown" }
+	end,
+	ft = { "markdown" },
 }

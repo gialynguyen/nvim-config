@@ -20,11 +20,11 @@ vim.keymap.set("n", "<leader>]", "<cmd>lua vim.diagnostic.goto_next()<CR>", { no
 
 vim.keymap.set("n", "<leader>db", "<cmd>Dashboard<CR>")
 
-vim.keymap.set("n", "<leader>x", require("lsp_lines").toggle)
-
 vim.keymap.set("n", "<c-b>", "<cmd>NvimTreeToggle<CR>")
 vim.keymap.set("n", "<c-f>", "<cmd>NvimTreeFindFile<CR>")
 vim.keymap.set("n", "<c-l>", "<cmd>NvimTreeFocus<CR>")
+
+vim.keymap.set("", "<Leader>x", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
 
 require("toggleterm").setup {
 	open_mapping = [[<C-\>]],

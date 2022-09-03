@@ -46,6 +46,7 @@ inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
 
 autocmd TermEnter term://*toggleterm#*
       \ tnoremap <silent><c-y> <Cmd>ToggleTermToggleAll<CR>
+
 nnoremap <silent><c-y> <Cmd>ToggleTermToggleAll<CR>
 inoremap <silent><c-y> <Esc><Cmd>ToggleTermToggleAll<CR>
 
@@ -54,7 +55,6 @@ runtime OPT telescope.nvim
 runtime OPT telescope-file-browser.nvim
 runtime OPT lualine.nvim
 
-packadd vim-devicons
 packadd vim-matchup
 packadd is.vim
 packadd vim-sneak
@@ -87,9 +87,26 @@ inoremap <C-a> <ESC>la
 inoremap <C-e> <ESC>
 vnoremap <C-e> <ESC>
 
-let g:indent_blankline_char_list = ['¦', '┆', '┊']
+" let g:indent_blankline_char_list = ['¦', '┆', '┊']
 
 lua require('lsp')
 lua require('keymap')
+
+syntax on
+"
+" set fileformat=unix
+" scriptencoding utf-8
+" set encoding=utf-8
+"
+autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc
+"
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set autoindent
+set smartindent
+set smarttab
+set expandtab
+set nowrap
 
 runtime OPT packs.vim
