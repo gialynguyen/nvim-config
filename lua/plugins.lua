@@ -99,7 +99,10 @@ packer.startup(function()
 	use "williamboman/nvim-lsp-installer"
 	use "hrsh7th/cmp-nvim-lsp"
 	use "hrsh7th/nvim-cmp"
-	use "L3MON4D3/LuaSnip"
+	use "hrsh7th/cmp-nvim-lsp-signature-help"
+	use "hrsh7th/cmp-vsnip"
+	use "hrsh7th/vim-vsnip"
+	use "rafamadriz/friendly-snippets"
 	use { "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" }
 	use {
 		"kyazdani42/nvim-tree.lua",
@@ -109,12 +112,10 @@ packer.startup(function()
 		-- tag = "nightly", -- optional, updated every week. (see issue #1193)
 	}
 
-	use "saadparwaiz1/cmp_luasnip"
 	use {
 		"neovim/nvim-lspconfig",
 	}
 	use "onsails/lspkind-nvim"
-	use "rafamadriz/friendly-snippets"
 
 	use "lewis6991/gitsigns.nvim"
 
@@ -416,7 +417,6 @@ null_ls.setup {
 }
 
 local lspkind = require "lspkind"
-local luasnip = require "luasnip"
 -- local tabnine = require "cmp_tabnine.config"
 --
 -- tabnine.setup {
@@ -433,18 +433,23 @@ local luasnip = require "luasnip"
 -- 	show_prediction_strength = false,
 -- }
 --
-require("luasnip.loaders.from_vscode").lazy_load()
 
 local has_words_before = function()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
 	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
 end
 
+local feedkey = function(key, mode)
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+
 local cmp = require "cmp"
 cmp.setup {
 	snippet = {
 		expand = function(args)
-			luasnip.lsp_expand(args.body)
+			vim.fn["vsnip#anonymous"](args.body)
 		end,
 	},
 	formatting = {
@@ -463,34 +468,50 @@ cmp.setup {
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
+			elseif vim.fn["vsnip#available"](1) == 1 then
+				feedkey("<Plug>(vsnip-expand-or-jump)", "")
 			elseif has_words_before() then
 				cmp.complete()
 			else
-				fallback()
+				fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
 			end
 		end, { "i", "s" }),
 
-		["<S-Tab>"] = cmp.mapping(function(fallback)
+		["<S-Tab>"] = cmp.mapping(function()
 			if cmp.visible() then
 				cmp.select_prev_item()
-			elseif luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			else
-				fallback()
+			elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+				feedkey("<Plug>(vsnip-jump-prev)", "")
 			end
 		end, { "i", "s" }),
 		["<C-c>"] = cmp.mapping.abort(),
 		["<C-e>"] = cmp.mapping.close(),
+		["<C-d>"] = cmp.mapping.scroll_docs(-4),
+		["<C-f>"] = cmp.mapping.scroll_docs(4),
+	},
+	completion = {
+		keyword_length = 1,
+		completeopt = "menu,noselect",
+		autocomplete = false,
+	},
+	view = {
+		entries = "custom",
+	},
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+	},
+	experimental = {
+		ghost_text = true,
+		native_menu = false,
 	},
 	sources = {
-		{ name = "luasnip" },
-		{ name = "nvim_lsp" },
+		{ name = "vsnip", max_item_count = 4 },
+		{ name = "nvim_lsp", max_item_count = 4 },
 		{ name = "nvim_lsp_signature_help" },
-		{ name = "cmp_tabnine" },
-		-- { name = "buffer" },
-		{ name = "path" },
+		{ name = "cmp_tabnine", max_item_count = 4 },
+		{ name = "buffer", keyword_length = 2, max_item_count = 4 },
+		{ name = "path", keyword_length = 3, max_item_count = 4 },
 	},
 }
 
@@ -502,6 +523,8 @@ require("gitsigns").setup {
 		topdelete = { text = "‾" },
 		changedelete = { text = "~" },
 	},
+	signcolumn = false,
+	numhl = true,
 }
 
 local db = require "dashboard"

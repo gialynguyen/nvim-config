@@ -7,7 +7,6 @@ vim.keymap.set("n", "<leader>b", require("telescope.builtin").buffers)
 vim.keymap.set("n", "<leader>rg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 vim.keymap.set("n", "<leader>re", require("telescope.builtin").oldfiles)
 
--- vim.keymap.set("n", "gd", require("telescope.builtin").lsp_definitions)
 vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations)
 vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references)
 vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions)
