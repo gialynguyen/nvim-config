@@ -8,6 +8,8 @@ vim.keymap.set("n", "<leader>rg", ":lua require('telescope').extensions.live_gre
 vim.keymap.set("n", "<leader>rr", "<cmd>Telescope resume<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>re", require("telescope.builtin").oldfiles)
 
+vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>", { noremap = true, silent = true })
+
 vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations)
 vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references)
 vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions)

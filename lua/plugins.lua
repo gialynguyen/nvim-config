@@ -183,7 +183,7 @@ require("telescope").setup {
 	extensions = {
 		file_browser = {
 			theme = "ivy",
-			hijack_netrw = true,
+			hijack_netrw = false,
 			mappings = {},
 			-- file_ignore_patterns = { ".git/", "node_modules/", "target/" },
 		},
@@ -665,13 +665,4 @@ require("sad").setup {
 	-- it is a threadhold when window is larger than the threshold sad will split vertically,
 	height_ratio = 0.6, -- height ratio of sad window when split horizontally
 	width_ratio = 0.6, -- height ratio of sad window when split vertically
-}
-
-use {
-	"iamcco/markdown-preview.nvim",
-	run = "cd app && npm install",
-	setup = function()
-		vim.g.mkdp_filetypes = { "markdown" }
-	end,
-	ft = { "markdown" },
 }
