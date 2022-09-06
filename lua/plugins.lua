@@ -507,7 +507,7 @@ cmp.setup {
 	},
 	sources = {
 		{ name = "vsnip", max_item_count = 4 },
-		{ name = "nvim_lsp", max_item_count = 4 },
+		{ name = "nvim_lsp" },
 		{ name = "nvim_lsp_signature_help" },
 		{ name = "cmp_tabnine", max_item_count = 4 },
 		{ name = "buffer", keyword_length = 2, max_item_count = 4 },
