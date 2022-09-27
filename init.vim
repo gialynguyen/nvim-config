@@ -86,6 +86,8 @@ map ' <Plug>Sneak_,
 inoremap <C-a> <ESC>la
 inoremap <C-e> <ESC>
 vnoremap <C-e> <ESC>
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
 
 " let g:indent_blankline_char_list = ['¦', '┆', '┊']
 
@@ -93,13 +95,8 @@ lua require('lsp')
 lua require('keymap')
 
 syntax on
-"
-" set fileformat=unix
-" scriptencoding utf-8
-" set encoding=utf-8
-"
 autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc
-"
+
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
@@ -108,5 +105,7 @@ set smartindent
 set smarttab
 set expandtab
 set nowrap
+
+set fillchars=eob:\ 
 
 runtime OPT packs.vim
