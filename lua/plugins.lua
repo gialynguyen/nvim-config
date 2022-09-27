@@ -93,7 +93,6 @@ packer.startup(function()
 
 	use {
 		"nvim-lualine/lualine.nvim",
-		-- requires = { "kyazdani42/nvim-web-devicons", opt = true },
 	}
 
 	use "williamboman/nvim-lsp-installer"
@@ -106,9 +105,6 @@ packer.startup(function()
 	use { "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" }
 	use {
 		"kyazdani42/nvim-tree.lua",
-		-- requires = {
-		-- 	"kyazdani42/nvim-web-devicons", -- optional, for file icons
-		-- },
 		-- tag = "nightly", -- optional, updated every week. (see issue #1193)
 	}
 
@@ -683,4 +679,21 @@ require("transparent").setup {
 		"BufferLineIndicatorSelected",
 	},
 	exclude = {}, -- table: groups you don't want to clear
+}
+
+require("nvim-web-devicons").setup {
+	-- your personnal icons can go here (to override)
+	-- you can specify color or cterm_color instead of specifying both of them
+	-- DevIcon will be appended to `name`
+	override = {
+		zsh = {
+			icon = "",
+			color = "#428850",
+			cterm_color = "65",
+			name = "Zsh",
+		},
+	},
+	-- globally enable default icons (default to false)
+	-- will get overriden by `get_icons` option
+	default = true,
 }

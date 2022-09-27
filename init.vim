@@ -96,6 +96,8 @@ lua require('keymap')
 
 syntax on
 autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc
+autocmd BufNewFile,BufRead *.astro setlocal filetype=astro
+autocmd BufNewFile,BufRead *.mdx setlocal filetype=markdown
 
 set tabstop=2
 set softtabstop=2

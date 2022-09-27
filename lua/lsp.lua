@@ -13,7 +13,7 @@ local servers = {
 	"flow",
 }
 
-local has_formatter = { "gopls", "html", "rust_analyzer", "sumneko_lua", "tsserver", "cssls", "cssmodules_ls" }
+local has_formatter = { "gopls", "html", "rust_analyzer", "sumneko_lua", "tsserver", "cssls", "cssmodules_ls", "astro" }
 for _, name in pairs(servers) do
 	local found, server = require("nvim-lsp-installer").get_server(name)
 	if found and not server:is_installed() then
@@ -109,6 +109,8 @@ lspconfig.emmet_ls.setup {
 		},
 	},
 }
+
+lspconfig.astro.setup {}
 
 vim.diagnostic.config {
 	virtual_text = false,
