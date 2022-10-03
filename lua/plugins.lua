@@ -121,10 +121,6 @@ packer.startup(function()
 
 	use "voldikss/vim-floaterm"
 
-	use {
-		"maxmellon/vim-jsx-pretty",
-	}
-
 	-- use "lukas-reineke/indent-blankline.nvim"
 
 	use {
@@ -151,6 +147,14 @@ packer.startup(function()
 	}
 
 	use "xiyaowong/nvim-transparent"
+
+	use {
+		"maxmellon/vim-jsx-pretty",
+	}
+
+	use {
+		"noib3/nvim-cokeline",
+	}
 
 	use {
 		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -256,7 +260,7 @@ require("lualine").setup {
 	},
 	sections = {
 		lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
-		lualine_b = { "filename", "branch", { "diff", colored = false } },
+		lualine_b = { { "filename", path = 1 }, "branch", { "diff", colored = false } },
 		lualine_c = {},
 		lualine_x = {
 			{
@@ -297,14 +301,22 @@ require("lualine").setup {
 		lualine_z = {},
 	},
 	tabline = {
-		lualine_a = {
-			{
-				"buffers",
-				separator = { left = "", right = "" },
-				right_padding = 2,
-				symbols = { alternate_file = "" },
-			},
-		},
+		-- lualine_a = {
+		-- 	{
+		-- 		"buffers",
+		-- 		separator = { left = "", right = "" },
+		-- 		right_padding = 2,
+		-- 		symbols = { alternate_file = "" },
+		-- 		mode = 2,
+		-- 		max_length = vim.o.columns * 2 / 3,
+		-- 		filetype_names = {
+		-- 			TelescopePrompt = "Telescope",
+		-- 			dashboard = "Dashboard",
+		-- 			packer = "Packer",
+		-- 			fzf = "FZF",
+		-- 		},
+		-- 	},
+		-- },
 	},
 }
 
@@ -444,6 +456,8 @@ end
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 local cmp = require "cmp"
+local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+
 cmp.setup {
 	snippet = {
 		expand = function(args)
@@ -512,6 +526,8 @@ cmp.setup {
 		{ name = "path", keyword_length = 3, max_item_count = 4 },
 	},
 }
+
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 require("gitsigns").setup {
 	signs = {
@@ -696,4 +712,72 @@ require("nvim-web-devicons").setup {
 	-- globally enable default icons (default to false)
 	-- will get overriden by `get_icons` option
 	default = true,
+}
+
+local get_hex = require("cokeline/utils").get_hex
+local errors_fg = get_hex("DiagnosticError", "fg")
+local warnings_fg = get_hex("DiagnosticWarn", "fg")
+
+require("cokeline").setup {
+	default_hl = {
+		fg = function(buffer)
+			return buffer.is_focused and get_hex("Normal", "fg") or get_hex("Comment", "fg")
+		end,
+		bg = "NONE",
+	},
+
+	components = {
+		{
+			text = function(buffer)
+				return (buffer.index ~= 1) and "▏" or ""
+			end,
+			fg = get_hex("Normal", "fg"),
+		},
+		{
+			text = function(buffer)
+				return " " .. buffer.index
+			end,
+		},
+		{
+			text = function(buffer)
+				return "    " .. buffer.devicon.icon
+			end,
+			fg = function(buffer)
+				return buffer.devicon.color
+			end,
+		},
+		{
+			text = function(buffer)
+				return buffer.unique_prefix .. buffer.filename .. "    "
+			end,
+			style = function(buffer)
+				return buffer.is_focused and "bold" or nil
+			end,
+		},
+		{
+			text = function(buffer)
+				return
+					(buffer.diagnostics.errors ~= 0 and "  " .. buffer.diagnostics.errors)
+						or (buffer.diagnostics.warnings ~= 0 and "  " .. buffer.diagnostics.warnings)
+						or ""
+			end,
+			fg = function(buffer)
+				return
+					(buffer.diagnostics.errors ~= 0 and errors_fg)
+						or (buffer.diagnostics.warnings ~= 0 and warnings_fg)
+						or nil
+			end,
+			truncation = { priority = 1 },
+		},
+		{
+			text = function(buffer)
+				return buffer.is_modified and "  ●  " or "    "
+			end,
+			fg = function(buffer)
+				return buffer.is_modified and green or nil
+			end,
+			delete_buffer_on_left_click = true,
+			truncation = { priority = 1 },
+		},
+	},
 }

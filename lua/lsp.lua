@@ -54,7 +54,7 @@ require("nvim-lsp-installer").on_server_ready(function(server)
 				end
 			end
 			if not should_format then
-				client.resolved_capabilities.document_formatting = false
+				client.server_capabilities.documentFormattingProvider = false
 			end
 		end,
 		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),

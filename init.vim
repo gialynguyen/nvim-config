@@ -13,16 +13,15 @@ nnoremap <leader>l   :bnext<CR>
 command! BufCurOnly execute '%bdelete|edit#|bdelete#'
 nnoremap <leader>w :BufCurOnly<CR>
 
-nnoremap <silent><leader>1 <Cmd>LualineBuffersJump 1<CR>
-nnoremap <silent><leader>2 <Cmd>LualineBuffersJump 2<CR>
-nnoremap <silent><leader>3 <Cmd>LualineBuffersJump 3<CR>
-nnoremap <silent><leader>4 <Cmd>LualineBuffersJump 4<CR>
-nnoremap <silent><leader>5 <Cmd>LualineBuffersJump 5<CR>
-nnoremap <silent><leader>6 <Cmd>LualineBuffersJump 6<CR>
-nnoremap <silent><leader>7 <Cmd>LualineBuffersJump 7<CR>
-nnoremap <silent><leader>8 <Cmd>LualineBuffersJump 8<CR>
-nnoremap <silent><leader>9 <Cmd>LualineBuffersJump 9<CR>
-nnoremap <silent><leader>$ <Cmd>LualineBuffersJump -1<CR>
+nnoremap <silent><leader>1 <Plug>(cokeline-focus-1)<CR>
+nnoremap <silent><leader>2 <Plug>(cokeline-focus-2)<CR>
+nnoremap <silent><leader>3 <Plug>(cokeline-focus-3)<CR>
+nnoremap <silent><leader>4 <Plug>(cokeline-focus-4)<CR>
+nnoremap <silent><leader>5 <Plug>(cokeline-focus-5)<CR>
+nnoremap <silent><leader>6 <Plug>(cokeline-focus-6)<CR>
+nnoremap <silent><leader>7 <Plug>(cokeline-focus-7)<CR>
+nnoremap <silent><leader>8 <Plug>(cokeline-focus-8)<CR>
+nnoremap <silent><leader>9 <Plug>(cokeline-focus-9)<CR>
 
 let g:floaterm_autoclose = 1
 let g:floaterm_width = 0.9
