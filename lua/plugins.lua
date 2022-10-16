@@ -121,8 +121,6 @@ packer.startup(function()
 
 	use "voldikss/vim-floaterm"
 
-	-- use "lukas-reineke/indent-blankline.nvim"
-
 	use {
 		"akinsho/toggleterm.nvim",
 		tag = "v2.*",
@@ -154,6 +152,14 @@ packer.startup(function()
 
 	use {
 		"noib3/nvim-cokeline",
+	}
+
+	use {
+		"SmiteshP/nvim-navic",
+	}
+
+	use {
+		"johann2357/nvim-smartbufs",
 	}
 
 	use {

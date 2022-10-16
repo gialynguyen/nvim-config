@@ -13,15 +13,25 @@ nnoremap <leader>l   :bnext<CR>
 command! BufCurOnly execute '%bdelete|edit#|bdelete#'
 nnoremap <leader>w :BufCurOnly<CR>
 
-nnoremap <silent><leader>1 <Plug>(cokeline-focus-1)<CR>
-nnoremap <silent><leader>2 <Plug>(cokeline-focus-2)<CR>
-nnoremap <silent><leader>3 <Plug>(cokeline-focus-3)<CR>
-nnoremap <silent><leader>4 <Plug>(cokeline-focus-4)<CR>
-nnoremap <silent><leader>5 <Plug>(cokeline-focus-5)<CR>
-nnoremap <silent><leader>6 <Plug>(cokeline-focus-6)<CR>
-nnoremap <silent><leader>7 <Plug>(cokeline-focus-7)<CR>
-nnoremap <silent><leader>8 <Plug>(cokeline-focus-8)<CR>
-nnoremap <silent><leader>9 <Plug>(cokeline-focus-9)<CR>
+nnoremap <Leader>1 :lua require("nvim-smartbufs").goto_buffer(1)<CR>
+nnoremap <Leader>2 :lua require("nvim-smartbufs").goto_buffer(2)<CR>
+nnoremap <Leader>3 :lua require("nvim-smartbufs").goto_buffer(3)<CR>
+nnoremap <Leader>4 :lua require("nvim-smartbufs").goto_buffer(4)<CR>
+nnoremap <Leader>5 :lua require("nvim-smartbufs").goto_buffer(5)<CR>
+nnoremap <Leader>6 :lua require("nvim-smartbufs").goto_buffer(6)<CR>
+nnoremap <Leader>7 :lua require("nvim-smartbufs").goto_buffer(7)<CR>
+nnoremap <Leader>8 :lua require("nvim-smartbufs").goto_buffer(8)<CR>
+nnoremap <Leader>9 :lua require("nvim-smartbufs").goto_buffer(9)<CR>
+
+nnoremap <Leader>q1 :lua require("nvim-smartbufs").close_buffer(1)<CR>
+nnoremap <Leader>q2 :lua require("nvim-smartbufs").close_buffer(2)<CR>
+nnoremap <Leader>q3 :lua require("nvim-smartbufs").close_buffer(3)<CR>
+nnoremap <Leader>q4 :lua require("nvim-smartbufs").close_buffer(4)<CR>
+nnoremap <Leader>q5 :lua require("nvim-smartbufs").close_buffer(5)<CR>
+nnoremap <Leader>q6 :lua require("nvim-smartbufs").close_buffer(6)<CR>
+nnoremap <Leader>q7 :lua require("nvim-smartbufs").close_buffer(7)<CR>
+nnoremap <Leader>q8 :lua require("nvim-smartbufs").close_buffer(8)<CR>
+nnoremap <Leader>q9 :lua require("nvim-smartbufs").close_buffer(9)<CR>
 
 let g:floaterm_autoclose = 1
 let g:floaterm_width = 0.9
@@ -71,7 +81,7 @@ if exists('+termguicolors')
 endif
 
 set background=dark
-let g:gruvbox_material_background = 'hard' 
+let g:gruvbox_material_background = 'medium' 
 let g:gruvbox_material_better_performance = 1
 colorscheme gruvbox-material
 let g:gruvbox_material_enable_italic = 1

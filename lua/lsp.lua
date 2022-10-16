@@ -27,9 +27,11 @@ local setup_server = {
 	end,
 }
 
+local navic = require "nvim-navic"
 local lspconfig = require "lspconfig"
 
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 require("nvim-lsp-installer").on_server_ready(function(server)
 	local opts = {
@@ -56,9 +58,15 @@ require("nvim-lsp-installer").on_server_ready(function(server)
 			if not should_format then
 				client.server_capabilities.documentFormattingProvider = false
 			end
+
+			if client.server_capabilities.documentSymbolProvider then
+				navic.attach(client, bufnr)
+				vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+			end
 		end,
-		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+		capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
 	}
+
 	if setup_server[server.name] then
 		setup_server[server.name](opts)
 	end
@@ -92,9 +100,6 @@ end)
 lspconfig.flow.setup {
 	capabilities = capabilities,
 }
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 lspconfig.emmet_ls.setup {
 	-- on_attach = on_attach,
