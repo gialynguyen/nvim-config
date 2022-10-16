@@ -7,11 +7,19 @@ lua require('nvim')
 lua require('plugins')
 
 " Buffer navigation
+function DeleteHiddenBuffers()
+    let tpbl=[]
+    call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
+    for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
+        silent execute 'bwipeout' buf
+    endfor
+endfunction
+
 nnoremap <leader>q :bp<cr>:bd #<cr>
 nnoremap <leader>h :bprevious<CR>
 nnoremap <leader>l   :bnext<CR>
 command! BufCurOnly execute '%bdelete|edit#|bdelete#'
-nnoremap <leader>w :BufCurOnly<CR>
+nnoremap <leader>w :call DeleteHiddenBuffers()<CR>
 
 nnoremap <Leader>1 :lua require("nvim-smartbufs").goto_buffer(1)<CR>
 nnoremap <Leader>2 :lua require("nvim-smartbufs").goto_buffer(2)<CR>

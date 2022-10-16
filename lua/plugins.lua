@@ -55,14 +55,9 @@ packer.startup(function()
 
 	use "haya14busa/is.vim"
 
-	use "mg979/vim-visual-multi"
-
-	use {
-		"ckipp01/stylua-nvim",
-		run = "cargo install stylua",
-	}
-
 	use "machakann/vim-sandwich"
+
+	use "mg979/vim-visual-multi"
 
 	use {
 		"numToStr/Comment.nvim",
@@ -71,9 +66,15 @@ packer.startup(function()
 	use "JoosepAlviste/nvim-ts-context-commentstring"
 
 	use {
+		"ckipp01/stylua-nvim",
+		run = "cargo install stylua",
+	}
+
+	use {
 		"nvim-lua/plenary.nvim",
 		opt = false,
 	}
+
 	use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
 	use "nvim-telescope/telescope.nvim"
 	use "nvim-telescope/telescope-file-browser.nvim"
@@ -103,6 +104,7 @@ packer.startup(function()
 	use "hrsh7th/vim-vsnip"
 	use "rafamadriz/friendly-snippets"
 	use { "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" }
+
 	use {
 		"kyazdani42/nvim-tree.lua",
 		-- tag = "nightly", -- optional, updated every week. (see issue #1193)
@@ -111,11 +113,10 @@ packer.startup(function()
 	use {
 		"neovim/nvim-lspconfig",
 	}
+
 	use "onsails/lspkind-nvim"
 
 	use "lewis6991/gitsigns.nvim"
-
-	use "tpope/vim-fugitive"
 
 	use "jose-elias-alvarez/null-ls.nvim"
 
@@ -160,6 +161,19 @@ packer.startup(function()
 
 	use {
 		"johann2357/nvim-smartbufs",
+	}
+
+	use {
+		"kwkarlwang/bufjump.nvim",
+		config = function()
+			require("bufjump").setup {
+				forward = "<leader>p",
+				backward = "<leader>o",
+				on_success = function()
+					vim.cmd [[execute "normal! g`\"zz"]]
+				end,
+			}
+		end,
 	}
 
 	use {
@@ -735,6 +749,12 @@ require("cokeline").setup {
 	components = {
 		{
 			text = function(buffer)
+				return (buffer.index == 1) and "   " or ""
+			end,
+			fg = get_hex("Normal", "fg"),
+		},
+		{
+			text = function(buffer)
 				return (buffer.index ~= 1) and "▏" or ""
 			end,
 			fg = get_hex("Normal", "fg"),
@@ -762,16 +782,14 @@ require("cokeline").setup {
 		},
 		{
 			text = function(buffer)
-				return
-					(buffer.diagnostics.errors ~= 0 and "  " .. buffer.diagnostics.errors)
-						or (buffer.diagnostics.warnings ~= 0 and "  " .. buffer.diagnostics.warnings)
-						or ""
+				return (buffer.diagnostics.errors ~= 0 and "  " .. buffer.diagnostics.errors)
+					or (buffer.diagnostics.warnings ~= 0 and "  " .. buffer.diagnostics.warnings)
+					or ""
 			end,
 			fg = function(buffer)
-				return
-					(buffer.diagnostics.errors ~= 0 and errors_fg)
-						or (buffer.diagnostics.warnings ~= 0 and warnings_fg)
-						or nil
+				return (buffer.diagnostics.errors ~= 0 and errors_fg)
+					or (buffer.diagnostics.warnings ~= 0 and warnings_fg)
+					or nil
 			end,
 			truncation = { priority = 1 },
 		},
