@@ -279,8 +279,8 @@ require("lualine").setup {
 		section_separators = { left = "", right = "" },
 	},
 	sections = {
-		lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
-		lualine_b = { { "filename", path = 1 }, "branch", { "diff", colored = false } },
+    lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
+    lualine_b = { { "filename", colored = true }, { "branch", colored = true }, { "diff", colored = true } },
 		lualine_c = {},
 		lualine_x = {
 			{

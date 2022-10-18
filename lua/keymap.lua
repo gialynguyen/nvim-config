@@ -54,3 +54,11 @@ function _G.set_terminal_keymaps()
 end
 
 vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()"
+
+local goBackAndCloseCurrentBuf = function()
+	local buf_id = vim.api.nvim_get_current_buf()
+	require("bufjump").backward()
+	vim.api.nvim_command(string.format("bdelete %d", buf_id))
+end
+
+vim.keymap.set("n", "<c-c>", goBackAndCloseCurrentBuf)
