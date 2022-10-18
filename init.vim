@@ -127,4 +127,6 @@ set nowrap
 
 set fillchars=eob:\ 
 
+" g:vim_jsx_pretty_highlight_close_tag = 1
+
 runtime OPT packs.vim

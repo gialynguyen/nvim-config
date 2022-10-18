@@ -77,8 +77,9 @@ packer.startup(function()
 
 	use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
 	use "nvim-telescope/telescope.nvim"
-	use "nvim-telescope/telescope-file-browser.nvim"
 	use "nvim-telescope/telescope-live-grep-args.nvim"
+	-- use "nvim-telescope/telescope-file-browser.nvim"
+
 	use "Shatur/neovim-session-manager"
 
 	use {
@@ -103,7 +104,6 @@ packer.startup(function()
 	use "hrsh7th/cmp-vsnip"
 	use "hrsh7th/vim-vsnip"
 	use "rafamadriz/friendly-snippets"
-	use { "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" }
 
 	use {
 		"kyazdani42/nvim-tree.lua",
@@ -147,9 +147,9 @@ packer.startup(function()
 
 	use "xiyaowong/nvim-transparent"
 
-	use {
-		"maxmellon/vim-jsx-pretty",
-	}
+	-- use {
+	-- 	"maxmellon/vim-jsx-pretty",
+	-- }
 
 	use {
 		"noib3/nvim-cokeline",
@@ -203,12 +203,12 @@ require("telescope").setup {
 		},
 	},
 	extensions = {
-		file_browser = {
-			theme = "ivy",
-			hijack_netrw = false,
-			mappings = {},
-			-- file_ignore_patterns = { ".git/", "node_modules/", "target/" },
-		},
+		-- file_browser = {
+		-- 	theme = "ivy",
+		-- 	hijack_netrw = false,
+		-- 	mappings = {},
+		-- 	-- file_ignore_patterns = { ".git/", "node_modules/", "target/" },
+		-- },
 		["ui-select"] = {
 			require("telescope.themes").get_dropdown {
 				-- even more opts
@@ -242,7 +242,7 @@ require("telescope").setup {
 }
 
 require("telescope").load_extension "fzf"
-require("telescope").load_extension "file_browser"
+-- require("telescope").load_extension "file_browser"
 require("telescope").load_extension "ui-select"
 require("telescope").load_extension "live_grep_args"
 
@@ -265,9 +265,12 @@ require("nvim-treesitter.configs").setup {
 		"typescript",
 		"yaml",
 	},
-	highlight = { enable = true, additional_vim_regex_highlighting = true },
+	highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = true
+  },
 	indent = {
-		enable = false,
+		enable = true,
 	},
 }
 
@@ -279,8 +282,8 @@ require("lualine").setup {
 		section_separators = { left = "", right = "" },
 	},
 	sections = {
-    lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
-    lualine_b = { { "filename", colored = true }, { "branch", colored = true }, { "diff", colored = true } },
+		lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
+		lualine_b = { { "filename", colored = true }, { "branch", colored = true }, { "diff", colored = true } },
 		lualine_c = {},
 		lualine_x = {
 			{
@@ -447,22 +450,6 @@ null_ls.setup {
 }
 
 local lspkind = require "lspkind"
--- local tabnine = require "cmp_tabnine.config"
---
--- tabnine.setup {
--- 	max_lines = 1000,
--- 	max_num_results = 20,
--- 	sort = true,
--- 	run_on_every_keystroke = true,
--- 	snippet_placeholder = "..",
--- 	ignored_file_types = {
--- 		-- default is not to ignore
--- 		-- uncomment to ignore in lua:
--- 		-- lua = true
--- 	},
--- 	show_prediction_strength = false,
--- }
---
 
 local has_words_before = function()
 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -541,7 +528,6 @@ cmp.setup {
 		{ name = "vsnip", max_item_count = 4 },
 		{ name = "nvim_lsp" },
 		{ name = "nvim_lsp_signature_help" },
-		{ name = "cmp_tabnine", max_item_count = 4 },
 		{ name = "buffer", keyword_length = 2, max_item_count = 4 },
 		{ name = "path", keyword_length = 3, max_item_count = 4 },
 	},

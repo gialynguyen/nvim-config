@@ -1,4 +1,3 @@
-vim.keymap.set("n", "<Leader>n", require("telescope").extensions.file_browser.file_browser)
 vim.keymap.set("n", "<Leader>ff", require("telescope.builtin").find_files)
 vim.keymap.set("n", "<Leader>fd", require("telescope.builtin").fd)
 vim.keymap.set("n", "<Leader>fg", require("telescope.builtin").git_status)
