@@ -280,6 +280,7 @@ require("lualine").setup {
 		theme = "gruvbox-material",
 		component_separators = "|",
 		section_separators = { left = "", right = "" },
+		globalstatus = true,
 	},
 	sections = {
 		lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
@@ -288,11 +289,6 @@ require("lualine").setup {
 		lualine_x = {
 			{
 				"diagnostics",
-
-				-- Table of diagnostic sources, available sources are:
-				--   'nvim_lsp', 'nvim_diagnostic', 'nvim_workspace_diagnostic', 'coc', 'ale', 'vim_lsp'.
-				-- or a function that returns a table as such:
-				--   { error=error_cnt, warn=warn_cnt, info=info_cnt, hint=hint_cnt }
 				sources = { "nvim_diagnostic" },
 				symbols = { error = " ", warn = " ", info = " " },
 				diagnostics_color = {
@@ -300,16 +296,9 @@ require("lualine").setup {
 					warn = { fg = "#ECBE7B" },
 					info = { fg = "#008080" },
 				},
-				-- diagnostics_color = {
-				-- 	-- Same values as the general color option can be used here.
-				-- 	error = "DiagnosticError", -- Changes diagnostics' error color.
-				-- 	warn = "DiagnosticWarn", -- Changes diagnostics' warn color.
-				-- 	info = "DiagnosticInfo", -- Changes diagnostics' info color.
-				-- 	hint = "DiagnosticHint", -- Changes diagnostics' hint color.
-				-- },
-				colored = true, -- Displays diagnostics status in color if set to true.
-				update_in_insert = true, -- Update diagnostics in insert mode.
-				always_visible = false, -- Show diagnostics even if there are none.
+				colored = true,
+				update_in_insert = true,
+				always_visible = false,
 			},
 		},
 		lualine_y = { "filetype", "progress" },
@@ -342,6 +331,8 @@ require("lualine").setup {
 		-- },
 	},
 }
+
+vim.opt.laststatus = 3
 
 local async_formatting = function(bufnr)
 	bufnr = bufnr or vim.api.nvim_get_current_buf()
@@ -768,12 +759,6 @@ require("cokeline").setup {
 		},
 		{
 			text = function(buffer)
-				return (buffer.index ~= 1) and "▏" or ""
-			end,
-			fg = get_hex("Normal", "fg"),
-		},
-		{
-			text = function(buffer)
 				return " " .. buffer.index
 			end,
 		},
@@ -787,16 +772,27 @@ require("cokeline").setup {
 		},
 		{
 			text = function(buffer)
-				return buffer.unique_prefix .. buffer.filename .. "    "
+				return buffer.unique_prefix .. buffer.filename 
+			end,
+			fg = function(buffer)
+				if buffer.is_focused then
+					return vim.g.terminal_color_4
+				end
+				if buffer.is_modified then
+					return vim.g.terminal_color_3
+				end
+				if buffer.lsp ~= nil and buffer.lsp.errors ~= 0 then
+					return vim.g.terminal_color_9
+				end
 			end,
 			style = function(buffer)
-				return buffer.is_focused and "bold" or nil
+				return buffer.is_focused and "bold,underline" or nil
 			end,
 		},
 		{
 			text = function(buffer)
-				return (buffer.diagnostics.errors ~= 0 and "  " .. buffer.diagnostics.errors)
-					or (buffer.diagnostics.warnings ~= 0 and "  " .. buffer.diagnostics.warnings)
+				return (buffer.diagnostics.errors ~= 0 and "   " .. buffer.diagnostics.errors)
+					or (buffer.diagnostics.warnings ~= 0 and "   " .. buffer.diagnostics.warnings)
 					or ""
 			end,
 			fg = function(buffer)
@@ -811,10 +807,24 @@ require("cokeline").setup {
 				return buffer.is_modified and "  ●  " or "    "
 			end,
 			fg = function(buffer)
-				return buffer.is_modified and green or nil
+				return buffer.is_modified and vim.g.terminal_color_2 or nil
 			end,
 			delete_buffer_on_left_click = true,
 			truncation = { priority = 1 },
+		},
+		{
+			text = " ",
+			fg = function(buffer)
+				if buffer.is_focused then
+					return vim.g.terminal_color_3
+				end
+				return vim.g.terminal_color_0
+			end,
+			bg = function(buffer)
+				if buffer.is_last then
+					return get_hex("ColorColumn", "bg")
+				end
+			end,
 		},
 	},
 }
