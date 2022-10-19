@@ -101,11 +101,11 @@ packer.startup(function()
 		branch = "main",
 		config = function()
 			local saga = require "lspsaga"
-      saga.init_lsp_saga {
-        code_action_lightbulb = {
-          enable = false
-        }
-      }
+			saga.init_lsp_saga {
+				code_action_lightbulb = {
+					enable = false,
+				},
+			}
 		end,
 	}
 
@@ -738,7 +738,9 @@ require("cokeline").setup {
 			text = function(buffer)
 				return (buffer.index == 1) and "   " or ""
 			end,
-			fg = vim.g.terminal_color_2,
+			fg = function()
+				return vim.g.terminal_color_2
+			end,
 		},
 		{
 			text = function(buffer)
