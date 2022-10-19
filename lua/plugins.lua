@@ -96,6 +96,19 @@ packer.startup(function()
 	use "feline-nvim/feline.nvim"
 
 	use "williamboman/nvim-lsp-installer"
+	use {
+		"glepnir/lspsaga.nvim",
+		branch = "main",
+		config = function()
+			local saga = require "lspsaga"
+      saga.init_lsp_saga {
+        code_action_lightbulb = {
+          enable = false
+        }
+      }
+		end,
+	}
+
 	use "hrsh7th/cmp-nvim-lsp"
 	use "hrsh7th/nvim-cmp"
 	use "hrsh7th/cmp-nvim-lsp-signature-help"

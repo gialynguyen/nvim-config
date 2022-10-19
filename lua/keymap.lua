@@ -9,25 +9,35 @@ vim.keymap.set("n", "<leader>re", require("telescope.builtin").oldfiles)
 
 vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>", { noremap = true, silent = true })
 
+local opts = { noremap = true, silent = true }
+vim.keymap.set("n", "K", "<Cmd>Lspsaga hover_doc<CR>", opts)
+vim.keymap.set("n", "gd", "<Cmd>Lspsaga peek_definition<CR>", opts)
+vim.keymap.set("n", "gr", "<Cmd>Lspsaga lsp_finder<CR>", opts)
+vim.keymap.set("n", "<leader>rn", "<Cmd>Lspsaga rename<CR>", opts)
+vim.keymap.set("n", "<leader>ca", "<Cmd>Lspsaga code_action<CR>", opts)
+
 vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations)
-vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references)
 vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions)
-vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>")
 
 vim.keymap.set("n", "<leader>dd", "<cmd>Telescope diagnostics<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", { noremap = true, silent = true })
 
+vim.keymap.set("n", "<leader>[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+
+vim.keymap.set("n", "<leader>]", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+
 vim.keymap.set(
 	"n",
-	"<leader>[",
-	"<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.ERROR } })<CR>",
-	{ noremap = true, silent = true }
+	"[e",
+	"<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
+	opts
 )
+
 vim.keymap.set(
 	"n",
-	"<leader>]",
-	"<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.WARN, max = vim.diagnostic.severity.ERROR } })<CR>",
-	{ noremap = true, silent = true }
+	"]e",
+	"<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
+	opts
 )
 
 vim.keymap.set("n", "<leader>db", "<cmd>Dashboard<CR>")

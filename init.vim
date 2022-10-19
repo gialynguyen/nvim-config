@@ -100,11 +100,19 @@ map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 map ' <Plug>Sneak_,
 
+
+" Close popup
+map Q <C-w><C-w>q
+
 inoremap <C-a> <ESC>la
 inoremap <C-e> <ESC>
+nnoremap <C-e> <ESC>
 vnoremap <C-e> <ESC>
+
 nnoremap <leader>d "_d
+nnoremap <leader>c "_c
 vnoremap <leader>d "_d
+vnoremap <leader>c "_c
 
 " let g:indent_blankline_char_list = ['¦', '┆', '┊']
 

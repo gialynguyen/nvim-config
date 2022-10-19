@@ -37,13 +37,6 @@ require("nvim-lsp-installer").on_server_ready(function(server)
 	local opts = {
 		on_attach = function(client, bufnr)
 			vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-			local opts = { buffer = bufnr, noremap = true, silent = true }
-
-			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-			vim.keymap.set("n", "<leader>gf", vim.lsp.buf.range_formatting, opts)
 
 			local should_format = true
 			for _, value in pairs(has_formatter) do
