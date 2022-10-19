@@ -93,9 +93,7 @@ packer.startup(function()
 		"windwp/nvim-ts-autotag",
 	}
 
-	use {
-		"nvim-lualine/lualine.nvim",
-	}
+	use "feline-nvim/feline.nvim"
 
 	use "williamboman/nvim-lsp-installer"
 	use "hrsh7th/cmp-nvim-lsp"
@@ -157,6 +155,38 @@ packer.startup(function()
 
 	use {
 		"SmiteshP/nvim-navic",
+		run = function()
+			require("nvim-navic").setup {
+				icons = {
+					File = " ",
+					Module = " ",
+					Namespace = " ",
+					Package = " ",
+					Class = " ",
+					Method = " ",
+					Property = " ",
+					Field = " ",
+					Constructor = " ",
+					Enum = " ",
+					Interface = " ",
+					Function = " ",
+					Variable = " ",
+					Constant = " ",
+					String = " ",
+					Number = " ",
+					Boolean = " ",
+					Array = " ",
+					Object = " ",
+					Key = " ",
+					Null = " ",
+					EnumMember = " ",
+					Struct = " ",
+					Event = " ",
+					Operator = " ",
+					TypeParameter = " ",
+				},
+			}
+		end,
 	}
 
 	use {
@@ -273,66 +303,6 @@ require("nvim-treesitter.configs").setup {
 		enable = true,
 	},
 }
-
-require("lualine").setup {
-	options = {
-		icons_enabled = true,
-		theme = "gruvbox-material",
-		component_separators = "|",
-		section_separators = { left = "", right = "" },
-		globalstatus = true,
-	},
-	sections = {
-		lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
-		lualine_b = { { "filename", colored = true }, { "branch", colored = true }, { "diff", colored = true } },
-		lualine_c = {},
-		lualine_x = {
-			{
-				"diagnostics",
-				sources = { "nvim_diagnostic" },
-				symbols = { error = " ", warn = " ", info = " " },
-				diagnostics_color = {
-					error = { fg = "#ec5f67" },
-					warn = { fg = "#ECBE7B" },
-					info = { fg = "#008080" },
-				},
-				colored = true,
-				update_in_insert = true,
-				always_visible = false,
-			},
-		},
-		lualine_y = { "filetype", "progress" },
-		lualine_z = { { "location", separator = { right = "" }, left_padding = 2 } },
-	},
-	inactive_sections = {
-		lualine_a = { "filename" },
-		lualine_b = {},
-		lualine_c = {},
-		lualine_x = {},
-		lualine_y = {},
-		lualine_z = {},
-	},
-	tabline = {
-		-- lualine_a = {
-		-- 	{
-		-- 		"buffers",
-		-- 		separator = { left = "", right = "" },
-		-- 		right_padding = 2,
-		-- 		symbols = { alternate_file = "" },
-		-- 		mode = 2,
-		-- 		max_length = vim.o.columns * 2 / 3,
-		-- 		filetype_names = {
-		-- 			TelescopePrompt = "Telescope",
-		-- 			dashboard = "Dashboard",
-		-- 			packer = "Packer",
-		-- 			fzf = "FZF",
-		-- 		},
-		-- 	},
-		-- },
-	},
-}
-
-vim.opt.laststatus = 3
 
 local async_formatting = function(bufnr)
 	bufnr = bufnr or vim.api.nvim_get_current_buf()
@@ -764,7 +734,7 @@ require("cokeline").setup {
 		},
 		{
 			text = function(buffer)
-				return "    " .. buffer.devicon.icon
+				return "  " .. buffer.devicon.icon
 			end,
 			fg = function(buffer)
 				return buffer.devicon.color
@@ -772,7 +742,7 @@ require("cokeline").setup {
 		},
 		{
 			text = function(buffer)
-				return buffer.unique_prefix .. buffer.filename 
+				return buffer.unique_prefix .. buffer.filename
 			end,
 			fg = function(buffer)
 				if buffer.is_focused then
@@ -813,18 +783,261 @@ require("cokeline").setup {
 			truncation = { priority = 1 },
 		},
 		{
-			text = " ",
-			fg = function(buffer)
-				if buffer.is_focused then
-					return vim.g.terminal_color_3
-				end
-				return vim.g.terminal_color_0
-			end,
-			bg = function(buffer)
-				if buffer.is_last then
-					return get_hex("ColorColumn", "bg")
-				end
+			text = "|",
+			fg = function()
+				return vim.g.terminal_color_3
 			end,
 		},
 	},
+}
+
+local line_ok, feline = pcall(require, "feline")
+if not line_ok then
+	return
+end
+
+local feline_theme = {
+	bg = "#282828",
+	bgdark = "#5a524c",
+	black = "#282828",
+	yellow = "#d8a657",
+	cyan = "#89b482",
+	oceanblue = "#45707a",
+	green = "#a9b665",
+	orange = "#e78a4e",
+	violet = "#d3869b",
+	magenta = "#c14a4a",
+	white = "#a89984",
+	fg = "#a89984",
+	skyblue = "#7daea3",
+	red = "#ea6962",
+}
+
+local vi_mode_colors = {
+	NORMAL = "green",
+	OP = "green",
+	INSERT = "yellow",
+	VISUAL = "purple",
+	LINES = "orange",
+	BLOCK = "dark_red",
+	REPLACE = "red",
+	COMMAND = "aqua",
+}
+
+local c = {
+	vim_mode = {
+		provider = {
+			name = "vi_mode",
+			opts = {
+				show_mode_name = true,
+			},
+		},
+		hl = function()
+			return {
+				fg = require("feline.providers.vi_mode").get_mode_color(),
+				bg = "bg",
+				style = "bold",
+				name = "NeovimModeHLColor",
+			}
+		end,
+		left_sep = "block",
+		right_sep = "block",
+	},
+	gitBranch = {
+		provider = "git_branch",
+		hl = {
+			fg = "peanut",
+			bg = "bgdark",
+			style = "bold",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	gitDiffAdded = {
+		provider = "git_diff_added",
+		hl = {
+			fg = "green",
+			bg = "bgdark",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	gitDiffRemoved = {
+		provider = "git_diff_removed",
+		hl = {
+			fg = "red",
+			bg = "bgdark",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	gitDiffChanged = {
+		provider = "git_diff_changed",
+		hl = {
+			fg = "fg",
+			bg = "bgdark",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	separator = {
+		provider = function()
+			return ""
+		end,
+		hl = {
+			fg = "bgdark",
+		},
+	},
+	fileinfo = {
+		provider = {
+			name = "file_info",
+			opts = {
+				type = "unique",
+			},
+		},
+		hl = {
+			style = "bold",
+		},
+		left_sep = " ",
+		right_sep = " ",
+	},
+	diagnostic_errors = {
+		provider = "diagnostic_errors",
+		hl = {
+			fg = "red",
+		},
+	},
+	diagnostic_warnings = {
+		provider = "diagnostic_warnings",
+		hl = {
+			fg = "yellow",
+		},
+	},
+	diagnostic_hints = {
+		provider = "diagnostic_hints",
+		hl = {
+			fg = "aqua",
+		},
+	},
+	diagnostic_info = {
+		provider = "diagnostic_info",
+	},
+
+	separator_right = {
+		provider = function()
+			return ""
+		end,
+		hl = {
+			fg = "bgdark",
+		},
+	},
+	lsp_client_names = {
+		provider = "lsp_client_names",
+		hl = {
+			fg = "purple",
+			bg = "bgdark",
+			style = "bold",
+		},
+		left_sep = "left_filled",
+		right_sep = "block",
+	},
+	file_type = {
+		provider = {
+			name = "file_type",
+			opts = {
+				filetype_icon = true,
+				case = "titlecase",
+			},
+		},
+		hl = {
+			fg = "red",
+			bg = "bgdark",
+			style = "bold",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	file_encoding = {
+		provider = "file_encoding",
+		hl = {
+			fg = "orange",
+			bg = "bgdark",
+			style = "italic",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	position = {
+		provider = "position",
+		hl = {
+			fg = "green",
+			bg = "bgdark",
+			style = "bold",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	line_percentage = {
+		provider = "line_percentage",
+		hl = {
+			fg = "aqua",
+			bg = "bgdark",
+			style = "bold",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	scroll_bar = {
+		provider = "scroll_bar",
+		hl = {
+			fg = "yellow",
+			style = "bold",
+		},
+	},
+}
+
+local left = {
+	c.vim_mode,
+	c.gitBranch,
+	c.gitDiffAdded,
+	c.gitDiffRemoved,
+	c.gitDiffChanged,
+	c.separator,
+}
+
+local middle = {
+	c.fileinfo,
+	c.diagnostic_errors,
+	c.diagnostic_warnings,
+	c.diagnostic_info,
+	-- c.diagnostic_hints,
+}
+
+local right = {
+	-- c.lsp_client_names,
+	c.separator_right,
+	c.file_type,
+	c.file_encoding,
+	c.position,
+	c.line_percentage,
+	c.scroll_bar,
+}
+
+local components = {
+	active = {
+		left,
+		middle,
+		right,
+	},
+	inactive = {
+		left,
+		middle,
+		right,
+	},
+}
+
+feline.setup {
+	components = components,
+	theme = feline_theme,
+	vi_mode_colors = vi_mode_colors,
 }
