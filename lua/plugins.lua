@@ -725,7 +725,7 @@ require("cokeline").setup {
 			text = function(buffer)
 				return (buffer.index == 1) and "   " or ""
 			end,
-			fg = get_hex("Normal", "fg"),
+			fg = vim.g.terminal_color_2,
 		},
 		{
 			text = function(buffer)
@@ -840,6 +840,17 @@ local c = {
 				name = "NeovimModeHLColor",
 			}
 		end,
+		left_sep = "block",
+		right_sep = "block",
+	},
+	name = {
+		provider = function()
+			return "Steven"
+		end,
+		hl = {
+			fg = "#3c3836",
+			bg = "#ebdbb2",
+		},
 		left_sep = "block",
 		right_sep = "block",
 	},
@@ -998,6 +1009,7 @@ local c = {
 
 local left = {
 	c.vim_mode,
+	c.name,
 	c.gitBranch,
 	c.gitDiffAdded,
 	c.gitDiffRemoved,
@@ -1040,4 +1052,9 @@ feline.setup {
 	components = components,
 	theme = feline_theme,
 	vi_mode_colors = vi_mode_colors,
+	disable = {
+		filetypes = {
+			"^NvimTree$",
+		},
+	},
 }
