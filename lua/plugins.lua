@@ -266,9 +266,9 @@ require("nvim-treesitter.configs").setup {
 		"yaml",
 	},
 	highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = true
-  },
+		enable = true,
+		additional_vim_regex_highlighting = true,
+	},
 	indent = {
 		enable = true,
 	},
@@ -464,12 +464,39 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 local cmp = require "cmp"
 local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+local types = require "cmp.types"
+
+local function deprioritize_snippet(entry1, entry2)
+	if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then
+		return false
+	end
+	if entry2:get_kind() == types.lsp.CompletionItemKind.Snippet then
+		return true
+	end
+end
 
 cmp.setup {
 	snippet = {
 		expand = function(args)
 			vim.fn["vsnip#anonymous"](args.body)
 		end,
+	},
+	sorting = {
+		priority_weight = 2,
+		comparators = {
+			deprioritize_snippet,
+			-- the rest of the comparators are pretty much the defaults
+			cmp.config.compare.offset,
+			cmp.config.compare.exact,
+			cmp.config.compare.scopes,
+			cmp.config.compare.score,
+			cmp.config.compare.recently_used,
+			cmp.config.compare.locality,
+			cmp.config.compare.kind,
+			cmp.config.compare.sort_text,
+			cmp.config.compare.length,
+			cmp.config.compare.order,
+		},
 	},
 	formatting = {
 		format = lspkind.cmp_format {
