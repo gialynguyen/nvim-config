@@ -158,9 +158,9 @@ packer.startup(function()
 
 	use "xiyaowong/nvim-transparent"
 
-	-- use {
-	-- 	"maxmellon/vim-jsx-pretty",
-	-- }
+	use {
+		"maxmellon/vim-jsx-pretty",
+	}
 
 	use {
 		"noib3/nvim-cokeline",

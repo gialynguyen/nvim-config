@@ -31,15 +31,15 @@ nnoremap <Leader>7 :lua require("nvim-smartbufs").goto_buffer(7)<CR>
 nnoremap <Leader>8 :lua require("nvim-smartbufs").goto_buffer(8)<CR>
 nnoremap <Leader>9 :lua require("nvim-smartbufs").goto_buffer(9)<CR>
 
-nnoremap <Leader>q1 :lua require("nvim-smartbufs").close_buffer(1)<CR>
-nnoremap <Leader>q2 :lua require("nvim-smartbufs").close_buffer(2)<CR>
-nnoremap <Leader>q3 :lua require("nvim-smartbufs").close_buffer(3)<CR>
-nnoremap <Leader>q4 :lua require("nvim-smartbufs").close_buffer(4)<CR>
-nnoremap <Leader>q5 :lua require("nvim-smartbufs").close_buffer(5)<CR>
-nnoremap <Leader>q6 :lua require("nvim-smartbufs").close_buffer(6)<CR>
-nnoremap <Leader>q7 :lua require("nvim-smartbufs").close_buffer(7)<CR>
-nnoremap <Leader>q8 :lua require("nvim-smartbufs").close_buffer(8)<CR>
-nnoremap <Leader>q9 :lua require("nvim-smartbufs").close_buffer(9)<CR>
+nnoremap <Leader>c1 :lua require("nvim-smartbufs").close_buffer(1)<CR>
+nnoremap <Leader>c2 :lua require("nvim-smartbufs").close_buffer(2)<CR>
+nnoremap <Leader>c3 :lua require("nvim-smartbufs").close_buffer(3)<CR>
+nnoremap <Leader>c4 :lua require("nvim-smartbufs").close_buffer(4)<CR>
+nnoremap <Leader>c5 :lua require("nvim-smartbufs").close_buffer(5)<CR>
+nnoremap <Leader>c6 :lua require("nvim-smartbufs").close_buffer(6)<CR>
+nnoremap <Leader>c7 :lua require("nvim-smartbufs").close_buffer(7)<CR>
+nnoremap <Leader>c8 :lua require("nvim-smartbufs").close_buffer(8)<CR>
+nnoremap <Leader>c9 :lua require("nvim-smartbufs").close_buffer(9)<CR>
 
 let g:floaterm_autoclose = 1
 let g:floaterm_width = 0.9
@@ -123,6 +123,7 @@ syntax on
 autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc
 autocmd BufNewFile,BufRead *.astro setlocal filetype=astro
 autocmd BufNewFile,BufRead *.mdx setlocal filetype=markdown
+autocmd BufNewFile,BufRead *.tsx TSBufDisable indent
 
 set tabstop=2
 set softtabstop=2
