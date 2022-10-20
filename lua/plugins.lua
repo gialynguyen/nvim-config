@@ -47,6 +47,8 @@ packer.startup(function()
 
 	use "sainnhe/gruvbox-material"
 
+	use "folke/tokyonight.nvim"
+
 	use "nvim-treesitter/nvim-treesitter"
 
 	use "justinmk/vim-sneak"
@@ -153,6 +155,9 @@ packer.startup(function()
 		"iamcco/markdown-preview.nvim",
 		run = function()
 			vim.fn["mkdp#util#install"]()
+		end,
+		config = function()
+			vim.g.mkdp_theme = "light"
 		end,
 	}
 
