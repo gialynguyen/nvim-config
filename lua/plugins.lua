@@ -39,15 +39,16 @@ packer.startup(function()
 		opt = false,
 	}
 
+	use {
+		"nvim-lua/plenary.nvim",
+		opt = false,
+	}
+
 	use "kyazdani42/nvim-web-devicons"
 
 	use "glepnir/dashboard-nvim"
 
-	use { "nvim-telescope/telescope-ui-select.nvim" }
-
 	use "sainnhe/gruvbox-material"
-
-	use "folke/tokyonight.nvim"
 
 	use "nvim-treesitter/nvim-treesitter"
 
@@ -72,13 +73,9 @@ packer.startup(function()
 		run = "cargo install stylua",
 	}
 
-	use {
-		"nvim-lua/plenary.nvim",
-		opt = false,
-	}
-
-	use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
 	use "nvim-telescope/telescope.nvim"
+	use { "nvim-telescope/telescope-ui-select.nvim" }
+	use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
 	use "nvim-telescope/telescope-live-grep-args.nvim"
 	-- use "nvim-telescope/telescope-file-browser.nvim"
 
@@ -296,6 +293,46 @@ packer.startup(function()
 				on_success = function()
 					vim.cmd [[execute "normal! g`\"zz"]]
 				end,
+			}
+		end,
+	}
+
+	use {
+		"RRethy/vim-illuminate",
+		config = function()
+			require("illuminate").configure {
+				providers = {
+					"lsp",
+					"treesitter",
+					"regex",
+				},
+				delay = 120,
+				filetypes_denylist = {
+					"dashboard",
+					"NvimTree",
+					"packer",
+					"Outline",
+					"terminal",
+					"floaterm",
+					"toggleterm",
+					"TelescopePrompt",
+				},
+				-- filetypes_allowlist: filetypes to illuminate, this is overridden by filetypes_denylist
+				filetypes_allowlist = {},
+				-- modes_denylist: modes to not illuminate, this overrides modes_allowlist
+				modes_denylist = {},
+				-- modes_allowlist: modes to illuminate, this is overridden by modes_denylist
+				modes_allowlist = {},
+				-- providers_regex_syntax_denylist: syntax to not illuminate, this overrides providers_regex_syntax_allowlist
+				-- Only applies to the 'regex' provider
+				-- Use :echom synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+				providers_regex_syntax_denylist = {},
+				-- providers_regex_syntax_allowlist: syntax to illuminate, this is overridden by providers_regex_syntax_denylist
+				-- Only applies to the 'regex' provider
+				-- Use :echom synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+				providers_regex_syntax_allowlist = {},
+				-- under_cursor: whether or not to illuminate under the cursor
+				under_cursor = true,
 			}
 		end,
 	}
