@@ -15,7 +15,8 @@ function DeleteHiddenBuffers()
     endfor
 endfunction
 
-nnoremap <leader>q :bp<cr>:bd #<cr>
+nnoremap <leader>q :bp<CR>:bd #<CR>
+nnoremap <leader>Q :bp<CR>:bd #<CR><C-w>q
 nnoremap <leader>h :bprevious<CR>
 nnoremap <leader>l   :bnext<CR>
 command! BufCurOnly execute '%bdelete|edit#|bdelete#'
@@ -128,12 +129,12 @@ autocmd BufNewFile,BufRead *.tsx TSBufDisable indent
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-set autoindent
 set smartindent
 set smarttab
 set expandtab
 set nowrap
-
+set nolist
+set linebreak
 set fillchars=eob:\ 
 
 " g:vim_jsx_pretty_highlight_close_tag = 1

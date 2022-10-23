@@ -98,6 +98,7 @@ packer.startup(function()
 	use "feline-nvim/feline.nvim"
 
 	use "williamboman/nvim-lsp-installer"
+
 	use {
 		"glepnir/lspsaga.nvim",
 		branch = "main",
@@ -106,6 +107,7 @@ packer.startup(function()
 			saga.init_lsp_saga {
 				code_action_lightbulb = {
 					enable = false,
+					enable_in_insert = false,
 				},
 			}
 		end,
@@ -168,10 +170,6 @@ packer.startup(function()
 	}
 
 	use {
-		"noib3/nvim-cokeline",
-	}
-
-	use {
 		"SmiteshP/nvim-navic",
 		run = function()
 			require("nvim-navic").setup {
@@ -209,6 +207,10 @@ packer.startup(function()
 
 	use {
 		"johann2357/nvim-smartbufs",
+	}
+
+	use {
+		"noib3/nvim-cokeline",
 	}
 
 	use {
@@ -726,91 +728,6 @@ require("nvim-web-devicons").setup {
 	default = true,
 }
 
-local get_hex = require("cokeline/utils").get_hex
-local errors_fg = get_hex("DiagnosticError", "fg")
-local warnings_fg = get_hex("DiagnosticWarn", "fg")
-
-require("cokeline").setup {
-	default_hl = {
-		fg = function(buffer)
-			return buffer.is_focused and get_hex("Normal", "fg") or get_hex("Comment", "fg")
-		end,
-		bg = "NONE",
-	},
-
-	components = {
-		{
-			text = function(buffer)
-				return (buffer.index == 1) and "   " or ""
-			end,
-			fg = function()
-				return vim.g.terminal_color_2
-			end,
-		},
-		{
-			text = function(buffer)
-				return " " .. buffer.index
-			end,
-		},
-		{
-			text = function(buffer)
-				return "  " .. buffer.devicon.icon
-			end,
-			fg = function(buffer)
-				return buffer.devicon.color
-			end,
-		},
-		{
-			text = function(buffer)
-				return buffer.unique_prefix .. buffer.filename
-			end,
-			fg = function(buffer)
-				if buffer.is_focused then
-					return vim.g.terminal_color_4
-				end
-				if buffer.is_modified then
-					return vim.g.terminal_color_3
-				end
-				if buffer.lsp ~= nil and buffer.lsp.errors ~= 0 then
-					return vim.g.terminal_color_9
-				end
-			end,
-			style = function(buffer)
-				return buffer.is_focused and "bold,underline" or nil
-			end,
-		},
-		{
-			text = function(buffer)
-				return (buffer.diagnostics.errors ~= 0 and "   " .. buffer.diagnostics.errors)
-					or (buffer.diagnostics.warnings ~= 0 and "   " .. buffer.diagnostics.warnings)
-					or ""
-			end,
-			fg = function(buffer)
-				return (buffer.diagnostics.errors ~= 0 and errors_fg)
-					or (buffer.diagnostics.warnings ~= 0 and warnings_fg)
-					or nil
-			end,
-			truncation = { priority = 1 },
-		},
-		{
-			text = function(buffer)
-				return buffer.is_modified and "  ●  " or "    "
-			end,
-			fg = function(buffer)
-				return buffer.is_modified and vim.g.terminal_color_2 or nil
-			end,
-			delete_buffer_on_left_click = true,
-			truncation = { priority = 1 },
-		},
-		{
-			text = "|",
-			fg = function()
-				return vim.g.terminal_color_3
-			end,
-		},
-	},
-}
-
 local line_ok, feline = pcall(require, "feline")
 if not line_ok then
 	return
@@ -932,28 +849,6 @@ local c = {
 		left_sep = " ",
 		right_sep = " ",
 	},
-	diagnostic_errors = {
-		provider = "diagnostic_errors",
-		hl = {
-			fg = "red",
-		},
-	},
-	diagnostic_warnings = {
-		provider = "diagnostic_warnings",
-		hl = {
-			fg = "yellow",
-		},
-	},
-	diagnostic_hints = {
-		provider = "diagnostic_hints",
-		hl = {
-			fg = "aqua",
-		},
-	},
-	diagnostic_info = {
-		provider = "diagnostic_info",
-	},
-
 	separator_right = {
 		provider = function()
 			return ""
@@ -961,16 +856,6 @@ local c = {
 		hl = {
 			fg = "bgdark",
 		},
-	},
-	lsp_client_names = {
-		provider = "lsp_client_names",
-		hl = {
-			fg = "purple",
-			bg = "bgdark",
-			style = "bold",
-		},
-		left_sep = "left_filled",
-		right_sep = "block",
 	},
 	file_type = {
 		provider = {
@@ -1018,13 +903,6 @@ local c = {
 		left_sep = "block",
 		right_sep = "block",
 	},
-	scroll_bar = {
-		provider = "scroll_bar",
-		hl = {
-			fg = "yellow",
-			style = "bold",
-		},
-	},
 }
 
 local left = {
@@ -1039,20 +917,14 @@ local left = {
 
 local middle = {
 	c.fileinfo,
-	c.diagnostic_errors,
-	c.diagnostic_warnings,
-	c.diagnostic_info,
-	-- c.diagnostic_hints,
 }
 
 local right = {
-	-- c.lsp_client_names,
 	c.separator_right,
 	c.file_type,
 	c.file_encoding,
 	c.position,
 	c.line_percentage,
-	c.scroll_bar,
 }
 
 local components = {
@@ -1075,6 +947,91 @@ feline.setup {
 	disable = {
 		filetypes = {
 			"^NvimTree$",
+		},
+	},
+}
+
+local get_hex = require("cokeline/utils").get_hex
+local errors_fg = get_hex("DiagnosticError", "fg")
+local warnings_fg = get_hex("DiagnosticWarn", "fg")
+
+require("cokeline").setup {
+	default_hl = {
+		fg = function(buffer)
+			return buffer.is_focused and get_hex("Normal", "fg") or get_hex("Comment", "fg")
+		end,
+		bg = "NONE",
+	},
+
+	components = {
+		{
+			text = function(buffer)
+				return (buffer.index == 1) and "   " or ""
+			end,
+			fg = function()
+				return vim.g.terminal_color_2
+			end,
+		},
+		{
+			text = function(buffer)
+				return " " .. buffer.index
+			end,
+		},
+		{
+			text = function(buffer)
+				return "  " .. buffer.devicon.icon
+			end,
+			fg = function(buffer)
+				return buffer.devicon.color
+			end,
+		},
+		{
+			text = function(buffer)
+				return buffer.unique_prefix .. buffer.filename
+			end,
+			fg = function(buffer)
+				if buffer.is_focused then
+					return vim.g.terminal_color_4
+				end
+				if buffer.is_modified then
+					return vim.g.terminal_color_3
+				end
+				if buffer.lsp ~= nil and buffer.lsp.errors ~= 0 then
+					return vim.g.terminal_color_9
+				end
+			end,
+			style = function(buffer)
+				return buffer.is_focused and "bold,underline" or nil
+			end,
+		},
+		{
+			text = function(buffer)
+				return (buffer.diagnostics.errors ~= 0 and "   " .. buffer.diagnostics.errors)
+					or (buffer.diagnostics.warnings ~= 0 and "   " .. buffer.diagnostics.warnings)
+					or ""
+			end,
+			fg = function(buffer)
+				return (buffer.diagnostics.errors ~= 0 and errors_fg)
+					or (buffer.diagnostics.warnings ~= 0 and warnings_fg)
+					or nil
+			end,
+			truncation = { priority = 1 },
+		},
+		{
+			text = function(buffer)
+				return buffer.is_modified and "  ●  " or "    "
+			end,
+			fg = function(buffer)
+				return buffer.is_modified and vim.g.terminal_color_2 or nil
+			end,
+			delete_buffer_on_left_click = true,
+			truncation = { priority = 1 },
+		},
+		{
+			text = "|",
+			fg = function()
+				return vim.g.terminal_color_3
+			end,
 		},
 	},
 }

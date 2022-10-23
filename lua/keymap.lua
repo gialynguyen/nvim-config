@@ -70,3 +70,14 @@ local goBackAndCloseCurrentBuf = function()
 end
 
 vim.keymap.set("n", "<c-c>", goBackAndCloseCurrentBuf)
+
+local Wrapline = function()
+	vim.api.nvim_command(string.format "wrap")
+end
+
+local Nowrapline = function()
+	vim.api.nvim_command(string.format "nowrap")
+end
+
+vim.api.nvim_create_user_command("Wrapline", Wrapline, {})
+vim.api.nvim_create_user_command("Nowrapline", Nowrapline, {})
