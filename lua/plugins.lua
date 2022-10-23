@@ -962,6 +962,16 @@ require("cokeline").setup {
 		end,
 		bg = "NONE",
 	},
+	sidebar = {
+		filetype = "NvimTree",
+		components = {
+			{
+				text = function()
+					return "  File Explorer  "
+				end,
+			},
+		},
+	},
 
 	components = {
 		{
