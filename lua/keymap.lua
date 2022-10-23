@@ -72,11 +72,11 @@ end
 vim.keymap.set("n", "<c-c>", goBackAndCloseCurrentBuf)
 
 local Wrapline = function()
-	vim.api.nvim_command(string.format "wrap")
+	vim.api.nvim_command(string.format "set wrap")
 end
 
 local Nowrapline = function()
-	vim.api.nvim_command(string.format "nowrap")
+	vim.api.nvim_command(string.format "set nowrap")
 end
 
 vim.api.nvim_create_user_command("Wrapline", Wrapline, {})

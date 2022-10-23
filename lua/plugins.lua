@@ -85,6 +85,28 @@ packer.startup(function()
 	use "Shatur/neovim-session-manager"
 
 	use {
+		"lukas-reineke/indent-blankline.nvim",
+		config = function()
+			vim.g.indentLine_char_list = { "|", "¦", "┆", "┊" }
+
+			require("indent_blankline").setup {
+				buftype_exclude = { "terminal", "nofile" },
+				filetype_exclude = {
+					"help",
+					"dashboard",
+					"packer",
+					"NvimTree",
+					"text",
+				},
+				show_trailing_blankline_indent = false,
+				show_first_indent_level = true,
+				use_treesitter = true,
+				show_current_context = true,
+			}
+		end,
+	}
+
+	use {
 		"windwp/nvim-autopairs",
 		config = function()
 			local status_ok, autopairs = pcall(require, "nvim-autopairs")
@@ -664,12 +686,6 @@ db.custom_center = {
 	},
 }
 vim.keymap.set("n", "<Leader>o", ":DashboardNewFile<CR>", { silent = true })
-
--- require("indent_blankline").setup {
--- 	-- for example, context is off by default, use this to turn it on
--- 	show_current_context = true,
--- 	show_current_context_start = true,
--- }
 
 local Path = require "plenary.path"
 require("session_manager").setup {
