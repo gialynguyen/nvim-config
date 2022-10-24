@@ -300,13 +300,14 @@ packer.startup(function()
 	use {
 		"RRethy/vim-illuminate",
 		config = function()
-			require("illuminate").configure {
+			local illuminate = require "illuminate"
+			illuminate.configure {
 				providers = {
 					"lsp",
 					"treesitter",
 					"regex",
 				},
-				delay = 120,
+				delay = 1000,
 				filetypes_denylist = {
 					"dashboard",
 					"NvimTree",
@@ -334,6 +335,8 @@ packer.startup(function()
 				-- under_cursor: whether or not to illuminate under the cursor
 				under_cursor = true,
 			}
+
+			illuminate.pause()
 		end,
 	}
 
@@ -984,26 +987,6 @@ local c = {
 		left_sep = "block",
 		right_sep = "block",
 	},
-	position = {
-		provider = "position",
-		hl = {
-			fg = "green",
-			bg = "bgdark",
-			style = "bold",
-		},
-		left_sep = "block",
-		right_sep = "block",
-	},
-	line_percentage = {
-		provider = "line_percentage",
-		hl = {
-			fg = "aqua",
-			bg = "bgdark",
-			style = "bold",
-		},
-		left_sep = "block",
-		right_sep = "block",
-	},
 }
 
 local left = {
@@ -1024,8 +1007,6 @@ local right = {
 	c.separator_right,
 	c.file_type,
 	c.file_encoding,
-	c.position,
-	c.line_percentage,
 }
 
 local components = {
