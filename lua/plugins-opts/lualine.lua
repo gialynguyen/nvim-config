@@ -136,9 +136,14 @@ ins_left {
 }
 
 ins_left {
-	function()
-		return "%="
-	end,
+	"diff",
+	symbols = { added = " ", modified = "柳 ", removed = " " },
+	diff_color = {
+		added = { fg = colors.green },
+		modified = { fg = colors.orange },
+		removed = { fg = colors.red },
+	},
+	cond = conditions.hide_in_width,
 }
 
 ins_left {
@@ -151,37 +156,6 @@ ins_left {
 		color_info = { fg = colors.cyan },
 	},
 	cond = conditions.hide_in_width,
-}
-
-ins_left {
-	"diff",
-	symbols = { added = " ", modified = "柳 ", removed = " " },
-	diff_color = {
-		added = { fg = colors.green },
-		modified = { fg = colors.orange },
-		removed = { fg = colors.red },
-	},
-	cond = conditions.hide_in_width,
-}
-
-ins_left {
-	function()
-		local diagnostics = vim.diagnostic.get(0)
-		local count = { 0, 0, 0, 0 }
-		for _, diagnostic in ipairs(diagnostics) do
-			if vim.startswith(vim.diagnostic.get_namespace(diagnostic.namespace).name, "vim.lsp") then
-				count[diagnostic.severity] = count[diagnostic.severity] + 1
-			end
-		end
-		local error_count = count[vim.diagnostic.severity.ERROR]
-		local warning_count = count[vim.diagnostic.severity.WARN]
-		local info_count = count[vim.diagnostic.severity.INFO]
-
-		if error_count == 0 and warning_count == 0 and info_count == 0 then
-			return "          "
-		end
-		return "                     "
-	end,
 }
 
 -- Add components to right sections
