@@ -172,6 +172,13 @@ packer.startup(function()
 
 	use "feline-nvim/feline.nvim"
 
+	use {
+		"nvim-lualine/lualine.nvim",
+		config = function()
+			require "plugins-opts.lualine"
+		end,
+	}
+
 	use "williamboman/nvim-lsp-installer"
 
 	use {

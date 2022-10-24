@@ -124,7 +124,6 @@ syntax on
 autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc
 autocmd BufNewFile,BufRead *.astro setlocal filetype=astro
 autocmd BufNewFile,BufRead *.mdx setlocal filetype=markdown
-autocmd BufNewFile,BufRead *.tsx TSBufDisable indent
 
 set tabstop=2
 set softtabstop=2
