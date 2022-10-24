@@ -977,6 +977,27 @@ local c = {
 		left_sep = "block",
 		right_sep = "block",
 	},
+	diagnostic_errors = {
+		provider = "diagnostic_errors",
+		hl = {
+			fg = "red",
+		},
+	},
+	diagnostic_warnings = {
+		provider = "diagnostic_warnings",
+		hl = {
+			fg = "yellow",
+		},
+	},
+	diagnostic_hints = {
+		provider = "diagnostic_hints",
+		hl = {
+			fg = "aqua",
+		},
+	},
+	diagnostic_info = {
+		provider = "diagnostic_info",
+	},
 	file_encoding = {
 		provider = "file_encoding",
 		hl = {
@@ -1001,6 +1022,9 @@ local left = {
 
 local middle = {
 	c.fileinfo,
+	c.diagnostic_errors,
+	c.diagnostic_warnings,
+	c.diagnostic_info,
 }
 
 local right = {
@@ -1022,16 +1046,16 @@ local components = {
 	},
 }
 
-feline.setup {
-	components = components,
-	theme = feline_theme,
-	vi_mode_colors = vi_mode_colors,
-	disable = {
-		filetypes = {
-			"^NvimTree$",
-		},
-	},
-}
+-- feline.setup {
+-- 	components = components,
+-- 	theme = feline_theme,
+-- 	vi_mode_colors = vi_mode_colors,
+-- 	disable = {
+-- 		filetypes = {
+-- 			"^NvimTree$",
+-- 		},
+-- 	},
+-- }
 
 local get_hex = require("cokeline/utils").get_hex
 local errors_fg = get_hex("DiagnosticError", "fg")

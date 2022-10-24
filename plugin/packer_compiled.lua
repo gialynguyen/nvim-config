@@ -80,7 +80,7 @@ _G.packer_plugins = {
     url = "https://github.com/numToStr/Comment.nvim"
   },
   ["bufjump.nvim"] = {
-    config = { "\27LJ\2\n<\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\29execute \"normal! g`\\\"zz\"\bcmd\bvimu\1\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0003\3\4\0=\3\5\2B\0\2\1K\0\1\0\15on_success\0\1\0\2\rbackward\14<leader>o\fforward\14<leader>p\nsetup\fbufjump\frequire\0" },
+    config = { "\27LJ\2\n<\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\29execute \"normal! g`\\\"zz\"\bcmd\bvimu\1\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0003\3\4\0=\3\5\2B\0\2\1K\0\1\0\15on_success\0\1\0\2\fforward\14<leader>p\rbackward\14<leader>o\nsetup\fbufjump\frequire\0" },
     loaded = true,
     path = "/Users/macbook/.local/share/nvim/site/pack/packer/start/bufjump.nvim",
     url = "https://github.com/kwkarlwang/bufjump.nvim"
@@ -131,7 +131,7 @@ _G.packer_plugins = {
     url = "https://github.com/ray-x/guihua.lua"
   },
   ["indent-blankline.nvim"] = {
-    config = { "\27LJ\2\nÕ\2\0\0\4\0\f\0\0156\0\0\0009\0\1\0005\1\3\0=\1\2\0006\0\4\0'\2\5\0B\0\2\0029\0\6\0005\2\b\0005\3\a\0=\3\t\0025\3\n\0=\3\v\2B\0\2\1K\0\1\0\21filetype_exclude\1\6\0\0\thelp\14dashboard\vpacker\rNvimTree\ttext\20buftype_exclude\1\0\4\19use_treesitter\2\28show_first_indent_level\2#show_trailing_blankline_indent\1\25show_current_context\2\1\3\0\0\rterminal\vnofile\nsetup\21indent_blankline\frequire\1\5\0\0\6|\a¬¶\b‚îÜ\b‚îä\25indentLine_char_list\6g\bvim\0" },
+    config = { "\27LJ\2\nÕ\2\0\0\4\0\f\0\0156\0\0\0009\0\1\0005\1\3\0=\1\2\0006\0\4\0'\2\5\0B\0\2\0029\0\6\0005\2\b\0005\3\a\0=\3\t\0025\3\n\0=\3\v\2B\0\2\1K\0\1\0\21filetype_exclude\1\6\0\0\thelp\14dashboard\vpacker\rNvimTree\ttext\20buftype_exclude\1\0\4#show_trailing_blankline_indent\1\25show_current_context\2\19use_treesitter\2\28show_first_indent_level\2\1\3\0\0\rterminal\vnofile\nsetup\21indent_blankline\frequire\1\5\0\0\6|\a¬¶\b‚îÜ\b‚îä\25indentLine_char_list\6g\bvim\0" },
     loaded = true,
     path = "/Users/macbook/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
@@ -153,7 +153,7 @@ _G.packer_plugins = {
     url = "https://github.com/onsails/lspkind-nvim"
   },
   ["lspsaga.nvim"] = {
-    config = { "\27LJ\2\n\127\0\0\5\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0005\4\3\0=\4\5\3B\1\2\1K\0\1\0\26code_action_lightbulb\1\0\0\1\0\2\21enable_in_insert\1\venable\1\18init_lsp_saga\flspsaga\frequire\0" },
+    config = { "\27LJ\2\n\127\0\0\5\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0005\4\3\0=\4\5\3B\1\2\1K\0\1\0\26code_action_lightbulb\1\0\0\1\0\2\venable\1\21enable_in_insert\1\18init_lsp_saga\flspsaga\frequire\0" },
     loaded = true,
     path = "/Users/macbook/.local/share/nvim/site/pack/packer/start/lspsaga.nvim",
     url = "https://github.com/glepnir/lspsaga.nvim"
@@ -175,7 +175,7 @@ _G.packer_plugins = {
     url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
   },
   ["nvim-autopairs"] = {
-    config = { "\27LJ\2\nè\1\0\0\a\0\a\0\0146\0\0\0'\2\1\0B\0\2\0026\1\0\0'\3\2\0B\1\2\0029\1\3\1\18\3\1\0009\1\4\1'\4\5\0009\5\6\0B\5\1\0A\1\2\1K\0\1\0\20on_confirm_done\17confirm_done\aon\nevent\bcmp\"nvim-autopairs.completion.cmp\frequireÌ\a\1\0\r\0&\1L6\0\0\0006\2\1\0'\3\2\0B\0\3\3\14\0\0\0X\2\1Ä2\0DÄ6\2\1\0'\4\3\0B\2\2\0029\3\4\0015\5\5\0005\6\6\0=\6\a\0055\6\t\0005\a\b\0=\a\n\0065\a\v\0=\a\f\6=\6\r\0055\6\14\0=\6\15\0056\6\16\0009\6\17\6'\b\18\0'\t\19\0'\n\20\0B\6\4\2=\6\21\0055\6\22\0005\a\23\0=\a\24\0066\a\16\0009\a\17\a'\t\25\0'\n\19\0'\v\20\0B\a\4\2=\a\26\6=\6\27\5B\3\2\0016\3\1\0'\5\28\0B\3\2\0029\4\29\0014\6\3\0\18\a\2\0'\t\30\0'\n\30\0'\v\n\0B\a\4\2\18\t\a\0009\a\31\a9\n \0035\f!\0B\n\2\0A\a\1\2>\a\1\6\18\a\2\0'\t\"\0'\n\"\0'\v\n\0B\a\4\2\18\t\a\0009\a\31\a9\n#\0035\f$\0B\n\2\0A\a\1\0?\a\0\0B\4\2\0016\4\0\0003\6%\0B\4\2\1K\0\1\0K\0\1\0\0\1\2\0\0\rfunction\19is_not_ts_node\6$\1\3\0\0\vstring\fcomment\15is_ts_node\14with_pair\6%\14add_rules\28nvim-autopairs.ts-conds\14fast_wrap\fpattern\25 [%'%\"%)%>%]%)%}%,] \nchars\1\6\0\0\6{\6[\6(\6\"\6'\1\0\a\fend_key\6$\voffset\3\0\16check_comma\2\bmap\n<M-e>\19highlight_grey\fComment\14highlight\vSearch\tkeys\31qwertyuiopzxcvbnmasdfghjkl\22ignored_next_char\5\b%s+\21 [%w%%%'%[%\"%.] \tgsub\vstring\21disable_filetype\1\3\0\0\20TelescopePrompt\18spectre_panel\14ts_config\15javascript\1\3\0\0\vstring\20template_string\blua\1\0\1\tjava\1\1\3\0\0\vstring\vsource\rmap_char\1\0\2\btex\6{\ball\6(\1\0\t\vactive\2\vmap_bs\2\fmap_c_w\1\27disable_in_visualblock\1\rcheck_ts\2\30enable_check_bracket_line\1\22enable_afterquote\2\21disable_in_macro\1\21enable_moveright\2\nsetup\24nvim-autopairs.rule\19nvim-autopairs\frequire\npcall\5ÄÄ¿ô\4\0" },
+    config = { "\27LJ\2\nè\1\0\0\a\0\a\0\0146\0\0\0'\2\1\0B\0\2\0026\1\0\0'\3\2\0B\1\2\0029\1\3\1\18\3\1\0009\1\4\1'\4\5\0009\5\6\0B\5\1\0A\1\2\1K\0\1\0\20on_confirm_done\17confirm_done\aon\nevent\bcmp\"nvim-autopairs.completion.cmp\frequireÌ\a\1\0\r\0&\1L6\0\0\0006\2\1\0'\3\2\0B\0\3\3\14\0\0\0X\2\1Ä2\0DÄ6\2\1\0'\4\3\0B\2\2\0029\3\4\0015\5\5\0005\6\6\0=\6\a\0055\6\t\0005\a\b\0=\a\n\0065\a\v\0=\a\f\6=\6\r\0055\6\14\0=\6\15\0056\6\16\0009\6\17\6'\b\18\0'\t\19\0'\n\20\0B\6\4\2=\6\21\0055\6\22\0005\a\23\0=\a\24\0066\a\16\0009\a\17\a'\t\25\0'\n\19\0'\v\20\0B\a\4\2=\a\26\6=\6\27\5B\3\2\0016\3\1\0'\5\28\0B\3\2\0029\4\29\0014\6\3\0\18\a\2\0'\t\30\0'\n\30\0'\v\n\0B\a\4\2\18\t\a\0009\a\31\a9\n \0035\f!\0B\n\2\0A\a\1\2>\a\1\6\18\a\2\0'\t\"\0'\n\"\0'\v\n\0B\a\4\2\18\t\a\0009\a\31\a9\n#\0035\f$\0B\n\2\0A\a\1\0?\a\0\0B\4\2\0016\4\0\0003\6%\0B\4\2\1K\0\1\0K\0\1\0\0\1\2\0\0\rfunction\19is_not_ts_node\6$\1\3\0\0\vstring\fcomment\15is_ts_node\14with_pair\6%\14add_rules\28nvim-autopairs.ts-conds\14fast_wrap\fpattern\25 [%'%\"%)%>%]%)%}%,] \nchars\1\6\0\0\6{\6[\6(\6\"\6'\1\0\a\16check_comma\2\tkeys\31qwertyuiopzxcvbnmasdfghjkl\fend_key\6$\voffset\3\0\bmap\n<M-e>\14highlight\vSearch\19highlight_grey\fComment\22ignored_next_char\5\b%s+\21 [%w%%%'%[%\"%.] \tgsub\vstring\21disable_filetype\1\3\0\0\20TelescopePrompt\18spectre_panel\14ts_config\15javascript\1\3\0\0\vstring\20template_string\blua\1\0\1\tjava\1\1\3\0\0\vstring\vsource\rmap_char\1\0\2\ball\6(\btex\6{\1\0\t\21disable_in_macro\1\21enable_moveright\2\vmap_bs\2\vactive\2\fmap_c_w\1\27disable_in_visualblock\1\rcheck_ts\2\30enable_check_bracket_line\1\22enable_afterquote\2\nsetup\24nvim-autopairs.rule\19nvim-autopairs\frequire\npcall\5ÄÄ¿ô\4\0" },
     loaded = true,
     path = "/Users/macbook/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
     url = "https://github.com/windwp/nvim-autopairs"
@@ -287,7 +287,7 @@ _G.packer_plugins = {
     url = "https://github.com/voldikss/vim-floaterm"
   },
   ["vim-illuminate"] = {
-    config = { "\27LJ\2\nù\3\0\0\5\0\14\0\0236\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0005\4\3\0=\4\5\0035\4\6\0=\4\a\0034\4\0\0=\4\b\0034\4\0\0=\4\t\0034\4\0\0=\4\n\0034\4\0\0=\4\v\0034\4\0\0=\4\f\3B\1\2\0019\1\r\0B\1\1\1K\0\1\0\npause%providers_regex_syntax_allowlist$providers_regex_syntax_denylist\20modes_allowlist\19modes_denylist\24filetypes_allowlist\23filetypes_denylist\1\t\0\0\14dashboard\rNvimTree\vpacker\fOutline\rterminal\rfloaterm\15toggleterm\20TelescopePrompt\14providers\1\0\2\ndelay\3Ë\a\17under_cursor\2\1\4\0\0\blsp\15treesitter\nregex\14configure\15illuminate\frequire\0" },
+    config = { "\27LJ\2\nù\3\0\0\5\0\14\0\0236\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0005\4\3\0=\4\5\0035\4\6\0=\4\a\0034\4\0\0=\4\b\0034\4\0\0=\4\t\0034\4\0\0=\4\n\0034\4\0\0=\4\v\0034\4\0\0=\4\f\3B\1\2\0019\1\r\0B\1\1\1K\0\1\0\npause%providers_regex_syntax_allowlist$providers_regex_syntax_denylist\20modes_allowlist\19modes_denylist\24filetypes_allowlist\23filetypes_denylist\1\t\0\0\14dashboard\rNvimTree\vpacker\fOutline\rterminal\rfloaterm\15toggleterm\20TelescopePrompt\14providers\1\0\2\17under_cursor\2\ndelay\3Ë\a\1\4\0\0\blsp\15treesitter\nregex\14configure\15illuminate\frequire\0" },
     loaded = true,
     path = "/Users/macbook/.local/share/nvim/site/pack/packer/start/vim-illuminate",
     url = "https://github.com/RRethy/vim-illuminate"
@@ -320,13 +320,25 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: markdown-preview.nvim
+time([[Config for markdown-preview.nvim]], true)
+try_loadstring("\27LJ\2\n2\0\0\2\0\4\0\0056\0\0\0009\0\1\0'\1\3\0=\1\2\0K\0\1\0\nlight\15mkdp_theme\6g\bvim\0", "config", "markdown-preview.nvim")
+time([[Config for markdown-preview.nvim]], false)
+-- Config for: nvim-autopairs
+time([[Config for nvim-autopairs]], true)
+try_loadstring("\27LJ\2\nè\1\0\0\a\0\a\0\0146\0\0\0'\2\1\0B\0\2\0026\1\0\0'\3\2\0B\1\2\0029\1\3\1\18\3\1\0009\1\4\1'\4\5\0009\5\6\0B\5\1\0A\1\2\1K\0\1\0\20on_confirm_done\17confirm_done\aon\nevent\bcmp\"nvim-autopairs.completion.cmp\frequireÌ\a\1\0\r\0&\1L6\0\0\0006\2\1\0'\3\2\0B\0\3\3\14\0\0\0X\2\1Ä2\0DÄ6\2\1\0'\4\3\0B\2\2\0029\3\4\0015\5\5\0005\6\6\0=\6\a\0055\6\t\0005\a\b\0=\a\n\0065\a\v\0=\a\f\6=\6\r\0055\6\14\0=\6\15\0056\6\16\0009\6\17\6'\b\18\0'\t\19\0'\n\20\0B\6\4\2=\6\21\0055\6\22\0005\a\23\0=\a\24\0066\a\16\0009\a\17\a'\t\25\0'\n\19\0'\v\20\0B\a\4\2=\a\26\6=\6\27\5B\3\2\0016\3\1\0'\5\28\0B\3\2\0029\4\29\0014\6\3\0\18\a\2\0'\t\30\0'\n\30\0'\v\n\0B\a\4\2\18\t\a\0009\a\31\a9\n \0035\f!\0B\n\2\0A\a\1\2>\a\1\6\18\a\2\0'\t\"\0'\n\"\0'\v\n\0B\a\4\2\18\t\a\0009\a\31\a9\n#\0035\f$\0B\n\2\0A\a\1\0?\a\0\0B\4\2\0016\4\0\0003\6%\0B\4\2\1K\0\1\0K\0\1\0\0\1\2\0\0\rfunction\19is_not_ts_node\6$\1\3\0\0\vstring\fcomment\15is_ts_node\14with_pair\6%\14add_rules\28nvim-autopairs.ts-conds\14fast_wrap\fpattern\25 [%'%\"%)%>%]%)%}%,] \nchars\1\6\0\0\6{\6[\6(\6\"\6'\1\0\a\16check_comma\2\tkeys\31qwertyuiopzxcvbnmasdfghjkl\fend_key\6$\voffset\3\0\bmap\n<M-e>\14highlight\vSearch\19highlight_grey\fComment\22ignored_next_char\5\b%s+\21 [%w%%%'%[%\"%.] \tgsub\vstring\21disable_filetype\1\3\0\0\20TelescopePrompt\18spectre_panel\14ts_config\15javascript\1\3\0\0\vstring\20template_string\blua\1\0\1\tjava\1\1\3\0\0\vstring\vsource\rmap_char\1\0\2\ball\6(\btex\6{\1\0\t\21disable_in_macro\1\21enable_moveright\2\vmap_bs\2\vactive\2\fmap_c_w\1\27disable_in_visualblock\1\rcheck_ts\2\30enable_check_bracket_line\1\22enable_afterquote\2\nsetup\24nvim-autopairs.rule\19nvim-autopairs\frequire\npcall\5ÄÄ¿ô\4\0", "config", "nvim-autopairs")
+time([[Config for nvim-autopairs]], false)
 -- Config for: vim-illuminate
 time([[Config for vim-illuminate]], true)
-try_loadstring("\27LJ\2\nù\3\0\0\5\0\14\0\0236\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0005\4\3\0=\4\5\0035\4\6\0=\4\a\0034\4\0\0=\4\b\0034\4\0\0=\4\t\0034\4\0\0=\4\n\0034\4\0\0=\4\v\0034\4\0\0=\4\f\3B\1\2\0019\1\r\0B\1\1\1K\0\1\0\npause%providers_regex_syntax_allowlist$providers_regex_syntax_denylist\20modes_allowlist\19modes_denylist\24filetypes_allowlist\23filetypes_denylist\1\t\0\0\14dashboard\rNvimTree\vpacker\fOutline\rterminal\rfloaterm\15toggleterm\20TelescopePrompt\14providers\1\0\2\ndelay\3Ë\a\17under_cursor\2\1\4\0\0\blsp\15treesitter\nregex\14configure\15illuminate\frequire\0", "config", "vim-illuminate")
+try_loadstring("\27LJ\2\nù\3\0\0\5\0\14\0\0236\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0005\4\3\0=\4\5\0035\4\6\0=\4\a\0034\4\0\0=\4\b\0034\4\0\0=\4\t\0034\4\0\0=\4\n\0034\4\0\0=\4\v\0034\4\0\0=\4\f\3B\1\2\0019\1\r\0B\1\1\1K\0\1\0\npause%providers_regex_syntax_allowlist$providers_regex_syntax_denylist\20modes_allowlist\19modes_denylist\24filetypes_allowlist\23filetypes_denylist\1\t\0\0\14dashboard\rNvimTree\vpacker\fOutline\rterminal\rfloaterm\15toggleterm\20TelescopePrompt\14providers\1\0\2\17under_cursor\2\ndelay\3Ë\a\1\4\0\0\blsp\15treesitter\nregex\14configure\15illuminate\frequire\0", "config", "vim-illuminate")
 time([[Config for vim-illuminate]], false)
+-- Config for: bufjump.nvim
+time([[Config for bufjump.nvim]], true)
+try_loadstring("\27LJ\2\n<\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\29execute \"normal! g`\\\"zz\"\bcmd\bvimu\1\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0003\3\4\0=\3\5\2B\0\2\1K\0\1\0\15on_success\0\1\0\2\fforward\14<leader>p\rbackward\14<leader>o\nsetup\fbufjump\frequire\0", "config", "bufjump.nvim")
+time([[Config for bufjump.nvim]], false)
 -- Config for: lspsaga.nvim
 time([[Config for lspsaga.nvim]], true)
-try_loadstring("\27LJ\2\n\127\0\0\5\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0005\4\3\0=\4\5\3B\1\2\1K\0\1\0\26code_action_lightbulb\1\0\0\1\0\2\21enable_in_insert\1\venable\1\18init_lsp_saga\flspsaga\frequire\0", "config", "lspsaga.nvim")
+try_loadstring("\27LJ\2\n\127\0\0\5\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0005\4\3\0=\4\5\3B\1\2\1K\0\1\0\26code_action_lightbulb\1\0\0\1\0\2\venable\1\21enable_in_insert\1\18init_lsp_saga\flspsaga\frequire\0", "config", "lspsaga.nvim")
 time([[Config for lspsaga.nvim]], false)
 -- Config for: toggleterm.nvim
 time([[Config for toggleterm.nvim]], true)
@@ -336,22 +348,10 @@ time([[Config for toggleterm.nvim]], false)
 time([[Config for lsp_lines.nvim]], true)
 try_loadstring("\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14lsp_lines\frequire\0", "config", "lsp_lines.nvim")
 time([[Config for lsp_lines.nvim]], false)
--- Config for: nvim-autopairs
-time([[Config for nvim-autopairs]], true)
-try_loadstring("\27LJ\2\nè\1\0\0\a\0\a\0\0146\0\0\0'\2\1\0B\0\2\0026\1\0\0'\3\2\0B\1\2\0029\1\3\1\18\3\1\0009\1\4\1'\4\5\0009\5\6\0B\5\1\0A\1\2\1K\0\1\0\20on_confirm_done\17confirm_done\aon\nevent\bcmp\"nvim-autopairs.completion.cmp\frequireÌ\a\1\0\r\0&\1L6\0\0\0006\2\1\0'\3\2\0B\0\3\3\14\0\0\0X\2\1Ä2\0DÄ6\2\1\0'\4\3\0B\2\2\0029\3\4\0015\5\5\0005\6\6\0=\6\a\0055\6\t\0005\a\b\0=\a\n\0065\a\v\0=\a\f\6=\6\r\0055\6\14\0=\6\15\0056\6\16\0009\6\17\6'\b\18\0'\t\19\0'\n\20\0B\6\4\2=\6\21\0055\6\22\0005\a\23\0=\a\24\0066\a\16\0009\a\17\a'\t\25\0'\n\19\0'\v\20\0B\a\4\2=\a\26\6=\6\27\5B\3\2\0016\3\1\0'\5\28\0B\3\2\0029\4\29\0014\6\3\0\18\a\2\0'\t\30\0'\n\30\0'\v\n\0B\a\4\2\18\t\a\0009\a\31\a9\n \0035\f!\0B\n\2\0A\a\1\2>\a\1\6\18\a\2\0'\t\"\0'\n\"\0'\v\n\0B\a\4\2\18\t\a\0009\a\31\a9\n#\0035\f$\0B\n\2\0A\a\1\0?\a\0\0B\4\2\0016\4\0\0003\6%\0B\4\2\1K\0\1\0K\0\1\0\0\1\2\0\0\rfunction\19is_not_ts_node\6$\1\3\0\0\vstring\fcomment\15is_ts_node\14with_pair\6%\14add_rules\28nvim-autopairs.ts-conds\14fast_wrap\fpattern\25 [%'%\"%)%>%]%)%}%,] \nchars\1\6\0\0\6{\6[\6(\6\"\6'\1\0\a\fend_key\6$\voffset\3\0\16check_comma\2\bmap\n<M-e>\19highlight_grey\fComment\14highlight\vSearch\tkeys\31qwertyuiopzxcvbnmasdfghjkl\22ignored_next_char\5\b%s+\21 [%w%%%'%[%\"%.] \tgsub\vstring\21disable_filetype\1\3\0\0\20TelescopePrompt\18spectre_panel\14ts_config\15javascript\1\3\0\0\vstring\20template_string\blua\1\0\1\tjava\1\1\3\0\0\vstring\vsource\rmap_char\1\0\2\btex\6{\ball\6(\1\0\t\vactive\2\vmap_bs\2\fmap_c_w\1\27disable_in_visualblock\1\rcheck_ts\2\30enable_check_bracket_line\1\22enable_afterquote\2\21disable_in_macro\1\21enable_moveright\2\nsetup\24nvim-autopairs.rule\19nvim-autopairs\frequire\npcall\5ÄÄ¿ô\4\0", "config", "nvim-autopairs")
-time([[Config for nvim-autopairs]], false)
--- Config for: markdown-preview.nvim
-time([[Config for markdown-preview.nvim]], true)
-try_loadstring("\27LJ\2\n2\0\0\2\0\4\0\0056\0\0\0009\0\1\0'\1\3\0=\1\2\0K\0\1\0\nlight\15mkdp_theme\6g\bvim\0", "config", "markdown-preview.nvim")
-time([[Config for markdown-preview.nvim]], false)
 -- Config for: indent-blankline.nvim
 time([[Config for indent-blankline.nvim]], true)
-try_loadstring("\27LJ\2\nÕ\2\0\0\4\0\f\0\0156\0\0\0009\0\1\0005\1\3\0=\1\2\0006\0\4\0'\2\5\0B\0\2\0029\0\6\0005\2\b\0005\3\a\0=\3\t\0025\3\n\0=\3\v\2B\0\2\1K\0\1\0\21filetype_exclude\1\6\0\0\thelp\14dashboard\vpacker\rNvimTree\ttext\20buftype_exclude\1\0\4\19use_treesitter\2\28show_first_indent_level\2#show_trailing_blankline_indent\1\25show_current_context\2\1\3\0\0\rterminal\vnofile\nsetup\21indent_blankline\frequire\1\5\0\0\6|\a¬¶\b‚îÜ\b‚îä\25indentLine_char_list\6g\bvim\0", "config", "indent-blankline.nvim")
+try_loadstring("\27LJ\2\nÕ\2\0\0\4\0\f\0\0156\0\0\0009\0\1\0005\1\3\0=\1\2\0006\0\4\0'\2\5\0B\0\2\0029\0\6\0005\2\b\0005\3\a\0=\3\t\0025\3\n\0=\3\v\2B\0\2\1K\0\1\0\21filetype_exclude\1\6\0\0\thelp\14dashboard\vpacker\rNvimTree\ttext\20buftype_exclude\1\0\4#show_trailing_blankline_indent\1\25show_current_context\2\19use_treesitter\2\28show_first_indent_level\2\1\3\0\0\rterminal\vnofile\nsetup\21indent_blankline\frequire\1\5\0\0\6|\a¬¶\b‚îÜ\b‚îä\25indentLine_char_list\6g\bvim\0", "config", "indent-blankline.nvim")
 time([[Config for indent-blankline.nvim]], false)
--- Config for: bufjump.nvim
-time([[Config for bufjump.nvim]], true)
-try_loadstring("\27LJ\2\n<\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\29execute \"normal! g`\\\"zz\"\bcmd\bvimu\1\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0003\3\4\0=\3\5\2B\0\2\1K\0\1\0\15on_success\0\1\0\2\rbackward\14<leader>o\fforward\14<leader>p\nsetup\fbufjump\frequire\0", "config", "bufjump.nvim")
-time([[Config for bufjump.nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then
