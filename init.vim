@@ -136,4 +136,9 @@ set nolist
 set linebreak
 set fillchars=eob:\ 
 
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+
+autocmd BufReadPost,FileReadPost * normal zR
+
 runtime OPT packs.vim

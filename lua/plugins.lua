@@ -219,9 +219,13 @@ packer.startup(function()
 
 	use {
 		"akinsho/toggleterm.nvim",
-		tag = "v2.*",
+		tag = "*",
 		config = function()
-			require("toggleterm").setup()
+			require("toggleterm").setup {
+				float_opts = {
+					winblend = 0,
+				},
+			}
 		end,
 	}
 
@@ -816,6 +820,7 @@ require("transparent").setup {
 		"BufferLineBackground",
 		"BufferLineSeparator",
 		"BufferLineIndicatorSelected",
+		"toggleterm",
 	},
 	exclude = {}, -- table: groups you don't want to clear
 }
