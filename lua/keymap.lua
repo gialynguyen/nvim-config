@@ -14,7 +14,7 @@ vim.keymap.set("n", "K", "<Cmd>Lspsaga hover_doc<CR>", opts)
 vim.keymap.set("n", "gd", "<Cmd>Lspsaga peek_definition<CR>", opts)
 vim.keymap.set("n", "gr", "<Cmd>Lspsaga lsp_finder<CR>", opts)
 vim.keymap.set("n", "<leader>rn", "<Cmd>Lspsaga rename<CR>", opts)
-vim.keymap.set("n", "<leader>ca", "<Cmd>Lspsaga code_action<CR>", opts)
+vim.keymap.set("n", "<leader>ac", "<Cmd>Lspsaga code_action<CR>", opts)
 
 vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations)
 vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions)
@@ -27,17 +27,19 @@ vim.keymap.set("n", "<leader>[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts
 vim.keymap.set("n", "<leader>]", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 
 vim.keymap.set(
-	"n",
-	"[e",
-	"<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
-	opts
+  "n",
+  "[e",
+  "<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>"
+  ,
+  opts
 )
 
 vim.keymap.set(
-	"n",
-	"]e",
-	"<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
-	opts
+  "n",
+  "]e",
+  "<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>"
+  ,
+  opts
 )
 
 vim.keymap.set("n", "<leader>db", "<cmd>Dashboard<CR>")
@@ -49,34 +51,36 @@ vim.keymap.set("n", "<c-l>", "<cmd>NvimTreeFocus<CR>")
 vim.keymap.set("", "<Leader>x", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
 
 require("toggleterm").setup {
-	open_mapping = [[<C-\>]],
+  open_mapping = [[<C-\>]],
 }
 
 function _G.set_terminal_keymaps()
-	local opts = { noremap = true }
-	vim.api.nvim_buf_set_keymap(0, "t", "<C-e>", [[<C-\><C-n>]], opts)
-	vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
-	vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
-	vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
-	vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
+  local opts = { noremap = true }
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-e>", [[<C-\><C-n>]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-z>", [[<C-\><C-n><cmd>resize 15<CR>a]], opts)
+  vim.api.nvim_buf_set_keymap(0, "n", "<C-z>", [[<C-\><C-n><cmd>resize 15<CR>a]], opts)
 end
 
 vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()"
 
 local goBackAndCloseCurrentBuf = function()
-	local buf_id = vim.api.nvim_get_current_buf()
-	require("bufjump").backward()
-	vim.api.nvim_command(string.format("bdelete %d", buf_id))
+  local buf_id = vim.api.nvim_get_current_buf()
+  require("bufjump").backward()
+  vim.api.nvim_command(string.format("bdelete %d", buf_id))
 end
 
 vim.keymap.set("n", "<c-c>", goBackAndCloseCurrentBuf)
 
 local Wrapline = function()
-	vim.api.nvim_command(string.format "set wrap")
+  vim.api.nvim_command(string.format "set wrap")
 end
 
 local Nowrapline = function()
-	vim.api.nvim_command(string.format "set nowrap")
+  vim.api.nvim_command(string.format "set nowrap")
 end
 
 vim.api.nvim_create_user_command("Wrapline", Wrapline, {})
