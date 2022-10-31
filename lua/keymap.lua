@@ -85,3 +85,5 @@ end
 
 vim.api.nvim_create_user_command("Wrapline", Wrapline, {})
 vim.api.nvim_create_user_command("Nowrapline", Nowrapline, {})
+
+vim.keymap.set("n", "<F8>", "<Cmd>SymbolsOutline<CR>")
