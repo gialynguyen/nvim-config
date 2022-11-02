@@ -5,6 +5,8 @@ local servers = {
   "cssmodules_ls",
   "gopls",
   "html",
+  "eslint",
+  "tsx",
   "pyright",
   "rust_analyzer",
   "sumneko_lua",
