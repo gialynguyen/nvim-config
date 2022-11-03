@@ -378,7 +378,8 @@ packer.startup(function()
 	}
 
 	use {
-		"simrat39/symbols-outline.nvim",
+		"mxsdev/symbols-outline.nvim",
+		branch = "merge-jsx-tree",
 		config = function()
 			require("symbols-outline").setup {
 				highlight_hovered_item = true,
