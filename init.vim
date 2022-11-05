@@ -86,9 +86,9 @@ inoremap <silent><c-]> <Esc><Cmd>ToggleTermToggleAll<CR>
 map Q <C-w><C-w>q
 
 inoremap <C-a> <ESC>la
+
 map <C-x> <ESC>
-map <C-x> <ESC>
-map <C-x> <ESC>
+inoremap <C-x> <ESC>
 
 nnoremap <leader>d "_d
 nnoremap <leader>c "_c
