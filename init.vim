@@ -1,3 +1,5 @@
+syntax on
+
 runtime OPT general.vim
 runtime OPT mapping.vim
 runtime OPT abbreviation.vim
@@ -5,6 +7,18 @@ runtime OPT colors.vim
 
 lua require('nvim')
 lua require('plugins')
+lua require('lsp')
+lua require('keymap')
+
+runtime OPT nvim-treesitter.vim
+runtime OPT telescope.nvim
+runtime OPT telescope-file-browser.nvim
+runtime OPT lualine.nvim
+
+packadd vim-matchup
+packadd gruvbox-material
+packadd nvim-autopairs
+packadd vim-sandwich
 
 " Buffer navigation
 function DeleteHiddenBuffers()
@@ -63,24 +77,25 @@ nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
 
 autocmd TermEnter term://*toggleterm#*
-      \ tnoremap <silent><c-y> <Cmd>ToggleTermToggleAll<CR>
+      \ tnoremap <silent><c-]> <Cmd>ToggleTermToggleAll<CR>
 
-nnoremap <silent><c-y> <Cmd>ToggleTermToggleAll<CR>
-inoremap <silent><c-y> <Esc><Cmd>ToggleTermToggleAll<CR>
+nnoremap <silent><c-]> <Cmd>ToggleTermToggleAll<CR>
+inoremap <silent><c-]> <Esc><Cmd>ToggleTermToggleAll<CR>
 
-runtime OPT nvim-treesitter.vim
-runtime OPT telescope.nvim
-runtime OPT telescope-file-browser.nvim
-runtime OPT lualine.nvim
+" Close popup
+map Q <C-w><C-w>q
 
-packadd vim-matchup
-packadd is.vim
-packadd vim-sneak
-packadd gruvbox-material
-packadd nvim-autopairs
-packadd vim-sandwich
+inoremap <C-a> <ESC>la
+map <C-x> <ESC>
+map <C-x> <ESC>
+map <C-x> <ESC>
 
-let g:loaded_matchit = 1
+nnoremap <leader>d "_d
+nnoremap <leader>c "_c
+vnoremap <leader>d "_d
+vnoremap <leader>c "_c
+
+nnoremap <silent> <ESC> :nohlsearch<cr>
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 if exists('+termguicolors')
@@ -92,38 +107,14 @@ endif
 set background=dark
 let g:gruvbox_material_background = 'medium' 
 let g:gruvbox_material_better_performance = 1
-colorscheme gruvbox-material
 let g:gruvbox_material_enable_italic = 1
 
-map f <Plug>Sneak_f
-map F <Plug>Sneak_F
-map t <Plug>Sneak_t
-map T <Plug>Sneak_T
-map ' <Plug>Sneak_,
+colorscheme gruvbox-material
 
-
-" Close popup
-map Q <C-w><C-w>q
-
-inoremap <C-a> <ESC>la
-inoremap <C-e> <ESC>
-nnoremap <C-e> <ESC>
-vnoremap <C-e> <ESC>
-
-nnoremap <leader>d "_d
-nnoremap <leader>c "_c
-vnoremap <leader>d "_d
-vnoremap <leader>c "_c
-
-" let g:indent_blankline_char_list = ['¦', '┆', '┊']
-
-lua require('lsp')
-lua require('keymap')
-
-syntax on
 autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc
 autocmd BufNewFile,BufRead *.astro setlocal filetype=astro
 autocmd BufNewFile,BufRead *.mdx setlocal filetype=markdown
+autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
 
 set tabstop=2
 set softtabstop=2

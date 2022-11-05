@@ -44,8 +44,8 @@ vim.keymap.set(
 
 vim.keymap.set("n", "<leader>db", "<cmd>Dashboard<CR>")
 
-vim.keymap.set("n", "<c-b>", "<cmd>NvimTreeToggle<CR>")
-vim.keymap.set("n", "<c-f>", "<cmd>NvimTreeFindFile<CR>")
+vim.keymap.set("n", "<c-j>", "<cmd>NvimTreeToggle<CR>")
+vim.keymap.set("n", "<c-g>", "<cmd>NvimTreeFindFile<CR>")
 vim.keymap.set("n", "<c-l>", "<cmd>NvimTreeFocus<CR>")
 
 vim.keymap.set("", "<Leader>x", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
