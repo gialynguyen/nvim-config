@@ -6,13 +6,13 @@ local servers = {
   "gopls",
   "html",
   "eslint",
-  "tsx",
   "pyright",
   "rust_analyzer",
   "sumneko_lua",
   "tailwindcss",
   "tsserver",
   "flow",
+  "astro",
 }
 
 for _, name in pairs(servers) do
@@ -22,10 +22,17 @@ for _, name in pairs(servers) do
     server:install()
   end
 end
+
 local setup_server = {
   sumneko_lua = function(opts)
     opts.settings = { Lua = { diagnostics = { globals = { "vim" } } } }
   end,
+  tailwindcss = function (opts)
+    opts.autostart = false
+  end,
+  cssmodules_ls = function (opts)
+    opts.autostart = false
+  end
 }
 
 local navic = require "nvim-navic"
@@ -34,13 +41,7 @@ local lspconfig = require "lspconfig"
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-lspconfig.flow.setup {
-  capabilities = capabilities,
-}
-
 lspconfig.emmet_ls.setup {
-  -- on_attach = on_attach,
-  capabilities = capabilities,
   filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
   init_options = {
     html = {
@@ -52,8 +53,6 @@ lspconfig.emmet_ls.setup {
   },
 }
 
-lspconfig.astro.setup {}
-
 require("nvim-lsp-installer").on_server_ready(function(server)
   local opts = {
     on_attach = function(client, bufnr)
@@ -64,6 +63,7 @@ require("nvim-lsp-installer").on_server_ready(function(server)
         vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
       end
     end,
+    autostart = true,
     capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
   }
 
@@ -86,8 +86,6 @@ require("nvim-lsp-installer").on_server_ready(function(server)
 
   if server.name == "volar" then
     opts.filetypes = {
-      -- "typescript",
-      -- "javascript",
       "vue",
     }
 
@@ -103,8 +101,4 @@ vim.diagnostic.config {
   signs = false,
   underline = true,
   virtual_lines = false,
-  -- float = {
-  -- 	header = false,
-  -- 	source = "always",
-  -- },
 }
