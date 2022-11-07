@@ -1017,6 +1017,10 @@ require("transparent").setup {
     "BufferLineOffsetSeparator",
     "BufferLineGroupSeparator",
 
+    "BufferLineDuplicate",
+    "BufferLineDuplicateVisible",
+    "BufferLineDuplicateSelected",
+
     "toggleterm",
   },
   exclude = {}, -- table: groups you don't want to clear
