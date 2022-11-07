@@ -102,7 +102,6 @@ packer.startup(function()
 
   use {
     "lukas-reineke/indent-blankline.nvim",
-    cond = false,
     config = function()
       vim.g.indentLine_char_list = { "|", "¦", "┆", "┊" }
 
@@ -242,25 +241,12 @@ packer.startup(function()
   use "voldikss/vim-floaterm"
 
   use {
-    "xiyaowong/nvim-transparent",
-    config = function()
-      require("transparent").setup {
-        enable = true, -- boolean: enable transparent
-        extra_groups = { -- table/string: additional groups that should be cleared
-          -- In particular, when you set it to 'all', that means all available groups
+    'akinsho/bufferline.nvim',
+    tag = "v3.*",
+  }
 
-          -- example of akinsho/nvim-bufferline.lua
-          "BufferLineTabClose",
-          "BufferlineBufferSelected",
-          "BufferLineFill",
-          "BufferLineBackground",
-          "BufferLineSeparator",
-          "BufferLineIndicatorSelected",
-          "toggleterm",
-        },
-        exclude = {}, -- table: groups you don't want to clear
-      }
-    end,
+  use {
+    "xiyaowong/nvim-transparent",
   }
 
   use {
@@ -337,10 +323,6 @@ packer.startup(function()
 
   use {
     "johann2357/nvim-smartbufs",
-  }
-
-  use {
-    "noib3/nvim-cokeline",
   }
 
   use {
@@ -466,6 +448,18 @@ packer.startup(function()
   }
 
   use {
+    "karb94/neoscroll.nvim",
+    config = function()
+      require('neoscroll').setup {}
+    end
+  }
+
+  use {
+    "yioneko/nvim-yati",
+    tag = "*",
+  }
+
+  use {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     config = function()
       require("lsp_lines").setup()
@@ -548,8 +542,15 @@ require("nvim-treesitter.configs").setup {
     enable = true,
     additional_vim_regex_highlighting = true,
   },
+  yati = {
+    enable = true,
+    suppress_conflict_warning = true,
+    default_lazy = true,
+    default_fallback = "auto"
+  },
   indent = {
     enable = true,
+    disable = { "html", "javascript", "typescript", "typescriptreact", "javascriptreact" }
   },
 }
 
@@ -927,97 +928,151 @@ require("nvim-web-devicons").setup {
   default = true,
 }
 
-local get_hex = require("cokeline/utils").get_hex
-local errors_fg = get_hex("DiagnosticError", "fg")
-local warnings_fg = get_hex("DiagnosticWarn", "fg")
+local bufferline = require('bufferline')
 
-require("cokeline").setup {
-  default_hl = {
-    fg = function(buffer)
-      return buffer.is_focused and get_hex("Normal", "fg") or get_hex("Comment", "fg")
-    end,
-    bg = "NONE",
-  },
-  sidebar = {
-    filetype = "NvimTree",
-    components = {
-      {
-        text = function()
-          return "  File Explorer  "
-        end,
-      },
-    },
-  },
+local close_func = function(bufnum)
+  local bufdelete_avail, bufdelete = pcall(require, "bufdelete")
+  if bufdelete_avail then
+    bufdelete.bufdelete(bufnum, true)
+  else
+    vim.cmd["bdelete!"] { args = { bufnum } }
+  end
+end
 
-  components = {
-    {
-      text = function(buffer)
-        return (buffer.index == 1) and "   " or ""
-      end,
-      fg = function()
-        return vim.g.terminal_color_2
-      end,
-    },
-    {
-      text = function(buffer)
-        return " " .. buffer.index
-      end,
-    },
-    {
-      text = function(buffer)
-        return "  " .. buffer.devicon.icon
-      end,
-      fg = function(buffer)
-        return buffer.devicon.color
-      end,
-    },
-    {
-      text = function(buffer)
-        return buffer.unique_prefix .. buffer.filename
-      end,
-      fg = function(buffer)
-        if buffer.is_focused then
-          return vim.g.terminal_color_4
-        end
-        if buffer.is_modified then
-          return vim.g.terminal_color_3
-        end
-        if buffer.lsp ~= nil and buffer.lsp.errors ~= 0 then
-          return vim.g.terminal_color_9
-        end
-      end,
-      style = function(buffer)
-        return buffer.is_focused and "bold,underline" or nil
-      end,
-    },
-    {
-      text = function(buffer)
-        return (buffer.diagnostics.errors ~= 0 and "   " .. buffer.diagnostics.errors)
-            or (buffer.diagnostics.warnings ~= 0 and "   " .. buffer.diagnostics.warnings)
-            or ""
-      end,
-      fg = function(buffer)
-        return (buffer.diagnostics.errors ~= 0 and errors_fg)
-            or (buffer.diagnostics.warnings ~= 0 and warnings_fg)
-            or nil
-      end,
-      truncation = { priority = 1 },
-    },
-    {
-      text = function(buffer)
-        return buffer.is_modified and "  ●  " or "    "
-      end,
-      fg = function(buffer)
-        return buffer.is_modified and vim.g.terminal_color_2 or nil
-      end,
-      delete_buffer_on_left_click = true,
-      truncation = { priority = 1 },
-    },
-    {
-      text = "|",
-      fg = function()
-        return vim.g.terminal_color_3
-      end,
-    },
+require("transparent").setup {
+  enable = true, -- boolean: enable transparent
+  extra_groups = { -- table/string: additional groups that should be cleared
+    -- In particular, when you set it to 'all', that means all available groups
+
+    -- example of akinsho/nvim-bufferline.lua
+    "BufferLineFill",
+    "BufferLineBackground",
+
+    "BufferLineTab",
+    "BufferLineTabSelected",
+    "BufferLineTabClose",
+    "BufferLineTabSeparator",
+    "BufferLineTabSelected",
+
+    "BufferLineNumbers",
+
+
+    "BufferLineDuplicate",
+
+    "BufferLineDiagnostic",
+    "BufferLineDiagnosticVisble",
+    "BufferLineDiagnosticSelected",
+
+    "BufferLineError",
+    "BufferLineErrorVisible",
+    "BufferLineErrorSelected",
+    "BufferLineErrorDiagnostic",
+    "BufferLineErrorDiagnosticSelected",
+    "BufferLineErrorDiagnosticVisible",
+
+    "BufferLineWarning",
+    "BufferLineWarningVisible",
+    "BufferLineWarningSelected",
+    "BufferLineWarningDiagnostic",
+    "BufferLineWarningDiagnosticSelected",
+    "BufferLineWarningDiagnosticVisible",
+
+    "BufferLineInfo",
+    "BufferLineInfoVisible",
+    "BufferLineInfoSelected",
+
+    "BufferLineInfoDiagnostic",
+    "BufferLineInfoDiagnosticSelected",
+    "BufferLineInfoDiagnosticVisible",
+
+    "BufferLineHint",
+    "BufferLineHintVisible",
+    "BufferLineHintSelected",
+    "BufferLineHintDiagnostic",
+    "BufferLineHintDiagnosticSelected",
+    "BufferLineHintDiagnosticVisible",
+
+    "BufferLineCloseButton",
+    "BufferLineCloseButtonVisible",
+    "BufferLineCloseButtonSelected",
+
+    "BufferLineBuffer",
+    "BufferLineBufferSelected",
+    "BufferLineBufferVisible",
+
+    "BufferLineNumbers",
+    "BufferLineNumbersVisible",
+    "BufferLineNumbersSelected",
+
+    "BufferLineModified",
+    "BufferLineModifiedSelected",
+    "BufferLineModifiedVisible",
+
+    "BufferLineIndicator",
+    "BufferLineIndicatorSelected",
+
+    "BufferLineSeparator",
+    "BufferLineSeparatorSelected",
+    "BufferLineSeparatorVisible",
+    "BufferLineOffsetSeparator",
+    "BufferLineGroupSeparator",
+
+    "toggleterm",
   },
+  exclude = {}, -- table: groups you don't want to clear
+}
+
+bufferline.setup {
+  options = {
+    offsets = {
+      { filetype = "NvimTree", text = "", padding = 1 },
+      { filetype = "neo-tree", text = "", padding = 1 },
+      { filetype = "Outline", text = "", padding = 1 },
+    },
+    buffer_close_icon = "",
+    modified_icon = "",
+    close_icon = "",
+    close_command = close_func,
+    right_mouse_command = close_func,
+    -- max_name_length = 14,
+    -- max_prefix_length = 13,
+    -- tab_size = 20,
+    separator_style = "thin",
+    diagnostics = "nvim_lsp",
+    diagnostics_update_in_insert = false,
+    diagnostics_indicator = function(_, _, diagnostics, _)
+      local result = {}
+      local symbols = {
+        error = "",
+        warning = "",
+      }
+
+      for name, count in pairs(diagnostics) do
+        if symbols[name] and count > 0 then
+          table.insert(result, symbols[name] .. " " .. count)
+        end
+      end
+
+      local result_string = table.concat(result, " ")
+      return #result > 0 and result_string or ""
+    end
+  },
+  highlights = {
+    background = {
+      fg = "NONE",
+      bg = "NONE"
+    },
+    buffer = {
+      fg = "NONE",
+      bg = "NONE"
+    },
+    buffer_visible = {
+      fg = "NONE",
+      bg = "NONE"
+    },
+    buffer_selected = {
+      fg = "NONE",
+      bg = "NONE"
+    }
+  }
 }

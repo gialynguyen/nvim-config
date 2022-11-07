@@ -14,7 +14,6 @@ local servers = {
   "flow",
   "astro",
 }
-
 for _, name in pairs(servers) do
   local found, server = require("nvim-lsp-installer").get_server(name)
   if found and not server:is_installed() then
@@ -87,6 +86,15 @@ require("nvim-lsp-installer").on_server_ready(function(server)
   if server.name == "volar" then
     opts.filetypes = {
       "vue",
+    }
+
+    server:setup(opts)
+    return
+  end
+
+  if server.name == 'eslint' then
+    opts.handlers = {
+      ['window/showMessageRequest'] = function(_, result, params) return result end
     }
 
     server:setup(opts)

@@ -1,5 +1,13 @@
 syntax on
 
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+set termguicolors
+
 runtime OPT general.vim
 runtime OPT mapping.vim
 runtime OPT abbreviation.vim
@@ -98,11 +106,6 @@ vnoremap <leader>c "_c
 nnoremap <silent> <ESC> :nohlsearch<cr>
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
 
 set background=dark
 let g:gruvbox_material_background = 'medium' 
@@ -110,6 +113,23 @@ let g:gruvbox_material_better_performance = 1
 let g:gruvbox_material_enable_italic = 1
 
 colorscheme gruvbox-material
+
+" Close popup
+map Q <C-w><C-w>q
+
+inoremap <C-a> <ESC>la
+nnoremap <C-x> <ESC>
+vnoremap <C-x> <ESC>
+
+nnoremap <leader>d "_d
+nnoremap <leader>c "_c
+vnoremap <leader>d "_d
+vnoremap <leader>c "_c
+
+" let g:indent_blankline_char_list = ['¦', '┆', '┊']
+
+lua require('lsp')
+lua require('keymap')
 
 autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc
 autocmd BufNewFile,BufRead *.astro setlocal filetype=astro
@@ -130,5 +150,7 @@ set fillchars=eob:\
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set nofoldenable
+
+set shell =/opt/homebrew/bin/fish
 
 runtime OPT packs.vim
