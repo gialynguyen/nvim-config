@@ -19,8 +19,8 @@ vim.keymap.set("n", "<leader>ac", "<Cmd>Lspsaga code_action<CR>", opts)
 vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations)
 vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions)
 
-vim.keymap.set("n", "<leader>dd", "<cmd>Telescope diagnostics<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>dd", "<cmd>Telescope diagnostics<CR>", opts)
+vim.keymap.set("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
 vim.keymap.set("n", "<leader>[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 
@@ -87,3 +87,17 @@ vim.api.nvim_create_user_command("Wrapline", Wrapline, {})
 vim.api.nvim_create_user_command("Nowrapline", Nowrapline, {})
 
 vim.keymap.set("n", "<F8>", "<Cmd>SymbolsOutline<CR>")
+
+function GotoBuffer(index)
+  require('nvim-smartbufs').goto_buffer(index)
+end
+
+function CloseBuffer(index)
+  require('nvim-smartbufs').close_buffer(index)
+  require('bufferline.ui').refresh()
+end
+
+for i = 1, 9 do
+  vim.keymap.set("n", ('<Leader>%s'):format(i), ("<Cmd>lua GotoBuffer(%s)<CR>"):format(i), { silent = true })
+  vim.keymap.set("n", ('<Leader>c%s'):format(i), ("<Cmd>lua CloseBuffer(%s)<CR>"):format(i), { silent = true })
+end

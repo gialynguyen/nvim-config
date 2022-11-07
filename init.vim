@@ -6,8 +6,6 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
-set termguicolors
-
 runtime OPT general.vim
 runtime OPT mapping.vim
 runtime OPT abbreviation.vim
@@ -43,26 +41,6 @@ nnoremap <leader>h :bprevious<CR>
 nnoremap <leader>l   :bnext<CR>
 command! BufCurOnly execute '%bdelete|edit#|bdelete#'
 nnoremap <leader>w :call DeleteHiddenBuffers()<CR>
-
-nnoremap <Leader>1 :lua require("nvim-smartbufs").goto_buffer(1)<CR>
-nnoremap <Leader>2 :lua require("nvim-smartbufs").goto_buffer(2)<CR>
-nnoremap <Leader>3 :lua require("nvim-smartbufs").goto_buffer(3)<CR>
-nnoremap <Leader>4 :lua require("nvim-smartbufs").goto_buffer(4)<CR>
-nnoremap <Leader>5 :lua require("nvim-smartbufs").goto_buffer(5)<CR>
-nnoremap <Leader>6 :lua require("nvim-smartbufs").goto_buffer(6)<CR>
-nnoremap <Leader>7 :lua require("nvim-smartbufs").goto_buffer(7)<CR>
-nnoremap <Leader>8 :lua require("nvim-smartbufs").goto_buffer(8)<CR>
-nnoremap <Leader>9 :lua require("nvim-smartbufs").goto_buffer(9)<CR>
-
-nnoremap <Leader>c1 :lua require("nvim-smartbufs").close_buffer(1)<CR>
-nnoremap <Leader>c2 :lua require("nvim-smartbufs").close_buffer(2)<CR>
-nnoremap <Leader>c3 :lua require("nvim-smartbufs").close_buffer(3)<CR>
-nnoremap <Leader>c4 :lua require("nvim-smartbufs").close_buffer(4)<CR>
-nnoremap <Leader>c5 :lua require("nvim-smartbufs").close_buffer(5)<CR>
-nnoremap <Leader>c6 :lua require("nvim-smartbufs").close_buffer(6)<CR>
-nnoremap <Leader>c7 :lua require("nvim-smartbufs").close_buffer(7)<CR>
-nnoremap <Leader>c8 :lua require("nvim-smartbufs").close_buffer(8)<CR>
-nnoremap <Leader>c9 :lua require("nvim-smartbufs").close_buffer(9)<CR>
 
 let g:floaterm_autoclose = 1
 let g:floaterm_width = 0.9
@@ -150,7 +128,5 @@ set fillchars=eob:\
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set nofoldenable
-
-set shell =/opt/homebrew/bin/fish
 
 runtime OPT packs.vim
