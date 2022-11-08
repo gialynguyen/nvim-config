@@ -57,10 +57,10 @@ nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
 
 autocmd TermEnter term://*toggleterm#*
-      \ tnoremap <silent><c-]> <Cmd>ToggleTermToggleAll<CR>
+      \ tnoremap <silent><c-\> <Cmd>ToggleTermToggleAll<CR>
 
-nnoremap <silent><c-]> <Cmd>ToggleTermToggleAll<CR>
-inoremap <silent><c-]> <Esc><Cmd>ToggleTermToggleAll<CR>
+nnoremap <silent><c-\> <Cmd>ToggleTermToggleAll<CR>
+inoremap <silent><c-\> <Esc><Cmd>ToggleTermToggleAll<CR>
 
 " Close popup
 map Q <C-w><C-w>q

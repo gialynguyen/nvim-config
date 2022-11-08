@@ -54,7 +54,7 @@ vim.keymap.set("n", "<c-l>", "<cmd>NvimTreeFocus<CR>")
 -- Terminal Keymap
 
 require("toggleterm").setup {
-  open_mapping = [[<C-\>]],
+  open_mapping = [[<C-t>]],
 }
 
 function _G.set_terminal_keymaps()
