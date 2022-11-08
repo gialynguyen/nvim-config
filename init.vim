@@ -1,5 +1,10 @@
 syntax on
 
+" For MacOS Ventura
+if filereadable("/opt/homebrew/bin/fish")
+  set shell=/opt/homebrew/bin/fish
+endif
+
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -26,21 +31,10 @@ packadd gruvbox-material
 packadd nvim-autopairs
 packadd vim-sandwich
 
-" Buffer navigation
-function DeleteHiddenBuffers()
-    let tpbl=[]
-    call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
-    for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
-        silent execute 'bwipeout' buf
-    endfor
-endfunction
-
 nnoremap <leader>q :bp<CR>:bd #<CR>
 nnoremap <leader>Q :bp<CR>:bd #<CR><C-w>q
 nnoremap <leader>h :bprevious<CR>
 nnoremap <leader>l   :bnext<CR>
-command! BufCurOnly execute '%bdelete|edit#|bdelete#'
-nnoremap <leader>w :call DeleteHiddenBuffers()<CR>
 
 let g:floaterm_autoclose = 1
 let g:floaterm_width = 0.9

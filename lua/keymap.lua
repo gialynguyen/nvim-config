@@ -1,3 +1,4 @@
+-- Telescope keymap
 vim.keymap.set("n", "<Leader>ff", require("telescope.builtin").find_files)
 vim.keymap.set("n", "<Leader>fd", require("telescope.builtin").fd)
 vim.keymap.set("n", "<Leader>fg", require("telescope.builtin").git_status)
@@ -7,7 +8,7 @@ vim.keymap.set("n", "<leader>rg", ":lua require('telescope').extensions.live_gre
 vim.keymap.set("n", "<leader>rr", "<cmd>Telescope resume<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>re", require("telescope.builtin").oldfiles)
 
-vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>", { noremap = true, silent = true })
+--- LSP keymap
 
 local opts = { noremap = true, silent = true }
 vim.keymap.set("n", "K", "<Cmd>Lspsaga hover_doc<CR>", opts)
@@ -42,13 +43,15 @@ vim.keymap.set(
   opts
 )
 
-vim.keymap.set("n", "<leader>db", "<cmd>Dashboard<CR>")
+vim.keymap.set("", "<Leader>x", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+
+-- NvimTree Keymap
 
 vim.keymap.set("n", "<c-j>", "<cmd>NvimTreeToggle<CR>")
 vim.keymap.set("n", "<c-g>", "<cmd>NvimTreeFindFile<CR>")
 vim.keymap.set("n", "<c-l>", "<cmd>NvimTreeFocus<CR>")
 
-vim.keymap.set("", "<Leader>x", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+-- Terminal Keymap
 
 require("toggleterm").setup {
   open_mapping = [[<C-\>]],
@@ -67,26 +70,39 @@ end
 
 vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()"
 
+-- Buffers Keymap
+
 local goBackAndCloseCurrentBuf = function()
   local buf_id = vim.api.nvim_get_current_buf()
   require("bufjump").backward()
-  vim.api.nvim_command(string.format("bdelete %d", buf_id))
+  vim.api.nvim_command(string.format("bwipeout %d", buf_id))
 end
 
-vim.keymap.set("n", "<c-c>", goBackAndCloseCurrentBuf)
+local closeHiddenBuffers = function()
+  local buffers = vim.api.nvim_list_bufs()
+  local non_hidden_buffer = {}
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    non_hidden_buffer[vim.api.nvim_win_get_buf(win)] = true
+  end
 
-local Wrapline = function()
-  vim.api.nvim_command(string.format "set wrap")
+  for _, buffer in ipairs(buffers) do
+    local filetype = vim.fn.getbufvar(buffer, '&buftype')
+    if non_hidden_buffer[buffer] == nil and filetype ~= 'terminal' then
+      vim.api.nvim_command(string.format("bwipeout %d", buffer))
+    end
+  end
+
+  require('bufferline.ui').refresh()
 end
 
-local Nowrapline = function()
-  vim.api.nvim_command(string.format "set nowrap")
+local jumpAlternateBuffer = function()
+  vim.api.nvim_command(string.format("e #"))
+  vim.cmd [[execute "normal! g`\"zz"]]
 end
 
-vim.api.nvim_create_user_command("Wrapline", Wrapline, {})
-vim.api.nvim_create_user_command("Nowrapline", Nowrapline, {})
-
-vim.keymap.set("n", "<F8>", "<Cmd>SymbolsOutline<CR>")
+vim.keymap.set("n", "<Leader>w", closeHiddenBuffers)
+vim.keymap.set("n", "<c-c>c", goBackAndCloseCurrentBuf)
+vim.keymap.set("n", "<c-c>j", jumpAlternateBuffer)
 
 function GotoBuffer(index)
   require('nvim-smartbufs').goto_buffer(index)
@@ -101,3 +117,20 @@ for i = 1, 9 do
   vim.keymap.set("n", ('<Leader>%s'):format(i), ("<Cmd>lua GotoBuffer(%s)<CR>"):format(i), { silent = true })
   vim.keymap.set("n", ('<Leader>c%s'):format(i), ("<Cmd>lua CloseBuffer(%s)<CR>"):format(i), { silent = true })
 end
+
+-- Others
+
+local Wrapline = function()
+  vim.api.nvim_command(string.format "set wrap")
+end
+
+local Nowrapline = function()
+  vim.api.nvim_command(string.format "set nowrap")
+end
+
+vim.api.nvim_create_user_command("Wrapline", Wrapline, {})
+vim.api.nvim_create_user_command("Nowrapline", Nowrapline, {})
+
+vim.keymap.set("n", "<F8>", "<Cmd>SymbolsOutline<CR>")
+vim.keymap.set("n", "<leader>db", "<cmd>Dashboard<CR>")
+vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>", { noremap = true, silent = true })

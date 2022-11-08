@@ -326,19 +326,6 @@ packer.startup(function()
   }
 
   use {
-    "kwkarlwang/bufjump.nvim",
-    config = function()
-      require("bufjump").setup {
-        forward = "<leader>p",
-        backward = "<leader>o",
-        on_success = function()
-          vim.cmd [[execute "normal! g`\"zz"]]
-        end,
-      }
-    end,
-  }
-
-  use {
     "RRethy/vim-illuminate",
     config = function()
       local illuminate = require "illuminate"
@@ -989,7 +976,7 @@ bufferline.setup {
       bg = "NONE"
     },
     buffer_selected = {
-      fg = "NONE",
+      fg = "#d8a657",
       bg = "NONE"
     }
   }
@@ -1053,7 +1040,7 @@ require("transparent").setup {
     "BufferLineCloseButtonSelected",
 
     "BufferLineBuffer",
-    "BufferLineBufferSelected",
+    -- "BufferLineBufferSelected",
     "BufferLineBufferVisible",
 
     "BufferLineNumbers",
