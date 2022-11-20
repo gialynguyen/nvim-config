@@ -80,7 +80,7 @@ nnoremap <silent> <ESC> :nohlsearch<cr>
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 set background=dark
-let g:gruvbox_material_background = 'medium' 
+let g:gruvbox_material_background = 'medium'
 let g:gruvbox_material_better_performance = 1
 let g:gruvbox_material_enable_italic = 1
 
@@ -100,27 +100,9 @@ vnoremap <leader>c "_c
 
 " let g:indent_blankline_char_list = ['¦', '┆', '┊']
 
-lua require('lsp')
-lua require('keymap')
-
 autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc
 autocmd BufNewFile,BufRead *.astro setlocal filetype=astro
 autocmd BufNewFile,BufRead *.mdx setlocal filetype=markdown
 autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
-
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-set smartindent
-set smarttab
-set expandtab
-set nowrap
-set nolist
-set linebreak
-set fillchars=eob:\ 
-
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set nofoldenable
 
 runtime OPT packs.vim
