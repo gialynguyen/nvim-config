@@ -72,13 +72,15 @@ vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()"
 local goBackBuffer = function()
   vim.api.nvim_command(string.format "BufferHistoryBack")
   vim.cmd [[execute "normal! g`\"zz"]]
-  require("bufferline.ui").refresh()
+
+  vim.fn.jobstart "sleep 1 && lua require('bufferline.ui').refresh()"
 end
 
 local goForwardBuffer = function()
   vim.api.nvim_command(string.format "BufferHistoryForward")
   vim.cmd [[execute "normal! g`\"zz"]]
-  require("bufferline.ui").refresh()
+
+  vim.fn.jobstart "sleep 1 && lua require('bufferline.ui').refresh()"
 end
 
 local goBackAndCloseCurrentBuf = function()
