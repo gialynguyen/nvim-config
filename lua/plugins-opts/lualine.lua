@@ -130,7 +130,9 @@ ins_left {
 }
 
 ins_left {
-  "filename",
+  function()
+    return vim.fn.expand "%:h:t" .. "/" .. vim.fn.expand "%:t"
+  end,
   cond = conditions.buffer_not_empty,
   color = { fg = colors.magenta, gui = "bold" },
 }
