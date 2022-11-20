@@ -28,19 +28,17 @@ vim.keymap.set("n", "<leader>[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts
 vim.keymap.set("n", "<leader>]", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 
 vim.keymap.set(
-  "n",
-  "[e",
-  "<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>"
-  ,
-  opts
+	"n",
+	"[e",
+	"<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
+	opts
 )
 
 vim.keymap.set(
-  "n",
-  "]e",
-  "<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>"
-  ,
-  opts
+	"n",
+	"]e",
+	"<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
+	opts
 )
 
 vim.keymap.set("", "<Leader>x", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
@@ -54,78 +52,85 @@ vim.keymap.set("n", "<c-l>", "<cmd>NvimTreeFocus<CR>")
 -- Terminal Keymap
 
 require("toggleterm").setup {
-  open_mapping = [[<C-t>]],
+	open_mapping = [[<C-t>]],
 }
 
 function _G.set_terminal_keymaps()
-  local opts = { noremap = true }
-  vim.api.nvim_buf_set_keymap(0, "t", "<C-e>", [[<C-\><C-n>]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
-  vim.api.nvim_buf_set_keymap(0, "t", "<C-z>", [[<C-\><C-n><cmd>resize 15<CR>a]], opts)
-  vim.api.nvim_buf_set_keymap(0, "n", "<C-z>", [[<C-\><C-n><cmd>resize 15<CR>a]], opts)
+	local opts = { noremap = true }
+	vim.api.nvim_buf_set_keymap(0, "t", "<C-e>", [[<C-\><C-n>]], opts)
+	vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
+	vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
+	vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
+	vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
+	vim.api.nvim_buf_set_keymap(0, "t", "<C-z>", [[<C-\><C-n><cmd>resize 15<CR>a]], opts)
+	vim.api.nvim_buf_set_keymap(0, "n", "<C-z>", [[<C-\><C-n><cmd>resize 15<CR>a]], opts)
 end
 
 vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()"
 
 -- Buffers Keymap
+local goBackBuffer = function()
+	vim.api.nvim_command(string.format "BufferHistoryBack")
+	vim.cmd [[execute "normal! g`\"zz"]]
+	require("bufferline.ui").refresh()
+end
+
+local goForwardBuffer = function()
+	vim.api.nvim_command(string.format "BufferHistoryForward")
+	vim.cmd [[execute "normal! g`\"zz"]]
+	require("bufferline.ui").refresh()
+end
 
 local goBackAndCloseCurrentBuf = function()
-  local buf_id = vim.api.nvim_get_current_buf()
-  require("bufjump").backward()
-  vim.api.nvim_command(string.format("bwipeout %d", buf_id))
+	local buf_id = vim.api.nvim_get_current_buf()
+	goBackBuffer()
+	vim.api.nvim_command(string.format("bwipeout %d", buf_id))
 end
 
 local closeHiddenBuffers = function()
-  local buffers = vim.api.nvim_list_bufs()
-  local non_hidden_buffer = {}
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    non_hidden_buffer[vim.api.nvim_win_get_buf(win)] = true
-  end
+	local buffers = vim.api.nvim_list_bufs()
+	local non_hidden_buffer = {}
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		non_hidden_buffer[vim.api.nvim_win_get_buf(win)] = true
+	end
 
-  for _, buffer in ipairs(buffers) do
-    local filetype = vim.fn.getbufvar(buffer, '&buftype')
-    if non_hidden_buffer[buffer] == nil and filetype ~= 'terminal' then
-      vim.api.nvim_command(string.format("bwipeout %d", buffer))
-    end
-  end
+	for _, buffer in ipairs(buffers) do
+		local filetype = vim.fn.getbufvar(buffer, "&buftype")
+		if non_hidden_buffer[buffer] == nil and filetype ~= "terminal" then
+			vim.api.nvim_command(string.format("bwipeout %d", buffer))
+		end
+	end
 
-  require('bufferline.ui').refresh()
-end
-
-local jumpAlternateBuffer = function()
-  vim.api.nvim_command(string.format("e #"))
-  vim.cmd [[execute "normal! g`\"zz"]]
+	require("bufferline.ui").refresh()
 end
 
 vim.keymap.set("n", "<Leader>w", closeHiddenBuffers)
 vim.keymap.set("n", "<c-c>c", goBackAndCloseCurrentBuf)
-vim.keymap.set("n", "<c-c>j", jumpAlternateBuffer)
+vim.keymap.set("n", "]b", goForwardBuffer)
+vim.keymap.set("n", "[b", goBackBuffer)
 
 function GotoBuffer(index)
-  require('nvim-smartbufs').goto_buffer(index)
+	require("nvim-smartbufs").goto_buffer(index)
 end
 
 function CloseBuffer(index)
-  require('nvim-smartbufs').close_buffer(index)
-  require('bufferline.ui').refresh()
+	require("nvim-smartbufs").close_buffer(index)
+	require("bufferline.ui").refresh()
 end
 
 for i = 1, 9 do
-  vim.keymap.set("n", ('<Leader>%s'):format(i), ("<Cmd>lua GotoBuffer(%s)<CR>"):format(i), { silent = true })
-  vim.keymap.set("n", ('<Leader>c%s'):format(i), ("<Cmd>lua CloseBuffer(%s)<CR>"):format(i), { silent = true })
+	vim.keymap.set("n", ("<Leader>%s"):format(i), ("<Cmd>lua GotoBuffer(%s)<CR>"):format(i), { silent = true })
+	vim.keymap.set("n", ("<Leader>c%s"):format(i), ("<Cmd>lua CloseBuffer(%s)<CR>"):format(i), { silent = true })
 end
 
 -- Others
 
 local Wrapline = function()
-  vim.api.nvim_command(string.format "set wrap")
+	vim.api.nvim_command(string.format "set wrap")
 end
 
 local Nowrapline = function()
-  vim.api.nvim_command(string.format "set nowrap")
+	vim.api.nvim_command(string.format "set nowrap")
 end
 
 vim.api.nvim_create_user_command("Wrapline", Wrapline, {})
