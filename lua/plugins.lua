@@ -19,14 +19,15 @@ vim.cmd [[packadd packer.nvim]]
 packer.init {
   display = {
     opt_default = true,
-    open_fn = require("packer.util").float, -- An optional function to open a window for packer's display
+    open_fn = function()
+      return require("packer.util").float { border = "rounded" }
+    end, -- An optional function to open a window for packer's display
     working_sym = "🛠", -- The symbol for a plugin being installed/updated
     error_sym = "🧨", -- The symbol for a plugin with an error in installation/updating
     done_sym = "🎉", -- The symbol for a plugin which has completed installation/updating
     removed_sym = "🔥", -- The symbol for an unused plugin which was removed
     moved_sym = "🚀", -- The symbol for a plugin which was moved (e.g. from opt to start)
     header_sym = "━", -- The symbol for the header line in packer's display show_all_info = true, -- Should packer show all update details automatically?
-    prompt_border = "double", -- Border style of prompt popups.
   },
 }
 
@@ -241,7 +242,12 @@ packer.startup(function()
 
   use "jose-elias-alvarez/null-ls.nvim"
 
-  use "voldikss/vim-floaterm"
+  use {
+    "voldikss/vim-floaterm",
+    config = function()
+      vim.g.floaterm_borderchars = '─│─│╭╮╯╰'
+    end
+  }
 
   use {
     "akinsho/bufferline.nvim",
