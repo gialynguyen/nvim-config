@@ -240,13 +240,15 @@ packer.startup(function()
 
   use "lewis6991/gitsigns.nvim"
 
+  use "jose-elias-alvarez/typescript.nvim"
+
   use "jose-elias-alvarez/null-ls.nvim"
 
   use {
     "voldikss/vim-floaterm",
     config = function()
-      vim.g.floaterm_borderchars = '─│─│╭╮╯╰'
-    end
+      vim.g.floaterm_borderchars = "─│─│╭╮╯╰"
+    end,
   }
 
   use {
@@ -625,6 +627,7 @@ null_ls.setup {
         "javascriptreact",
       },
     },
+    require("typescript.extensions.null-ls.code-actions"),
   },
   on_attach = function(client, bufnr)
     if client.supports_method "textDocument/formatting" then
