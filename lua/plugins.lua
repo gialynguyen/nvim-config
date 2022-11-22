@@ -91,11 +91,6 @@ packer.startup(function()
 
   use "JoosepAlviste/nvim-ts-context-commentstring"
 
-  use {
-    "ckipp01/stylua-nvim",
-    run = "cargo install stylua",
-  }
-
   use "nvim-telescope/telescope.nvim"
   use { "nvim-telescope/telescope-ui-select.nvim" }
   use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
@@ -627,7 +622,7 @@ null_ls.setup {
         "javascriptreact",
       },
     },
-    require("typescript.extensions.null-ls.code-actions"),
+    require "typescript.extensions.null-ls.code-actions",
   },
   on_attach = function(client, bufnr)
     if client.supports_method "textDocument/formatting" then
