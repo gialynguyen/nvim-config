@@ -332,7 +332,7 @@ packer.startup(function()
   }
 
   use {
-    "dhruvasagar/vim-buffer-history",
+    "ton/vim-bufsurf",
   }
 
   use {
