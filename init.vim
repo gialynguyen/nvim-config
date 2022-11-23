@@ -67,9 +67,6 @@ map Q <C-w><C-w>q
 
 inoremap <C-a> <ESC>la
 
-map <C-x> <ESC>
-inoremap <C-x> <ESC>
-
 nnoremap <leader>d "_d
 nnoremap <leader>c "_c
 vnoremap <leader>d "_d
@@ -85,18 +82,6 @@ let g:gruvbox_material_better_performance = 1
 let g:gruvbox_material_enable_italic = 1
 
 colorscheme gruvbox-material
-
-" Close popup
-map Q <C-w><C-w>q
-
-inoremap <C-a> <ESC>la
-nnoremap <C-x> <ESC>
-vnoremap <C-x> <ESC>
-
-nnoremap <leader>d "_d
-nnoremap <leader>c "_c
-vnoremap <leader>d "_d
-vnoremap <leader>c "_c
 
 " let g:indent_blankline_char_list = ['¦', '┆', '┊']
 
