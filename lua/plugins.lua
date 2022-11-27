@@ -56,6 +56,8 @@ packer.startup(function()
 
   use "nvim-treesitter/nvim-treesitter"
 
+  use "nvim-treesitter/nvim-treesitter-textobjects"
+
   use {
     "phaazon/hop.nvim",
     branch = "v2", -- optional but strongly recommended
@@ -581,6 +583,46 @@ require("nvim-treesitter.configs").setup {
     enable = true,
     disable = { "html", "javascript", "typescript", "typescriptreact", "javascriptreact" },
   },
+  textobjects = {
+    select = {
+      enable = true,
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+      selection_modes = {
+        ['@parameter.outer'] = 'v', -- charwise
+        ['@function.outer'] = 'V', -- linewise
+        ['@class.outer'] = '<c-v>', -- blockwise
+      },
+      include_surrounding_whitespace = true,
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = { query = "@class.outer", desc = "Next class start" },
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
+      },
+    },
+  },
 }
 
 local async_formatting = function(bufnr)
@@ -688,15 +730,6 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 local cmp = require "cmp"
 local types = require "cmp.types"
 
-local function deprioritize_snippet(entry1, entry2)
-  if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then
-    return false
-  end
-  if entry2:get_kind() == types.lsp.CompletionItemKind.Snippet then
-    return true
-  end
-end
-
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -706,7 +739,6 @@ cmp.setup {
   sorting = {
     priority_weight = 2,
     comparators = {
-      deprioritize_snippet,
       cmp.config.compare.offset,
       cmp.config.compare.exact,
       cmp.config.compare.scopes,
@@ -816,7 +848,7 @@ cmp.setup {
     native_menu = false,
   },
   sources = {
-    { name = "vsnip", max_item_count = 4 },
+    { name = "vsnip" },
     { name = "nvim_lsp" },
     { name = "nvim_lsp_signature_help" },
     { name = "buffer", max_item_count = 4 },

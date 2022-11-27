@@ -79,7 +79,8 @@ let g:gruvbox_material_enable_italic = 1
 colorscheme gruvbox-material
 
 " let g:indent_blankline_char_list = ['¦', '┆', '┊']
-
+set autoread
+au CursorHold * checktime
 autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc
 autocmd BufNewFile,BufRead *.astro setlocal filetype=astro
 autocmd BufNewFile,BufRead *.mdx setlocal filetype=markdown
