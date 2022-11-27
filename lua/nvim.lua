@@ -17,7 +17,7 @@ vim.o.fillchars = "eob: "
 vim.o.foldmethod = "expr"
 vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 vim.o.foldenable = false
-vim.wo.wrap = false
+vim.wo.wrap = true
 vim.wo.list = false
 vim.wo.linebreak = true
 

@@ -88,6 +88,7 @@ colorscheme gruvbox-material
 autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc
 autocmd BufNewFile,BufRead *.astro setlocal filetype=astro
 autocmd BufNewFile,BufRead *.mdx setlocal filetype=markdown
-autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
+autocmd User TelescopePreviewerLoaded setlocal wrap
+autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js silent! EslintFixAll
 
 runtime OPT packs.vim

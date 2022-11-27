@@ -468,18 +468,45 @@ packer.startup(function()
   end
 end)
 
-require("telescope").setup {
+local function spread(template)
+  local result = {}
+  for key, value in pairs(template) do
+    result[key] = value
+  end
+
+  return function(table)
+    for key, value in pairs(table) do
+      result[key] = value
+    end
+    return result
+  end
+end
+
+local telescope = require "telescope"
+local telescope_picker_opts = {
+  theme = "ivy",
+  layout_config = {
+    preview_width = 0.4,
+  },
+}
+
+telescope.setup {
   defaults = {
     mappings = { n = { ["o"] = require("telescope.actions").select_default } },
     initial_mode = "normal",
     hidden = false,
+    color_devicons = true,
   },
   pickers = {
-    find_files = {
-      theme = "ivy",
-    },
-    treesitter = {
-      theme = "ivy",
+    find_files = spread(telescope_picker_opts) {},
+    fd = spread(telescope_picker_opts) {},
+    git_status = spread(telescope_picker_opts) {},
+    git_files = spread(telescope_picker_opts) {},
+    treesitter = spread(telescope_picker_opts) {},
+    diagnostics = spread(telescope_picker_opts) {},
+    oldfiles = spread(telescope_picker_opts) {},
+    buffers = {
+      theme = "dropdown",
     },
   },
   extensions = {
@@ -500,9 +527,9 @@ require("telescope").setup {
   },
 }
 
-require("telescope").load_extension "fzf"
-require("telescope").load_extension "ui-select"
-require("telescope").load_extension "live_grep_args"
+telescope.load_extension "fzf"
+telescope.load_extension "ui-select"
+telescope.load_extension "live_grep_args"
 
 require("nvim-treesitter.configs").setup {
   context_commentstring = {
@@ -757,6 +784,13 @@ cmp.setup {
     ["<C-e>"] = cmp.mapping.close(),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
+  },
+  confirmation = {
+    get_commit_characters = function(commit_characters)
+      return vim.tbl_filter(function(char)
+        return char ~= ","
+      end, commit_characters)
+    end,
   },
   completion = {
     keyword_length = 2,

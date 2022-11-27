@@ -1,12 +1,14 @@
 -- Telescope keymap
-vim.keymap.set("n", "<Leader>ff", require("telescope.builtin").find_files)
-vim.keymap.set("n", "<Leader>fd", require("telescope.builtin").fd)
-vim.keymap.set("n", "<Leader>fg", require("telescope.builtin").git_status)
-vim.keymap.set("n", "<Leader>t", require("telescope.builtin").treesitter)
-vim.keymap.set("n", "<leader>b", require("telescope.builtin").buffers)
+local builtin = require "telescope.builtin"
+vim.keymap.set("n", "<Leader>ff", builtin.find_files)
+vim.keymap.set("n", "<Leader>fd", builtin.fd)
+vim.keymap.set("n", "<Leader>gs", builtin.git_status)
+vim.keymap.set("n", "<Leader>gf", builtin.git_files)
+vim.keymap.set("n", "<Leader>t", builtin.treesitter)
+vim.keymap.set("n", "<leader>b", builtin.buffers)
 vim.keymap.set("n", "<leader>rg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
-vim.keymap.set("n", "<leader>rr", "<cmd>Telescope resume<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>re", require("telescope.builtin").oldfiles)
+vim.keymap.set("n", "<leader>rr", builtin.resume)
+vim.keymap.set("n", "<leader>re", ":lua require('telescope.builtin').oldfiles({ only_cwd = true })<CR>")
 
 --- LSP keymap
 
@@ -20,7 +22,7 @@ vim.keymap.set("n", "<leader>ac", "<Cmd>Lspsaga code_action<CR>", opts)
 vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations)
 vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions)
 
-vim.keymap.set("n", "<leader>dd", "<cmd>Telescope diagnostics<CR>", opts)
+vim.keymap.set("n", "<leader>dd", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
 vim.keymap.set("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
 vim.keymap.set("n", "<leader>[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
