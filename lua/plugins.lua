@@ -234,6 +234,11 @@ packer.startup(function()
   use "onsails/lspkind-nvim"
 
   use "lewis6991/gitsigns.nvim"
+  use {
+    "sindrets/diffview.nvim",
+  }
+
+  use "tpope/vim-fugitive"
 
   use "jose-elias-alvarez/typescript.nvim"
 

@@ -1,14 +1,23 @@
 -- Telescope keymap
 local builtin = require "telescope.builtin"
-vim.keymap.set("n", "<Leader>ff", builtin.find_files)
-vim.keymap.set("n", "<Leader>fd", builtin.fd)
-vim.keymap.set("n", "<Leader>gs", builtin.git_status)
-vim.keymap.set("n", "<Leader>gf", builtin.git_files)
-vim.keymap.set("n", "<Leader>t", builtin.treesitter)
+vim.keymap.set("n", "<leader>ff", builtin.find_files)
+vim.keymap.set("n", "<leader>fd", builtin.fd)
+vim.keymap.set("n", "<leader>gs", builtin.git_status)
+vim.keymap.set("n", "<leader>gf", builtin.git_files)
+vim.keymap.set("n", "<leader>t", builtin.treesitter)
 vim.keymap.set("n", "<leader>b", builtin.buffers)
 vim.keymap.set("n", "<leader>rg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 vim.keymap.set("n", "<leader>rr", builtin.resume)
 vim.keymap.set("n", "<leader>re", ":lua require('telescope.builtin').oldfiles({ only_cwd = true })<CR>")
+
+--- Git Keymap
+
+vim.keymap.set("n", "]c", "<cmd>Gitsigns next_hunk<CR>")
+vim.keymap.set("n", "[c", "<cmd>Gitsigns prev_hunk<CR>")
+vim.keymap.set("n", "<leader>gd", "<cmd>DiffviewOpen<CR>")
+vim.keymap.set("n", "<leader>go", "<cmd>DiffviewOpen<CR>")
+vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory %<CR>")
+vim.keymap.set("n", "<leader>gH", "<cmd>DiffviewFileHistory<CR>")
 
 --- LSP keymap
 
@@ -113,6 +122,10 @@ vim.keymap.set("n", "<c-c>c", goBackAndCloseCurrentBuf)
 vim.keymap.set("n", "]b", goForwardBuffer)
 vim.keymap.set("n", "[b", goBackBuffer)
 
+vim.keymap.set("n", "<leader>q", "<cmd>bp<CR><cmd>bd #<CR>")
+vim.keymap.set("n", "<leader>h", "<cmd>bprevious<CR>")
+vim.keymap.set("n", "<leader>l", "<cmd>bnext<CR>")
+
 function GotoBuffer(index)
   require("nvim-smartbufs").goto_buffer(index)
 end
@@ -143,3 +156,5 @@ vim.api.nvim_create_user_command("Nowrapline", Nowrapline, {})
 vim.keymap.set("n", "<F8>", "<Cmd>SymbolsOutline<CR>")
 vim.keymap.set("n", "<leader>db", "<cmd>Dashboard<CR>")
 vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>", { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>Q", "<cmd>tabc<CR>", { noremap = true, silent = true })
