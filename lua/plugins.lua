@@ -596,9 +596,9 @@ require("nvim-treesitter.configs").setup {
         ["ic"] = "@class.inner",
       },
       selection_modes = {
-        ['@parameter.outer'] = 'v', -- charwise
-        ['@function.outer'] = 'V', -- linewise
-        ['@class.outer'] = '<c-v>', -- blockwise
+        ["@parameter.outer"] = "v", -- charwise
+        ["@function.outer"] = "V", -- linewise
+        ["@class.outer"] = "<c-v>", -- blockwise
       },
       include_surrounding_whitespace = true,
     },
@@ -667,6 +667,8 @@ null_ls.setup {
     null_ls.builtins.formatting.rustfmt,
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.code_actions.gitsigns,
+    null_ls.builtins.diagnostics.stylelint,
+    null_ls.builtins.formatting.stylelint,
     null_ls.builtins.diagnostics.cspell.with {
       filetypes = {
         "html",
@@ -728,7 +730,28 @@ end
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 local cmp = require "cmp"
-local types = require "cmp.types"
+
+local lspkind_comparator = function(conf)
+  local lsp_types = require("cmp.types").lsp
+  return function(entry1, entry2)
+    if entry1.source.name ~= "nvim_lsp" then
+      if entry2.source.name == "nvim_lsp" then
+        return false
+      else
+        return nil
+      end
+    end
+    local kind1 = lsp_types.CompletionItemKind[entry1:get_kind()]
+    local kind2 = lsp_types.CompletionItemKind[entry2:get_kind()]
+
+    local priority1 = conf.kind_priority[kind1] or 0
+    local priority2 = conf.kind_priority[kind2] or 0
+    if priority1 == priority2 then
+      return nil
+    end
+    return priority2 < priority1
+  end
+end
 
 cmp.setup {
   snippet = {
@@ -737,17 +760,42 @@ cmp.setup {
     end,
   },
   sorting = {
-    priority_weight = 2,
+    priority_weight = 1,
     comparators = {
-      cmp.config.compare.offset,
-      cmp.config.compare.exact,
-      cmp.config.compare.scopes,
-      cmp.config.compare.score,
-      cmp.config.compare.recently_used,
       cmp.config.compare.locality,
-      cmp.config.compare.kind,
-      cmp.config.compare.sort_text,
-      cmp.config.compare.length,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.score,
+      lspkind_comparator {
+        kind_priority = {
+          Field = 11,
+          Property = 11,
+          Constant = 10,
+          Enum = 10,
+          EnumMember = 10,
+          Event = 10,
+          Function = 10,
+          Method = 10,
+          Operator = 10,
+          Reference = 10,
+          Struct = 10,
+          Variable = 9,
+          File = 8,
+          Folder = 8,
+          Class = 5,
+          Color = 5,
+          Module = 5,
+          Keyword = 2,
+          Constructor = 1,
+          Interface = 1,
+          Snippet = 1,
+          Text = 1,
+          TypeParameter = 1,
+          Unit = 1,
+          Value = 1,
+        },
+      },
+
+      cmp.config.compare.offset,
       cmp.config.compare.order,
     },
   },
@@ -785,14 +833,14 @@ cmp.setup {
 
       maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
 
-      before = function(entry, vim_item)
+      before = function(_, vim_item)
         return vim_item
       end,
     },
   },
   mapping = cmp.mapping.preset.insert {
     ["<C-s>"] = cmp.mapping.complete(),
-    ["<CR>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true },
+    ["<CR>"] = cmp.mapping.confirm { select = false },
     ["<Tab>"] = cmp.mapping(function(fallback)
       if not cmp.visible() then
         fallback()
@@ -801,8 +849,6 @@ cmp.setup {
 
       if cmp.visible() then
         cmp.select_next_item()
-      elseif cmp.visible and vim.fn["vsnip#available"](1) == 1 then
-        feedkey("<Plug>(vsnip-expand-or-jump)", "")
       elseif has_words_before() then
         cmp.complete()
       else
@@ -813,13 +859,26 @@ cmp.setup {
     ["<S-Tab>"] = cmp.mapping(function()
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif cmp.visible and vim.fn["vsnip#jumpable"](-1) == 1 then
+      end
+    end, { "i", "s" }),
+    ["<C-d>"] = cmp.mapping(function(fallback)
+      if vim.fn["vsnip#available"](1) == 1 then
+        feedkey("<Plug>(vsnip-expand-or-jump)", "")
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+
+    ["<C-b>"] = cmp.mapping(function(fallback)
+      if vim.fn["vsnip#jumpable"](-1) == 1 then
         feedkey("<Plug>(vsnip-jump-prev)", "")
+      else
+        fallback()
       end
     end, { "i", "s" }),
     ["<C-c>"] = cmp.mapping.abort(),
     ["<C-e>"] = cmp.mapping.close(),
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-u>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
   },
   confirmation = {
@@ -848,10 +907,10 @@ cmp.setup {
     native_menu = false,
   },
   sources = {
-    { name = "vsnip" },
-    { name = "nvim_lsp" },
+    { name = "vsnip", max_item_count = 4, priority = 7 },
+    { name = "nvim_lsp", priority = 8 },
     { name = "nvim_lsp_signature_help" },
-    { name = "buffer", max_item_count = 4 },
+    { name = "buffer", priority = 7 },
     { name = "path", max_item_count = 4 },
   },
 }
