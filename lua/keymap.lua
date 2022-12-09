@@ -32,7 +32,7 @@ vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations)
 vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions)
 
 vim.keymap.set("n", "<leader>dd", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
-vim.keymap.set("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+vim.keymap.set("n", "<leader>da", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
 vim.keymap.set("n", "<leader>[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 
@@ -123,6 +123,7 @@ vim.keymap.set("n", "]b", goForwardBuffer)
 vim.keymap.set("n", "[b", goBackBuffer)
 
 vim.keymap.set("n", "<leader>q", "<cmd>bp<CR><cmd>bd #<CR>")
+vim.keymap.set("n", "<leader>X", "<cmd>bp<CR><cmd>bd #<CR><cmd>q<CR>")
 vim.keymap.set("n", "<leader>h", "<cmd>bprevious<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>bnext<CR>")
 
@@ -159,7 +160,7 @@ vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>", { noremap = true, silent = 
 
 vim.keymap.set("n", "<leader>Q", "<cmd>tabc<CR>", { noremap = true, silent = true })
 
-vim.keymap.set("n", "<leader>za", "<cmd>TZAtaraxis<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>za", "<cmd>ZenMode<CR>", { noremap = true, silent = true })
 
 --- illuminate keymap for MacOS (stupid) ---
 vim.keymap.set("n", "˜", require("illuminate").goto_next_reference, { desc = "Move to next reference" })

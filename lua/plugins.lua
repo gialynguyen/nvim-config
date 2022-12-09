@@ -281,18 +281,12 @@ packer.startup(function()
   }
 
   use {
-    "Pocco81/true-zen.nvim",
+    "folke/zen-mode.nvim",
     config = function()
-      require("true-zen").setup {
-        modes = { -- configurations per mode
-          ataraxis = {
-            padding = { -- padding windows
-              left = 70,
-              right = 70,
-              top = 0,
-              bottom = 0,
-            },
-          },
+      require("zen-mode").setup {
+        window = {
+          backdrop = 1,
+          width = 0.6,
         },
       }
     end,
@@ -1233,6 +1227,7 @@ require("transparent").setup {
     "BufferLineDuplicateSelected",
 
     "toggleterm",
+    "ZenBg",
   },
   exclude = {}, -- table: groups you don't want to clear
 }
