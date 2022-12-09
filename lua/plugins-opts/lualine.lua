@@ -162,6 +162,10 @@ ins_left {
 
 -- Add components to right sections
 ins_right {
+  "searchcount",
+}
+
+ins_right {
   "filetype",
   icons_enabled = true,
   color = { fg = colors.red, gui = "bold" },

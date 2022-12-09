@@ -26,6 +26,11 @@ runtime OPT telescope.nvim
 runtime OPT telescope-file-browser.nvim
 runtime OPT lualine.nvim
 
+augroup matchup_matchparen_highlight
+  autocmd!
+  autocmd ColorScheme * hi MatchParen guifg=#f6f3e8 guibg=#857b6f gui=none
+augroup END
+
 packadd vim-matchup
 packadd gruvbox-material
 packadd nvim-autopairs
@@ -61,6 +66,7 @@ inoremap <silent><c-\> <Esc><Cmd>ToggleTermToggleAll<CR>
 map Q <C-w><C-w>q
 
 inoremap <C-a> <ESC>la
+inoremap <C-d> <ESC>ha
 
 nnoremap <leader>d "_d
 nnoremap <leader>c "_c

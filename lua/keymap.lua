@@ -158,3 +158,9 @@ vim.keymap.set("n", "<leader>db", "<cmd>Dashboard<CR>")
 vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>", { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>Q", "<cmd>tabc<CR>", { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>za", "<cmd>TZAtaraxis<CR>", { noremap = true, silent = true })
+
+--- illuminate keymap for MacOS (stupid) ---
+vim.keymap.set("n", "˜", require("illuminate").goto_next_reference, { desc = "Move to next reference" })
+vim.keymap.set("n", "π", require("illuminate").goto_prev_reference, { desc = "Move to previous reference" })

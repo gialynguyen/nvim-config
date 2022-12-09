@@ -26,6 +26,9 @@ vim.g.mapleader = ","
 vim.o.mouse = "a"
 vim.o.inccommand = "nosplit"
 
+vim.g.VM_set_statusline = 0
+vim.g.VM_silent_exit = 1
+
 local vim = vim
 local api = vim.api
 local M = {}
