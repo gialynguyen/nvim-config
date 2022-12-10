@@ -52,7 +52,7 @@ vim.keymap.set(
   opts
 )
 
-vim.keymap.set("", "<Leader>x", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+vim.keymap.set("", "<c-k>", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
 
 -- NvimTree Keymap
 
@@ -123,7 +123,7 @@ vim.keymap.set("n", "]b", goForwardBuffer)
 vim.keymap.set("n", "[b", goBackBuffer)
 
 vim.keymap.set("n", "<leader>q", "<cmd>bp<CR><cmd>bd #<CR>")
-vim.keymap.set("n", "<leader>X", "<cmd>bp<CR><cmd>bd #<CR><cmd>q<CR>")
+vim.keymap.set("n", "<leader>x", "<cmd>bp<CR><cmd>bd #<CR><cmd>q<CR>")
 vim.keymap.set("n", "<leader>h", "<cmd>bprevious<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>bnext<CR>")
 
