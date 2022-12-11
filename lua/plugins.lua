@@ -217,13 +217,16 @@ packer.startup(function()
 
   use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/nvim-cmp"
-  use "hrsh7th/cmp-nvim-lsp-signature-help"
   use "hrsh7th/cmp-vsnip"
   use "hrsh7th/vim-vsnip"
   use "hrsh7th/cmp-path"
   use "rafamadriz/friendly-snippets"
   use "hrsh7th/cmp-buffer"
   use "lukas-reineke/cmp-under-comparator"
+  use {
+    "jackieaskins/cmp-emmet",
+    run = "npm run release",
+  }
 
   use {
     "kyazdani42/nvim-tree.lua",
@@ -233,8 +236,11 @@ packer.startup(function()
   use {
     "neovim/nvim-lspconfig",
   }
-
   use "onsails/lspkind-nvim"
+  use {
+    "ray-x/lsp_signature.nvim",
+  }
+
 
   use "lewis6991/gitsigns.nvim"
   use {
@@ -843,7 +849,6 @@ cmp.setup {
     end,
   },
   completion = {
-    keyword_length = 2,
     completeopt = "menu,noselect",
     autocomplete = {
       cmp.TriggerEvent.TextChanged,
@@ -863,9 +868,9 @@ cmp.setup {
   sources = {
     { name = "vsnip", max_item_count = 4, priority = 7 },
     { name = "nvim_lsp", priority = 8 },
-    { name = "nvim_lsp_signature_help" },
     { name = "buffer", priority = 7 },
     { name = "path", max_item_count = 4 },
+    { name = "emmet" },
   },
 }
 

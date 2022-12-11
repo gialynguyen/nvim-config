@@ -49,6 +49,14 @@ require("nvim-lsp-installer").on_server_ready(function(server)
         navic.attach(client, bufnr)
         vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
       end
+
+      require("lsp_signature").on_attach({
+        bind = true, -- This is mandatory, otherwise border config won't get registered.
+        handler_opts = {
+          border = "rounded",
+        },
+        hint_enable = false,
+      }, bufnr)
     end,
     autostart = true,
     capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
@@ -93,18 +101,6 @@ require("nvim-lsp-installer").on_server_ready(function(server)
 
   server:setup(opts)
 end)
-
-lspconfig.emmet_ls.setup {
-  capabilities = capabilities,
-  filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
-  init_options = {
-    html = {
-      options = {
-        ["bem.enabled"] = true,
-      },
-    },
-  },
-}
 
 vim.diagnostic.config {
   virtual_text = false,
