@@ -185,7 +185,14 @@ packer.startup(function()
 
       pcall(function()
         local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-        require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+        local ts_utils = require "nvim-treesitter.ts_utils"
+
+        require "cmp".event:on("confirm_done", function (evt)
+          local name = ts_utils.get_node_at_cursor():type()
+          if name ~= "named_imports" then
+            cmp_autopairs.on_confirm_done()(evt)
+          end
+        end)
       end)
     end,
   }
