@@ -223,6 +223,7 @@ packer.startup(function()
   use "hrsh7th/cmp-path"
   use "rafamadriz/friendly-snippets"
   use "hrsh7th/cmp-buffer"
+  use "lukas-reineke/cmp-under-comparator"
 
   use {
     "kyazdani42/nvim-tree.lua",
@@ -733,28 +734,6 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 local cmp = require "cmp"
 
-local lspkind_comparator = function(conf)
-  local lsp_types = require("cmp.types").lsp
-  return function(entry1, entry2)
-    if entry1.source.name ~= "nvim_lsp" then
-      if entry2.source.name == "nvim_lsp" then
-        return false
-      else
-        return nil
-      end
-    end
-    local kind1 = lsp_types.CompletionItemKind[entry1:get_kind()]
-    local kind2 = lsp_types.CompletionItemKind[entry2:get_kind()]
-
-    local priority1 = conf.kind_priority[kind1] or 0
-    local priority2 = conf.kind_priority[kind2] or 0
-    if priority1 == priority2 then
-      return nil
-    end
-    return priority2 < priority1
-  end
-end
-
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -764,40 +743,13 @@ cmp.setup {
   sorting = {
     priority_weight = 1,
     comparators = {
-      cmp.config.compare.locality,
-      cmp.config.compare.recently_used,
-      cmp.config.compare.score,
-      lspkind_comparator {
-        kind_priority = {
-          Field = 11,
-          Property = 11,
-          Constant = 10,
-          Enum = 10,
-          EnumMember = 10,
-          Event = 10,
-          Function = 10,
-          Method = 10,
-          Operator = 10,
-          Reference = 10,
-          Struct = 10,
-          Variable = 9,
-          File = 8,
-          Folder = 8,
-          Class = 5,
-          Color = 5,
-          Module = 5,
-          Keyword = 2,
-          Constructor = 1,
-          Interface = 1,
-          Snippet = 1,
-          Text = 1,
-          TypeParameter = 1,
-          Unit = 1,
-          Value = 1,
-        },
-      },
-
       cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      require("cmp-under-comparator").under,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
       cmp.config.compare.order,
     },
   },

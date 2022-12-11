@@ -31,8 +31,8 @@ vim.keymap.set("n", "<leader>ac", "<Cmd>Lspsaga code_action<CR>", opts)
 vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations)
 vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions)
 
-vim.keymap.set("n", "<leader>dd", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
-vim.keymap.set("n", "<leader>da", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+vim.keymap.set("n", "<leader>da", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
+vim.keymap.set("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
 vim.keymap.set("n", "<leader>[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 
