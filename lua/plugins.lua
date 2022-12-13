@@ -187,7 +187,7 @@ packer.startup(function()
         local cmp_autopairs = require "nvim-autopairs.completion.cmp"
         local ts_utils = require "nvim-treesitter.ts_utils"
 
-        require "cmp".event:on("confirm_done", function (evt)
+        require("cmp").event:on("confirm_done", function(evt)
           local name = ts_utils.get_node_at_cursor():type()
           if name ~= "named_imports" then
             cmp_autopairs.on_confirm_done()(evt)
@@ -206,28 +206,21 @@ packer.startup(function()
     end,
   }
 
-  use "williamboman/nvim-lsp-installer"
+  use "hrsh7th/cmp-nvim-lsp"
+  use "hrsh7th/nvim-cmp"
+  use "rafamadriz/friendly-snippets"
 
   use {
-    "glepnir/lspsaga.nvim",
-    branch = "main",
+    "L3MON4D3/LuaSnip",
     config = function()
-      local saga = require "lspsaga"
-      saga.init_lsp_saga {
-        code_action_lightbulb = {
-          enable = false,
-          enable_in_insert = false,
-        },
-      }
+      require("luasnip.loaders.from_lua").lazy_load()
+      require("luasnip.loaders.from_vscode").lazy_load()
+      require("luasnip.loaders.from_snipmate").lazy_load()
     end,
   }
 
-  use "hrsh7th/cmp-nvim-lsp"
-  use "hrsh7th/nvim-cmp"
-  use "hrsh7th/cmp-vsnip"
-  use "hrsh7th/vim-vsnip"
+  use "saadparwaiz1/cmp_luasnip"
   use "hrsh7th/cmp-path"
-  use "rafamadriz/friendly-snippets"
   use "hrsh7th/cmp-buffer"
   use "lukas-reineke/cmp-under-comparator"
   use {
@@ -243,11 +236,35 @@ packer.startup(function()
   use {
     "neovim/nvim-lspconfig",
   }
+
+  use { "williamboman/mason-lspconfig.nvim" }
+
+  use {
+    "williamboman/mason.nvim",
+    config = function()
+      -- require("lvim.core.mason").setup()
+    end,
+  }
+
   use "onsails/lspkind-nvim"
+
   use {
     "ray-x/lsp_signature.nvim",
   }
 
+  use {
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+    config = function()
+      local saga = require "lspsaga"
+      saga.init_lsp_saga {
+        code_action_lightbulb = {
+          enable = false,
+          enable_in_insert = false,
+        },
+      }
+    end,
+  }
 
   use "lewis6991/gitsigns.nvim"
   use {
@@ -677,7 +694,6 @@ local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
 
 null_ls.setup {
   sources = {
-    null_ls.builtins.formatting.autopep8,
     null_ls.builtins.formatting.gofmt,
     null_ls.builtins.formatting.prettier,
     null_ls.builtins.formatting.rustfmt,
@@ -746,11 +762,12 @@ end
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 local cmp = require "cmp"
+local luasnip = require "luasnip"
 
 cmp.setup {
   snippet = {
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body)
+      require("luasnip").lsp_expand(args.body)
     end,
   },
   sorting = {
@@ -813,32 +830,36 @@ cmp.setup {
         fallback()
         return
       end
-
       if cmp.visible() then
         cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
       elseif has_words_before() then
         cmp.complete()
-      else
-        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-      end
-    end, { "i", "s" }),
-
-    ["<S-Tab>"] = cmp.mapping(function()
-      if cmp.visible() then
-        cmp.select_prev_item()
-      end
-    end, { "i", "s" }),
-    ["<C-d>"] = cmp.mapping(function(fallback)
-      if vim.fn["vsnip#available"](1) == 1 then
-        feedkey("<Plug>(vsnip-expand-or-jump)", "")
       else
         fallback()
       end
     end, { "i", "s" }),
 
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+    ["<C-d>"] = cmp.mapping(function(fallback)
+      if luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
     ["<C-b>"] = cmp.mapping(function(fallback)
-      if vim.fn["vsnip#jumpable"](-1) == 1 then
-        feedkey("<Plug>(vsnip-jump-prev)", "")
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -856,6 +877,7 @@ cmp.setup {
     end,
   },
   completion = {
+    keyword_length = 2,
     completeopt = "menu,noselect",
     autocomplete = {
       cmp.TriggerEvent.TextChanged,
@@ -873,9 +895,9 @@ cmp.setup {
     native_menu = false,
   },
   sources = {
-    { name = "vsnip", max_item_count = 4, priority = 7 },
-    { name = "nvim_lsp", priority = 8 },
-    { name = "buffer", priority = 7 },
+    { name = "luasnip", max_item_count = 4 },
+    { name = "nvim_lsp" },
+    { name = "buffer" },
     { name = "path", max_item_count = 4 },
     { name = "emmet" },
   },
@@ -1192,6 +1214,7 @@ require("transparent").setup {
 
     "toggleterm",
     "ZenBg",
+    "MasonNormal",
   },
   exclude = {}, -- table: groups you don't want to clear
 }

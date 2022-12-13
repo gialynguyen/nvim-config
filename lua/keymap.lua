@@ -118,7 +118,7 @@ local closeHiddenBuffers = function()
 end
 
 vim.keymap.set("n", "<Leader>w", closeHiddenBuffers)
-vim.keymap.set("n", "<c-c>c", goBackAndCloseCurrentBuf)
+vim.keymap.set("n", "<c-x>", goBackAndCloseCurrentBuf)
 vim.keymap.set("n", "]b", goForwardBuffer)
 vim.keymap.set("n", "[b", goBackBuffer)
 

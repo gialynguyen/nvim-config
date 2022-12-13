@@ -92,5 +92,6 @@ autocmd BufNewFile,BufRead *.astro setlocal filetype=astro
 autocmd BufNewFile,BufRead *.mdx setlocal filetype=markdown
 autocmd User TelescopePreviewerLoaded setlocal wrap
 autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js silent! EslintFixAll
+autocmd FileType mason setlocal winblend=10
 
 runtime OPT packs.vim

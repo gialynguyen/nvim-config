@@ -1,106 +1,97 @@
-local servers = {
-  "bashls",
-  "clangd",
-  "cssls",
-  "cssmodules_ls",
-  "gopls",
-  "html",
-  "eslint",
-  "pyright",
-  "rust_analyzer",
-  "sumneko_lua",
-  "tailwindcss",
-  "tsserver",
-  "flow",
-  "astro",
-}
-for _, name in pairs(servers) do
-  local found, server = require("nvim-lsp-installer").get_server(name)
-  if found and not server:is_installed() then
-    print("Installing " .. name)
-    server:install()
-  end
-end
-
-local setup_server = {
-  sumneko_lua = function(opts)
-    opts.settings = { Lua = { diagnostics = { globals = { "vim" } } } }
-  end,
-  tailwindcss = function(opts)
-    opts.autostart = false
-  end,
-  cssmodules_ls = function(opts)
-    opts.autostart = false
-  end,
+require("mason").setup {
+  ui = {
+    border = "rounded",
+  },
 }
 
-local navic = require "nvim-navic"
-local lspconfig = require "lspconfig"
+require("mason-lspconfig").setup {
+  ensure_installed = {
+    "bashls",
+    "clangd",
+    "cssls",
+    "cssmodules_ls",
+    "gopls",
+    "html",
+    "eslint",
+    "pyright",
+    "rust_analyzer",
+    "sumneko_lua",
+    "tailwindcss",
+    "tsserver",
+    "astro",
+  },
+  automatic_installation = false,
+}
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+require("mason-lspconfig").setup_handlers {
+  function(server_name)
+    local navic = require "nvim-navic"
+    local lspconfig = require "lspconfig"
 
-require("nvim-lsp-installer").on_server_ready(function(server)
-  local opts = {
-    on_attach = function(client, bufnr)
-      vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+    local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-      if client.server_capabilities.documentSymbolProvider then
-        navic.attach(client, bufnr)
-        vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
-      end
+    local setup_server = {
+      sumneko_lua = function(opts)
+        opts.settings = { Lua = { diagnostics = { globals = { "vim" } } } }
+      end,
+      tailwindcss = function(opts)
+        opts.autostart = false
+      end,
+      cssmodules_ls = function(opts)
+        opts.autostart = false
+      end,
+      tsserver = function(opts)
+        opts.root_dir = function(fname)
+          return lspconfig.util.root_pattern "tsconfig.json"(fname)
+            or not lspconfig.util.root_pattern ".flowconfig"(fname)
+              and lspconfig.util.root_pattern("package.json", "jsconfig.json", ".git")(fname)
+        end
 
-      require("lsp_signature").on_attach({
-        bind = true, -- This is mandatory, otherwise border config won't get registered.
-        handler_opts = {
-          border = "rounded",
-        },
-        hint_enable = false,
-      }, bufnr)
-    end,
-    autostart = true,
-    capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
-  }
-
-  if setup_server[server.name] then
-    setup_server[server.name](opts)
-  end
-
-  if server.name == "tsserver" then
-    opts.root_dir = function(fname)
-      return lspconfig.util.root_pattern "tsconfig.json"(fname)
-        or not lspconfig.util.root_pattern ".flowconfig"(fname)
-          and lspconfig.util.root_pattern("package.json", "jsconfig.json", ".git")(fname)
-    end
-
-    opts.capabilities = capabilities
-
-    server:setup(opts)
-    return
-  end
-
-  if server.name == "volar" then
-    opts.filetypes = {
-      "vue",
-    }
-
-    server:setup(opts)
-    return
-  end
-
-  if server.name == "eslint" then
-    opts.handlers = {
-      ["window/showMessageRequest"] = function(_, result, params)
-        return result
+        opts.capabilities = capabilities
+      end,
+      volar = function(opts)
+        opts.filetypes = {
+          "vue",
+        }
+      end,
+      eslint = function(opts)
+        opts.handlers = {
+          ["window/showMessageRequest"] = function(_, result, params)
+            return result
+          end,
+        }
       end,
     }
 
-    server:setup(opts)
-    return
-  end
+    local opts = {
+      on_attach = function(client, bufnr)
+        vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  server:setup(opts)
-end)
+        if client.server_capabilities.documentSymbolProvider then
+          navic.attach(client, bufnr)
+          vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+        end
+
+        require("lsp_signature").on_attach({
+          bind = true, -- This is mandatory, otherwise border config won't get registered.
+          handler_opts = {
+            border = "rounded",
+          },
+          hint_enable = false,
+        }, bufnr)
+      end,
+      autostart = true,
+      capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    }
+
+    if setup_server[server_name] then
+      setup_server[server_name](opts)
+    end
+
+    lspconfig[server_name].setup(opts)
+  end,
+}
 
 vim.diagnostic.config {
   virtual_text = false,
