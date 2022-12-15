@@ -41,14 +41,16 @@ vim.keymap.set("n", "<leader>]", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts
 vim.keymap.set(
   "n",
   "[e",
-  "<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
+  "<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>"
+  ,
   opts
 )
 
 vim.keymap.set(
   "n",
   "]e",
-  "<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
+  "<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>"
+  ,
   opts
 )
 
@@ -97,7 +99,7 @@ end
 local goBackAndCloseCurrentBuf = function()
   local buf_id = vim.api.nvim_get_current_buf()
   goBackBuffer()
-  vim.api.nvim_command(string.format("bwipeout %d", buf_id))
+  vim.api.nvim_command(string.format("bdelete %d", buf_id))
 end
 
 local closeHiddenBuffers = function()
@@ -110,7 +112,7 @@ local closeHiddenBuffers = function()
   for _, buffer in ipairs(buffers) do
     local filetype = vim.fn.getbufvar(buffer, "&buftype")
     if non_hidden_buffer[buffer] == nil and filetype ~= "terminal" then
-      vim.api.nvim_command(string.format("bwipeout %d", buffer))
+      vim.api.nvim_command(string.format("bdelete %d", buffer))
     end
   end
 
