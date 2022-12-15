@@ -41,16 +41,14 @@ vim.keymap.set("n", "<leader>]", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts
 vim.keymap.set(
   "n",
   "[e",
-  "<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>"
-  ,
+  "<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
   opts
 )
 
 vim.keymap.set(
   "n",
   "]e",
-  "<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>"
-  ,
+  "<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
   opts
 )
 
@@ -124,8 +122,8 @@ vim.keymap.set("n", "<c-x>", goBackAndCloseCurrentBuf)
 vim.keymap.set("n", "]b", goForwardBuffer)
 vim.keymap.set("n", "[b", goBackBuffer)
 
-vim.keymap.set("n", "<leader>q", "<cmd>bp<CR><cmd>bd #<CR>")
-vim.keymap.set("n", "<leader>x", "<cmd>bp<CR><cmd>bd #<CR><cmd>q<CR>")
+vim.keymap.set("n", "<leader>q", "<cmd>bd #<CR>")
+vim.keymap.set("n", "<leader>x", "<cmd>bd #<CR><cmd>q<CR>")
 vim.keymap.set("n", "<leader>h", "<cmd>bprevious<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>bnext<CR>")
 
