@@ -826,10 +826,6 @@ cmp.setup {
     ["<C-s>"] = cmp.mapping.complete(),
     ["<CR>"] = cmp.mapping.confirm { select = false },
     ["<Tab>"] = cmp.mapping(function(fallback)
-      if not cmp.visible() then
-        fallback()
-        return
-      end
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
