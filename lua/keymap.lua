@@ -105,15 +105,18 @@ end
 local closeHiddenBuffers = function()
   local buffers = vim.api.nvim_list_bufs()
   local non_hidden_buffer = {}
+
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     non_hidden_buffer[vim.api.nvim_win_get_buf(win)] = true
   end
 
   for _, buffer in ipairs(buffers) do
     local filetype = vim.fn.getbufvar(buffer, "&buftype")
-
-    if non_hidden_buffer[buffer] == nil and filetype ~= "terminal" then
-      vim.api.nvim_command(string.format("bdelete %d", buffer))
+    print(vim.api.nvim_buf_get_name(buffer))
+    if vim.api.nvim_buf_is_valid(buffer) and vim.api.nvim_buf_get_option(buffer, "buflisted") and
+        not vim.api.nvim_buf_get_option(buffer, "modified") and non_hidden_buffer[buffer] == nil and
+        filetype ~= "terminal" then
+      vim.cmd["bdelete!"](buffer)
     end
   end
   require("bufferline.ui").refresh()
@@ -165,5 +168,11 @@ vim.keymap.set("n", "<leader>Q", "<cmd>tabc<CR>", { noremap = true, silent = tru
 vim.keymap.set("n", "<leader>za", "<cmd>ZenMode<CR>", { noremap = true, silent = true })
 
 --- illuminate keymap for MacOS (stupid) ---
+vim.keymap.set("n", "˜", require("illuminate").goto_next_reference, { desc = "Move to next reference" })
+vim.keymap.set("n", "π", require("illuminate").goto_prev_reference, { desc = "Move to previous reference" })
+
+--- illuminate keymap for MacOS (stupid) ---
+vim.keymap.set("n", "˜", require("illuminate").goto_next_reference, { desc = "Move to next reference" })
+vim.keymap.set("n", "π", require("illuminate").goto_prev_reference, { desc = "Move to previous reference" })
 vim.keymap.set("n", "˜", require("illuminate").goto_next_reference, { desc = "Move to next reference" })
 vim.keymap.set("n", "π", require("illuminate").goto_prev_reference, { desc = "Move to previous reference" })
