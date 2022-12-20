@@ -109,13 +109,11 @@ local closeHiddenBuffers = function()
     non_hidden_buffer[vim.api.nvim_win_get_buf(win)] = true
   end
 
-  local delCmd = 'bdelete';
-
-  for i, buffer in ipairs(buffers) do
+  for _, buffer in ipairs(buffers) do
     local filetype = vim.fn.getbufvar(buffer, "&buftype")
 
     if non_hidden_buffer[buffer] == nil and filetype ~= "terminal" then
-      vim.cmd(delCmd .. ' ' .. buffer)
+      vim.api.nvim_command(string.format("bdelete %d", buffer))
     end
   end
   require("bufferline.ui").refresh()
