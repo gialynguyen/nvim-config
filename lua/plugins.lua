@@ -254,7 +254,7 @@ packer.startup(function()
 
   use {
     "glepnir/lspsaga.nvim",
-    branch = "main",
+    branch = "version_2.2",
     config = function()
       local saga = require "lspsaga"
       saga.init_lsp_saga {
