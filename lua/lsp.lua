@@ -25,7 +25,6 @@ require("mason-lspconfig").setup {
 
 require("mason-lspconfig").setup_handlers {
   function(server_name)
-    local navic = require "nvim-navic"
     local lspconfig = require "lspconfig"
 
     local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -43,8 +42,8 @@ require("mason-lspconfig").setup_handlers {
       end,
       tsserver = function(opts)
         opts.root_dir = function(fname)
-          return lspconfig.util.root_pattern "tsconfig.json"(fname)
-            or not lspconfig.util.root_pattern ".flowconfig"(fname)
+          return lspconfig.util.root_pattern "tsconfig.json" (fname)
+              or not lspconfig.util.root_pattern ".flowconfig" (fname)
               and lspconfig.util.root_pattern("package.json", "jsconfig.json", ".git")(fname)
         end
 
@@ -69,8 +68,7 @@ require("mason-lspconfig").setup_handlers {
         vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
         if client.server_capabilities.documentSymbolProvider then
-          navic.attach(client, bufnr)
-          vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+          vim.wo.winbar = require('lspsaga.symbolwinbar'):get_winbar()
         end
 
         require("lsp_signature").on_attach({

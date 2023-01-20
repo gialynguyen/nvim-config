@@ -254,13 +254,19 @@ packer.startup(function()
 
   use {
     "glepnir/lspsaga.nvim",
-    branch = "version_2.2",
     config = function()
       local saga = require "lspsaga"
-      saga.init_lsp_saga {
-        code_action_lightbulb = {
+      saga.setup {
+        lightbulb = {
           enable = false,
           enable_in_insert = false,
+        },
+        ui = {
+          winblend = 0,
+          border = "rounded",
+          colors = {
+            normal_bg = "NONE",
+          },
         },
       }
     end,
@@ -338,42 +344,6 @@ packer.startup(function()
     end,
     config = function()
       vim.g.mkdp_theme = "light"
-    end,
-  }
-
-  use {
-    "SmiteshP/nvim-navic",
-    run = function()
-      require("nvim-navic").setup {
-        icons = {
-          File = " ",
-          Module = " ",
-          Namespace = " ",
-          Package = " ",
-          Class = " ",
-          Method = " ",
-          Property = " ",
-          Field = " ",
-          Constructor = " ",
-          Enum = " ",
-          Interface = " ",
-          Function = " ",
-          Variable = " ",
-          Constant = " ",
-          String = " ",
-          Number = " ",
-          Boolean = " ",
-          Array = " ",
-          Object = " ",
-          Key = " ",
-          Null = " ",
-          EnumMember = " ",
-          Struct = " ",
-          Event = " ",
-          Operator = " ",
-          TypeParameter = " ",
-        },
-      }
     end,
   }
 
@@ -601,6 +571,8 @@ require("nvim-treesitter.configs").setup {
     "javascript",
     "typescript",
     "yaml",
+    "vim",
+    "markdown",
   },
   highlight = {
     enable = true,
