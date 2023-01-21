@@ -97,7 +97,7 @@ packer.startup(function()
   use { "nvim-telescope/telescope-ui-select.nvim" }
   use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
   use "nvim-telescope/telescope-live-grep-args.nvim"
-  -- use "nvim-telescope/telescope-file-browser.nvim"
+  use "nvim-telescope/telescope-file-browser.nvim"
 
   use "Shatur/neovim-session-manager"
 
@@ -540,6 +540,7 @@ telescope.setup {
 telescope.load_extension "fzf"
 telescope.load_extension "ui-select"
 telescope.load_extension "live_grep_args"
+telescope.load_extension "file_browser"
 
 require("nvim-treesitter.configs").setup {
   context_commentstring = {
