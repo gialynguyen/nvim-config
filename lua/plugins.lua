@@ -259,7 +259,7 @@ packer.startup(function()
           if ts_utils.get_node_at_cursor() == nil then
             return
           end
-          
+
           local name = ts_utils.get_node_at_cursor():type()
           if name ~= "named_imports" then
             cmp_autopairs.on_confirm_done()(evt)
@@ -650,6 +650,9 @@ require("nvim-treesitter.configs").setup {
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = true,
+    disable = function()
+      return vim.b.large_buf
+    end,
   },
   yati = {
     enable = true,

@@ -54,3 +54,24 @@ local autoCommands = {
 }
 
 M.nvim_create_augroups(autoCommands)
+
+local aug = vim.api.nvim_create_augroup("buf_large", { clear = true })
+
+vim.api.nvim_create_autocmd({ "BufReadPre" }, {
+  callback = function()
+    local max_size = 1024 * 50;
+    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf()))
+    if ok and stats and (stats.size > max_size) then
+      vim.b.large_buf = true
+      -- vim.cmd "syntax off"
+      vim.cmd "IlluminatePauseBuf"
+      vim.cmd "IndentBlanklineDisable"
+      vim.opt_local.foldmethod = "manual"
+      vim.opt_local.spell = false
+    else
+      vim.b.large_buf = false
+    end
+  end,
+  group = aug,
+  pattern = "*",
+})
