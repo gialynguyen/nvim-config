@@ -977,6 +977,7 @@ require("session_manager").setup {
 }
 
 require("nvim-tree").setup {
+  sync_root_with_cwd = true,
   view = {
     adaptive_size = true,
     mappings = {
