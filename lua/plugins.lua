@@ -122,6 +122,38 @@ packer.startup(function()
     commit = "66f66f64788f66c8101aa35344dd005143356b6b",
   }
 
+  use {
+    "catppuccin/nvim",
+    as = "catppuccin",
+    config = function()
+      require("catppuccin").setup {
+        flavour = "mocha", -- latte, frappe, macchiato, mocha
+        transparent_background = true,
+        integrations = {
+          gitsigns = true,
+          telescope = true,
+          treesitter = true,
+          cmp = true,
+          nvimtree = {
+            enabled = true,
+            show_root = true,
+            transparent_panel = true,
+          },
+          native_lsp = {
+            enabled = true,
+          },
+          hop = true,
+          bufferline = true,
+          dashboard = true,
+          symbols_outline = true,
+          mason = true,
+          treesitter_context = true,
+          illuminate = true,
+        },
+      }
+    end,
+  }
+
   use "nvim-treesitter/nvim-treesitter"
 
   use "nvim-treesitter/nvim-treesitter-textobjects"
@@ -326,6 +358,7 @@ packer.startup(function()
 
   use {
     "glepnir/lspsaga.nvim",
+    commit = "18f4125690c04dc48c3b057de12addaaaacc9736",
     config = function()
       local saga = require "lspsaga"
       saga.setup {
@@ -398,6 +431,13 @@ packer.startup(function()
           width = 0.6,
         },
       }
+    end,
+  }
+
+  use {
+    "folke/twilight.nvim",
+    config = function()
+      require("twilight").setup {}
     end,
   }
 
