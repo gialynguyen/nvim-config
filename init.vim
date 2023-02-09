@@ -82,9 +82,7 @@ let g:gruvbox_material_background = 'medium'
 let g:gruvbox_material_better_performance = 1
 let g:gruvbox_material_enable_italic = 1
 
-" colorscheme gruvbox-material
-
-colorscheme catppuccin
+colorscheme gruvbox-material
 
 " let g:indent_blankline_char_list = ['¦', '┆', '┊']
 set autoread

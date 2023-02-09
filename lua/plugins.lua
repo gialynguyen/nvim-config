@@ -122,38 +122,6 @@ packer.startup(function()
     commit = "66f66f64788f66c8101aa35344dd005143356b6b",
   }
 
-  use {
-    "catppuccin/nvim",
-    as = "catppuccin",
-    config = function()
-      require("catppuccin").setup {
-        flavour = "mocha", -- latte, frappe, macchiato, mocha
-        transparent_background = true,
-        integrations = {
-          gitsigns = true,
-          telescope = true,
-          treesitter = true,
-          cmp = true,
-          nvimtree = {
-            enabled = true,
-            show_root = true,
-            transparent_panel = true,
-          },
-          native_lsp = {
-            enabled = true,
-          },
-          hop = true,
-          bufferline = true,
-          dashboard = true,
-          symbols_outline = true,
-          mason = true,
-          treesitter_context = true,
-          illuminate = true,
-        },
-      }
-    end,
-  }
-
   use "nvim-treesitter/nvim-treesitter"
 
   use "nvim-treesitter/nvim-treesitter-textobjects"
