@@ -83,14 +83,14 @@ vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()"
 
 -- Buffers Keymap
 local goBackBuffer = function()
-  vim.api.nvim_command(string.format "BufSurfBack")
+  vim.api.nvim_command(string.format "silent BufSurfBack")
   vim.cmd [[execute "normal! g`\"zz"]]
 
   vim.fn.jobstart "sleep 1 && lua require('bufferline.ui').refresh()"
 end
 
 local goForwardBuffer = function()
-  vim.api.nvim_command(string.format "BufSurfForward")
+  vim.api.nvim_command(string.format "silent BufSurfForward")
   vim.cmd [[execute "normal! g`\"zz"]]
 
   vim.fn.jobstart "sleep 1 && lua require('bufferline.ui').refresh()"
@@ -113,9 +113,12 @@ local closeHiddenBuffers = function()
   for _, buffer in ipairs(buffers) do
     local filetype = vim.fn.getbufvar(buffer, "&buftype")
     print(vim.api.nvim_buf_get_name(buffer))
-    if vim.api.nvim_buf_is_valid(buffer) and vim.api.nvim_buf_get_option(buffer, "buflisted") and
-        not vim.api.nvim_buf_get_option(buffer, "modified") and non_hidden_buffer[buffer] == nil and
-        filetype ~= "terminal" then
+    if vim.api.nvim_buf_is_valid(buffer)
+        and vim.api.nvim_buf_get_option(buffer, "buflisted")
+        and not vim.api.nvim_buf_get_option(buffer, "modified")
+        and non_hidden_buffer[buffer] == nil
+        and filetype ~= "terminal"
+    then
       vim.cmd["bdelete!"](buffer)
     end
   end

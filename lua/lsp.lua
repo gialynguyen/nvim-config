@@ -76,6 +76,8 @@ require("mason-lspconfig").setup_handlers {
           handler_opts = {
             border = "rounded",
           },
+          transparency = 1,
+          toggle_key = '≈',
           hint_enable = false,
         }, bufnr)
       end,

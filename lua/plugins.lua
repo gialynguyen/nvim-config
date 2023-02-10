@@ -326,7 +326,6 @@ packer.startup(function()
 
   use {
     "glepnir/lspsaga.nvim",
-    commit = "18f4125690c04dc48c3b057de12addaaaacc9736",
     config = function()
       local saga = require "lspsaga"
       saga.setup {
@@ -399,13 +398,6 @@ packer.startup(function()
           width = 0.6,
         },
       }
-    end,
-  }
-
-  use {
-    "folke/twilight.nvim",
-    config = function()
-      require("twilight").setup {}
     end,
   }
 
@@ -654,6 +646,7 @@ require("nvim-treesitter.configs").setup {
     "yaml",
     "vim",
     "markdown",
+    "markdown_inline",
   },
   highlight = {
     enable = true,
