@@ -15,7 +15,6 @@ require("mason-lspconfig").setup {
     "eslint",
     "pyright",
     "rust_analyzer",
-    "sumneko_lua",
     "tailwindcss",
     "tsserver",
     "astro",
@@ -31,9 +30,6 @@ require("mason-lspconfig").setup_handlers {
     capabilities.textDocument.completion.completionItem.snippetSupport = true
 
     local setup_server = {
-      sumneko_lua = function(opts)
-        opts.settings = { Lua = { diagnostics = { globals = { "vim" } } } }
-      end,
       tailwindcss = function(opts)
         opts.autostart = false
       end,
@@ -42,8 +38,8 @@ require("mason-lspconfig").setup_handlers {
       end,
       tsserver = function(opts)
         opts.root_dir = function(fname)
-          return lspconfig.util.root_pattern "tsconfig.json" (fname)
-              or not lspconfig.util.root_pattern ".flowconfig" (fname)
+          return lspconfig.util.root_pattern "tsconfig.json"(fname)
+            or not lspconfig.util.root_pattern ".flowconfig"(fname)
               and lspconfig.util.root_pattern("package.json", "jsconfig.json", ".git")(fname)
         end
 
@@ -68,7 +64,7 @@ require("mason-lspconfig").setup_handlers {
         vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
         if client.server_capabilities.documentSymbolProvider then
-          vim.wo.winbar = require('lspsaga.symbolwinbar'):get_winbar()
+          vim.wo.winbar = require("lspsaga.symbolwinbar"):get_winbar()
         end
 
         require("lsp_signature").on_attach({
@@ -77,7 +73,7 @@ require("mason-lspconfig").setup_handlers {
             border = "rounded",
           },
           transparency = 1,
-          toggle_key = '≈',
+          toggle_key = "≈",
           hint_enable = false,
         }, bufnr)
       end,
