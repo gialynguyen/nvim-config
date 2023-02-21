@@ -340,6 +340,9 @@ packer.startup(function()
             normal_bg = "NONE",
           },
         },
+        diagnostic = {
+          on_insert = false,
+        },
       }
     end,
   }
