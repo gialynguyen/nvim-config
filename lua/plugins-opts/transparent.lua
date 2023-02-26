@@ -1,9 +1,6 @@
 require("transparent").setup {
-  enable = true, -- boolean: enable transparent
-  extra_groups = { -- table/string: additional groups that should be cleared
-    -- In particular, when you set it to 'all', that means all available groups
-
-    -- example of akinsho/nvim-bufferline.lua
+  enable = true,
+  extra_groups = {
     "BufferLineFill",
     "BufferLineBackground",
 
@@ -54,7 +51,6 @@ require("transparent").setup {
     "BufferLineCloseButtonSelected",
 
     "BufferLineBuffer",
-    -- "BufferLineBufferSelected",
     "BufferLineBufferVisible",
 
     "BufferLineNumbers",
@@ -86,5 +82,23 @@ require("transparent").setup {
     "NvimTreeStatuslineNc",
     "NvimTreeEndOfBuffer",
   },
-  exclude = {}, -- table: groups you don't want to clear
+  exclude = {},
 }
+
+local transparent_enable
+
+local function init_transparent()
+  if vim.g.transparent_enable == transparent_enable then
+    return
+  end
+
+  if vim.g.transparent_enable == true then
+    vim.cmd "TransparentEnable"
+  else
+    vim.cmd "TransparentDisable"
+  end
+
+  transparent_enable = vim.g.transparent_enable
+end
+
+vim.api.nvim_create_autocmd({ "BufEnter" }, { callback = init_transparent })
