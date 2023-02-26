@@ -51,75 +51,12 @@ packer.startup(function()
     "glepnir/dashboard-nvim",
     event = "VimEnter",
     config = function()
-      require("dashboard").setup {
-        theme = "doom",
-        config = {
-          header = {
-
-            "",
-            "",
-            "",
-            "",
-            " ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗",
-            " ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║",
-            " ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║",
-            " ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║",
-            " ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║",
-            " ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝",
-            "",
-            "",
-            "",
-          },
-          center = {
-            {
-              icon = " ",
-              desc = "Recently latest session      ",
-              action = "SessionManager load_session",
-            },
-            {
-              icon = " ",
-              desc = "Recently opened files    ",
-              action = "Telescope oldfiles",
-              shortcut = ", re",
-            },
-            {
-              icon = " ",
-              desc = "New File                  ",
-              action = "DashboardNewFile",
-              shortcut = ", o",
-            },
-            {
-              icon = " ",
-              desc = "Browse Files              ",
-              action = "Telescope file_browser",
-              shortcut = ", n",
-            },
-            {
-              icon = " ",
-              desc = "Find File                 ",
-              action = "Telescope find_files",
-              shortcut = ", f",
-            },
-            {
-              icon = " ",
-              desc = "Configure Neovim          ",
-              action = "edit ~/.config/nvim/init.vim",
-              shortcut = ", v",
-            },
-            {
-              icon = " ",
-              desc = "Exit Neovim                  ",
-              action = "quit",
-            },
-          },
-        },
-      }
+      require "plugins-opts.dashboard"
     end,
   }
 
   use {
     "sainnhe/gruvbox-material",
-    commit = "66f66f64788f66c8101aa35344dd005143356b6b",
   }
 
   use "nvim-treesitter/nvim-treesitter"
@@ -128,24 +65,8 @@ packer.startup(function()
 
   use {
     "phaazon/hop.nvim",
-    branch = "v2", -- optional but strongly recommended
     config = function()
-      local hop = require "hop"
-      hop.setup {}
-
-      local directions = require("hop.hint").HintDirection
-      vim.keymap.set("", "f", function()
-        hop.hint_char1 { direction = directions.AFTER_CURSOR, current_line_only = true }
-      end, { remap = true })
-      vim.keymap.set("", "F", function()
-        hop.hint_char1 { direction = directions.BEFORE_CURSOR, current_line_only = true }
-      end, { remap = true })
-      vim.keymap.set("", "t", function()
-        hop.hint_char1 { direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 }
-      end, { remap = true })
-      vim.keymap.set("", "T", function()
-        hop.hint_char1 { direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 }
-      end, { remap = true })
+      require "plugins-opts.hop"
     end,
   }
 
@@ -172,100 +93,14 @@ packer.startup(function()
   use {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
-      vim.g.indentLine_char_list = { "|", "¦", "┆", "┊" }
-
-      require("indent_blankline").setup {
-        buftype_exclude = { "terminal", "nofile" },
-        filetype_exclude = {
-          "help",
-          "dashboard",
-          "packer",
-          "NvimTree",
-          "text",
-        },
-        show_trailing_blankline_indent = false,
-        show_first_indent_level = true,
-        use_treesitter = true,
-        show_current_context = true,
-      }
+      require "plugins-opts.indent-blankline"
     end,
   }
 
   use {
     "windwp/nvim-autopairs",
     config = function()
-      local status_ok, autopairs = pcall(require, "nvim-autopairs")
-      if not status_ok then
-        return
-      end
-      local Rule = require "nvim-autopairs.rule"
-      autopairs.setup {
-        active = true,
-        on_config_done = nil,
-        ---@usage  modifies the function or method delimiter by filetypes
-        map_char = {
-          all = "(",
-          tex = "{",
-        },
-        ---@usage check bracket in same line
-        enable_check_bracket_line = false,
-        ---@usage check treesitter
-        check_ts = true,
-        ts_config = {
-          lua = { "string", "source" },
-          javascript = { "string", "template_string" },
-          java = false,
-        },
-        disable_filetype = { "TelescopePrompt", "spectre_panel" },
-        ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""),
-        enable_moveright = true,
-        ---@usage disable when recording or executing a macro
-        disable_in_macro = false,
-        ---@usage add bracket pairs after quote
-        enable_afterquote = true,
-        ---@usage map the <BS> key
-        map_bs = true,
-        ---@usage map <c-w> to delete a pair if possible
-        map_c_w = false,
-        ---@usage disable when insert after visual block mode
-        disable_in_visualblock = false,
-        ---@usage  change default fast_wrap
-        fast_wrap = {
-          map = "<M-e>",
-          chars = { "{", "[", "(", "\"", "'" },
-          pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
-          offset = 0, -- Offset from pattern match
-          end_key = "$",
-          keys = "qwertyuiopzxcvbnmasdfghjkl",
-          check_comma = true,
-          highlight = "Search",
-          highlight_grey = "Comment",
-        },
-      }
-      local ts_conds = require "nvim-autopairs.ts-conds"
-
-      -- TODO: can these rules be safely added from "config.lua" ?
-      -- press % => %% is only inside comment or string
-      autopairs.add_rules {
-        Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node { "string", "comment" }),
-        Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node { "function" }),
-      }
-
-      pcall(function()
-        local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-        local ts_utils = require "nvim-treesitter.ts_utils"
-
-        require("cmp").event:on("confirm_done", function(evt)
-          if ts_utils.get_node_at_cursor() == nil then
-            return
-          end
-
-          local name = ts_utils.get_node_at_cursor():type()
-          if name ~= "named_imports" then
-            cmp_autopairs.on_confirm_done()(evt)
-          end
-        end)
-      end)
+      require "plugins-opts.autopairs"
     end,
   }
 
@@ -285,9 +120,7 @@ packer.startup(function()
   use {
     "L3MON4D3/LuaSnip",
     config = function()
-      require("luasnip.loaders.from_lua").lazy_load()
-      require("luasnip.loaders.from_vscode").lazy_load()
-      require("luasnip.loaders.from_snipmate").lazy_load()
+      require "plugins-opts.snippets"
     end,
   }
 
@@ -302,7 +135,6 @@ packer.startup(function()
 
   use {
     "kyazdani42/nvim-tree.lua",
-    -- tag = "nightly", -- optional, updated every week. (see issue #1193)
   }
 
   use {
@@ -314,7 +146,7 @@ packer.startup(function()
   use {
     "williamboman/mason.nvim",
     config = function()
-      -- require("lvim.core.mason").setup()
+      require "plugins-opts.mason"
     end,
   }
 
@@ -327,23 +159,7 @@ packer.startup(function()
   use {
     "glepnir/lspsaga.nvim",
     config = function()
-      local saga = require "lspsaga"
-      saga.setup {
-        lightbulb = {
-          enable = false,
-          enable_in_insert = false,
-        },
-        ui = {
-          winblend = 0,
-          border = "rounded",
-          colors = {
-            normal_bg = "NONE",
-          },
-        },
-        diagnostic = {
-          on_insert = false,
-        },
-      }
+      require "plugins-opts.saga"
     end,
   }
 
@@ -361,7 +177,7 @@ packer.startup(function()
   use {
     "voldikss/vim-floaterm",
     config = function()
-      vim.g.floaterm_borderchars = "─│─│╭╮╯╰"
+      require('plugins-opts.floaterm')
     end,
   }
 
@@ -378,29 +194,14 @@ packer.startup(function()
     "akinsho/toggleterm.nvim",
     tag = "*",
     config = function()
-      require("toggleterm").setup {
-        size = 20,
-        float_opts = {
-          winblend = 0,
-        },
-        highlights = {
-          Normal = {
-            link = "Normal",
-          },
-        },
-      }
+      require('plugins-opts.togglerterm')
     end,
   }
 
   use {
     "folke/zen-mode.nvim",
     config = function()
-      require("zen-mode").setup {
-        window = {
-          backdrop = 1,
-          width = 0.6,
-        },
-      }
+      require('plugins-opts.zen-mode')
     end,
   }
 
@@ -433,31 +234,7 @@ packer.startup(function()
   use {
     "RRethy/vim-illuminate",
     config = function()
-      local illuminate = require "illuminate"
-      illuminate.configure {
-        providers = {
-          "lsp",
-          "treesitter",
-          "regex",
-        },
-        delay = 1000,
-        filetypes_denylist = {
-          "dashboard",
-          "NvimTree",
-          "packer",
-          "Outline",
-          "terminal",
-          "floaterm",
-          "toggleterm",
-          "TelescopePrompt",
-        },
-        filetypes_allowlist = {},
-        modes_denylist = {},
-        modes_allowlist = {},
-        providers_regex_syntax_denylist = {},
-        providers_regex_syntax_allowlist = {},
-        under_cursor = true,
-      }
+      require('plugins-opts.illuminate')
     end,
   }
 
@@ -465,74 +242,14 @@ packer.startup(function()
     "mxsdev/symbols-outline.nvim",
     branch = "merge-jsx-tree",
     config = function()
-      require("symbols-outline").setup {
-        highlight_hovered_item = true,
-        show_guides = true,
-        auto_preview = false,
-        position = "right",
-        relative_width = true,
-        width = 25,
-        auto_close = false,
-        show_numbers = false,
-        show_relative_numbers = false,
-        show_symbol_details = true,
-        preview_bg_highlight = "Pmenu",
-        autofold_depth = nil,
-        auto_unfold_hover = true,
-        fold_markers = { "", "" },
-        wrap = false,
-        keymaps = { -- These keymaps can be a string or a table for multiple keys
-          close = { "<Esc>", "q" },
-          goto_location = "<Cr>",
-          focus_location = "o",
-          hover_symbol = "<C-space>",
-          toggle_preview = "K",
-          rename_symbol = "r",
-          code_actions = "a",
-          fold = "h",
-          unfold = "l",
-          fold_all = "W",
-          unfold_all = "E",
-          fold_reset = "R",
-        },
-        lsp_blacklist = {},
-        symbol_blacklist = {},
-        symbols = {
-          File = { icon = "", hl = "TSURI" },
-          Module = { icon = "", hl = "TSNamespace" },
-          Namespace = { icon = "", hl = "TSNamespace" },
-          Package = { icon = "", hl = "TSNamespace" },
-          Class = { icon = "𝓒", hl = "TSType" },
-          Method = { icon = "ƒ", hl = "TSMethod" },
-          Property = { icon = "", hl = "TSMethod" },
-          Field = { icon = "", hl = "TSField" },
-          Constructor = { icon = "", hl = "TSConstructor" },
-          Enum = { icon = "ℰ", hl = "TSType" },
-          Interface = { icon = "ﰮ", hl = "TSType" },
-          Function = { icon = "", hl = "TSFunction" },
-          Variable = { icon = "", hl = "TSConstant" },
-          Constant = { icon = "", hl = "TSConstant" },
-          String = { icon = "𝓐", hl = "TSString" },
-          Number = { icon = "#", hl = "TSNumber" },
-          Boolean = { icon = "⊨", hl = "TSBoolean" },
-          Array = { icon = "", hl = "TSConstant" },
-          Object = { icon = "⦿", hl = "TSType" },
-          Key = { icon = "🔐", hl = "TSType" },
-          Null = { icon = "NULL", hl = "TSType" },
-          EnumMember = { icon = "", hl = "TSField" },
-          Struct = { icon = "𝓢", hl = "TSType" },
-          Event = { icon = "🗲", hl = "TSType" },
-          Operator = { icon = "+", hl = "TSOperator" },
-          TypeParameter = { icon = "𝙏", hl = "TSParameter" },
-        },
-      }
+      require('plugins-opts.outline')
     end,
   }
 
   use {
     "karb94/neoscroll.nvim",
     config = function()
-      require("neoscroll").setup {}
+      require('plugins-opts.neoscroll')
     end,
   }
 
@@ -544,7 +261,7 @@ packer.startup(function()
   use {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     config = function()
-      require("lsp_lines").setup()
+      require('plugins-opts.lsp_lines')
     end,
   }
 
@@ -713,7 +430,7 @@ require("nvim-treesitter.configs").setup {
 local async_formatting = function(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
 
-  vim.lsp.buf_request(bufnr, "textDocument/formatting", vim.lsp.util.make_formatting_params {}, function(err, res, ctx)
+  vim.lsp.buf_request(bufnr, "textDocument/formatting", vim.lsp.util.make_formatting_params {}, function(_, res, ctx)
     if not vim.api.nvim_buf_is_loaded(bufnr) or vim.api.nvim_buf_get_option(bufnr, "modified") then
       return
     end
@@ -807,10 +524,6 @@ local has_words_before = function()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
 end
 
-local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
-
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 local cmp = require "cmp"
@@ -892,8 +605,8 @@ cmp.setup {
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+      elseif luasnip.jumpable( -1) then
+        luasnip.jump( -1)
       else
         fallback()
       end
@@ -906,15 +619,15 @@ cmp.setup {
       end
     end, { "i", "s" }),
     ["<C-b>"] = cmp.mapping(function(fallback)
-      if luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+      if luasnip.jumpable( -1) then
+        luasnip.jump( -1)
       else
         fallback()
       end
     end, { "i", "s" }),
     ["<C-c>"] = cmp.mapping.abort(),
     ["<C-e>"] = cmp.mapping.close(),
-    ["<C-u>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-u>"] = cmp.mapping.scroll_docs( -4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
   },
   confirmation = {
@@ -946,7 +659,7 @@ cmp.setup {
     { name = "luasnip", max_item_count = 4 },
     { name = "nvim_lsp" },
     { name = "buffer" },
-    { name = "path", max_item_count = 4 },
+    { name = "path",    max_item_count = 4 },
     { name = "emmet" },
   },
 }
@@ -1071,7 +784,7 @@ bufferline.setup {
     offsets = {
       { filetype = "NvimTree", text = "", padding = 1 },
       { filetype = "neo-tree", text = "", padding = 1 },
-      { filetype = "Outline", text = "", padding = 1 },
+      { filetype = "Outline",  text = "", padding = 1 },
     },
     numbers = "ordinal",
     buffer_close_icon = "",
@@ -1206,6 +919,10 @@ require("transparent").setup {
     "toggleterm",
     "ZenBg",
     "MasonNormal",
+
+    "NvimTreeNormal",
+    "NvimTreeStatuslineNc",
+    "NvimTreeEndOfBuffer",
   },
   exclude = {}, -- table: groups you don't want to clear
 }

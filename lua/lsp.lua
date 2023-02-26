@@ -38,8 +38,8 @@ require("mason-lspconfig").setup_handlers {
       end,
       tsserver = function(opts)
         opts.root_dir = function(fname)
-          return lspconfig.util.root_pattern "tsconfig.json"(fname)
-            or not lspconfig.util.root_pattern ".flowconfig"(fname)
+          return lspconfig.util.root_pattern "tsconfig.json" (fname)
+              or not lspconfig.util.root_pattern ".flowconfig" (fname)
               and lspconfig.util.root_pattern("package.json", "jsconfig.json", ".git")(fname)
         end
 
@@ -79,6 +79,13 @@ require("mason-lspconfig").setup_handlers {
       end,
       autostart = true,
       capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = { 'vim' }
+          }
+        }
+      }
     }
 
     if setup_server[server_name] then
