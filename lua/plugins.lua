@@ -198,9 +198,6 @@ packer.startup(function()
       require "plugins-opts.gitsign"
     end,
   }
-  use {
-    "sindrets/diffview.nvim",
-  }
 
   use "tpope/vim-fugitive"
 
@@ -224,15 +221,15 @@ packer.startup(function()
     "akinsho/bufferline.nvim",
     tag = "v3.*",
     config = function()
-      require('plugins-opts.bufferline')
-    end
+      require "plugins-opts.bufferline"
+    end,
   }
 
   use {
     "xiyaowong/nvim-transparent",
     config = function()
-      require('plugins-opts.transparent')
-    end
+      require "plugins-opts.transparent"
+    end,
   }
 
   use {
