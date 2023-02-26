@@ -5,10 +5,10 @@ saga.setup {
     enable_in_insert = false,
   },
   ui = {
-    winblend = 0,
     border = "rounded",
     colors = {
       normal_bg = "NONE",
+      title_bg = "NONE",
     },
   },
   diagnostic = {

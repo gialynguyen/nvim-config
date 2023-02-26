@@ -186,6 +186,7 @@ packer.startup(function()
 
   use {
     "glepnir/lspsaga.nvim",
+    commit = "fb5ec294f833ce5563fc5abce4eb9725d7809652",
     config = function()
       require "plugins-opts.saga"
     end,

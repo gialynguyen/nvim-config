@@ -85,20 +85,20 @@ require("transparent").setup {
   exclude = {},
 }
 
-local transparent_enable
+local transparent_enabled
 
 local function init_transparent()
-  if vim.g.transparent_enable == transparent_enable then
+  if vim.g.transparent_enabled == transparent_enabled then
     return
   end
 
-  if vim.g.transparent_enable == true then
+  if vim.g.transparent_enabled == true then
     vim.cmd "TransparentEnable"
   else
     vim.cmd "TransparentDisable"
   end
 
-  transparent_enable = vim.g.transparent_enable
+  transparent_enabled = vim.g.transparent_enabled
 end
 
 vim.api.nvim_create_autocmd({ "BufEnter" }, { callback = init_transparent })
