@@ -14,7 +14,7 @@ vim.o.smartindent = true
 vim.o.smarttab = true
 vim.o.expandtab = true
 vim.o.fillchars = "eob: "
-vim.o.foldenable = true
+vim.o.foldenable = false
 vim.o.foldmethod = "expr"
 vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 vim.wo.wrap = true
@@ -29,37 +29,13 @@ vim.o.inccommand = "nosplit"
 vim.g.VM_set_statusline = 0
 vim.g.VM_silent_exit = 1
 
-local vim = vim
-local api = vim.api
-local M = {}
--- function to create a list of commands and convert them to autocommands
--------- This function is taken from https://github.com/norcalli/nvim_utils
-function M.nvim_create_augroups(definitions)
-  for group_name, definition in pairs(definitions) do
-    api.nvim_command("augroup " .. group_name)
-    api.nvim_command "autocmd!"
-    for _, def in ipairs(definition) do
-      local command = table.concat(vim.tbl_flatten { "autocmd", def }, " ")
-      api.nvim_command(command)
-    end
-    api.nvim_command "augroup END"
-  end
-end
-
-local autoCommands = {
-  -- other autocommands
-  open_folds = {
-    { "BufReadPost,FileReadPost", "*", "normal zR" },
-  },
-}
-
-M.nvim_create_augroups(autoCommands)
+vim.api.nvim_create_autocmd({ "BufReadPost", "FileReadPost" }, { command = "normal zR" })
 
 local aug = vim.api.nvim_create_augroup("buf_large", { clear = true })
 
 vim.api.nvim_create_autocmd({ "BufReadPre" }, {
   callback = function()
-    local max_size = 1024 * 50;
+    local max_size = 1024 * 50
     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf()))
     if ok and stats and (stats.size > max_size) then
       vim.b.large_buf = true
