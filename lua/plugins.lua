@@ -64,6 +64,8 @@ packer.startup(function()
     "sainnhe/gruvbox-material",
   }
 
+  use { 'nyoom-engineering/oxocarbon.nvim' }
+
   use {
     "nvim-treesitter/nvim-treesitter",
     config = function()
