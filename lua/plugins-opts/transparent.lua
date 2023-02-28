@@ -1,6 +1,7 @@
 require("transparent").setup {
   enable = true,
   extra_groups = {
+    "VertSplit",
     "BufferLineFill",
     "BufferLineBackground",
 
@@ -79,6 +80,7 @@ require("transparent").setup {
     "MasonNormal",
 
     "NvimTreeNormal",
+    "NvimTreeWinSeparator",
     "NvimTreeStatuslineNc",
     "NvimTreeEndOfBuffer",
   },
