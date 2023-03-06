@@ -65,3 +65,9 @@ bufferline.setup {
     },
   },
 }
+
+vim.cmd [[
+ autocmd ColorScheme * highlight BufferLineFill guibg=none
+ autocmd ColorScheme * highlight BufferLineBackground guifg=none
+ autocmd ColorScheme * highlight BufferLineBufferSelected guifg=none gui=none
+ ]]

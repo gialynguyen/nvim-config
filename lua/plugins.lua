@@ -66,6 +66,8 @@ packer.startup(function()
 
   use { 'nyoom-engineering/oxocarbon.nvim' }
 
+  use { 'sainnhe/everforest' }
+
   use {
     "nvim-treesitter/nvim-treesitter",
     config = function()

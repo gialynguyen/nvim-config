@@ -78,9 +78,15 @@ nnoremap <silent> <ESC> :nohlsearch<cr>
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 set background=dark
+
+" gruvbox-material
 let g:gruvbox_material_background = 'medium'
 let g:gruvbox_material_better_performance = 1
 let g:gruvbox_material_enable_italic = 1
+
+" everforest
+ let g:everforest_background = 'hard'
+ let g:everforest_better_performance = 1
 
 colorscheme gruvbox-material
 
