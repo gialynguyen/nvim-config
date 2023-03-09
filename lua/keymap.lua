@@ -153,7 +153,7 @@ end, {
 
 for i = 1, 9 do
   vim.keymap.set("n", ("<Leader>%s"):format(i), ("<Cmd>lua GotoBuffer(%s)<CR>"):format(i), { silent = true })
-  vim.keymap.set("n", ("<Leader>w%s"):format(i), ("<Cmd>lua CloseBuffer(%s)<CR>"):format(i), { silent = true })
+  vim.keymap.set("n", ("<Leader>s%s"):format(i), ("<Cmd>lua CloseBuffer(%s)<CR>"):format(i), { silent = true })
 end
 
 -- Others
