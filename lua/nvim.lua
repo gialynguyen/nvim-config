@@ -21,7 +21,7 @@ vim.wo.wrap = true
 vim.wo.list = false
 vim.wo.linebreak = true
 
-vim.g.mapleader = ","
+vim.g.mapleader = "\\"
 
 vim.o.mouse = "a"
 vim.o.inccommand = "nosplit"

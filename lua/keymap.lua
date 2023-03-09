@@ -43,16 +43,14 @@ vim.keymap.set("n", "<leader>]", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts
 vim.keymap.set(
   "n",
   "[e",
-  "<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>"
-  ,
+  "<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
   opts
 )
 
 vim.keymap.set(
   "n",
   "]e",
-  "<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>"
-  ,
+  "<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
   opts
 )
 
@@ -115,11 +113,12 @@ local closeHiddenBuffers = function()
   for _, buffer in ipairs(buffers) do
     local filetype = vim.fn.getbufvar(buffer, "&buftype")
     print(vim.api.nvim_buf_get_name(buffer))
-    if vim.api.nvim_buf_is_valid(buffer)
-        and vim.api.nvim_buf_get_option(buffer, "buflisted")
-        and not vim.api.nvim_buf_get_option(buffer, "modified")
-        and non_hidden_buffer[buffer] == nil
-        and filetype ~= "terminal"
+    if
+      vim.api.nvim_buf_is_valid(buffer)
+      and vim.api.nvim_buf_get_option(buffer, "buflisted")
+      and not vim.api.nvim_buf_get_option(buffer, "modified")
+      and non_hidden_buffer[buffer] == nil
+      and filetype ~= "terminal"
     then
       vim.cmd["bdelete!"](buffer)
     end
@@ -143,12 +142,18 @@ end
 
 function CloseBuffer(index)
   require("nvim-smartbufs").close_buffer(index)
-  vim.fn.jobstart "sleep 1 && lua require('bufferline.ui').refresh()"
+  -- vim.fn.jobstart "sleep 1 && lua require('bufferline.ui').refresh()"
 end
+
+vim.api.nvim_create_user_command("CloseBuffer", function(_opts)
+  CloseBuffer(tonumber(_opts.args))
+end, {
+  nargs = 1,
+})
 
 for i = 1, 9 do
   vim.keymap.set("n", ("<Leader>%s"):format(i), ("<Cmd>lua GotoBuffer(%s)<CR>"):format(i), { silent = true })
-  vim.keymap.set("n", ("<Leader>c%s"):format(i), ("<Cmd>lua CloseBuffer(%s)<CR>"):format(i), { silent = true })
+  vim.keymap.set("n", ("<Leader>w%s"):format(i), ("<Cmd>lua CloseBuffer(%s)<CR>"):format(i), { silent = true })
 end
 
 -- Others
