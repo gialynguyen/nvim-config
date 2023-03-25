@@ -21,7 +21,7 @@ packer.init {
     opt_default = true,
     open_fn = function()
       return require("packer.util").float { border = "rounded" }
-    end, -- An optional function to open a window for packer's display
+    end,               -- An optional function to open a window for packer's display
     working_sym = "🛠", -- The symbol for a plugin being installed/updated
     error_sym = "🧨", -- The symbol for a plugin with an error in installation/updating
     done_sym = "🎉", -- The symbol for a plugin which has completed installation/updating
@@ -64,14 +64,14 @@ packer.startup(function()
     "sainnhe/gruvbox-material",
   }
 
-  use { 'nyoom-engineering/oxocarbon.nvim' }
+  use { "nyoom-engineering/oxocarbon.nvim" }
 
-  use { 'sainnhe/everforest' }
+  use { "sainnhe/everforest" }
 
   use {
     "nvim-treesitter/nvim-treesitter",
     config = function()
-      require "plugins-opts.nvim-tree"
+      require "plugins-opts.treesitter"
     end,
   }
 
@@ -167,6 +167,9 @@ packer.startup(function()
 
   use {
     "kyazdani42/nvim-tree.lua",
+    config = function()
+      require 'plugins-opts.nvim-tree'
+    end
   }
 
   use {
@@ -190,7 +193,7 @@ packer.startup(function()
 
   use {
     "glepnir/lspsaga.nvim",
-    commit = "fb5ec294f833ce5563fc5abce4eb9725d7809652",
+    -- commit = "fb5ec294f833ce5563fc5abce4eb9725d7809652",
     config = function()
       require "plugins-opts.saga"
     end,

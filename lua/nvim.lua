@@ -51,14 +51,3 @@ vim.api.nvim_create_autocmd({ "BufReadPre" }, {
   group = aug,
   pattern = "*",
 })
-
-vim.api.nvim_create_autocmd({ "ColorScheme", "UIEnter" }, {
-  callback = function()
-    local current_color = vim.g.colors_name
-
-    if current_color == "oxocarbon" then
-      vim.cmd "silent! TransparentDisable"
-      vim.cmd "silent! IndentBlanklineDisable!"
-    end
-  end,
-})

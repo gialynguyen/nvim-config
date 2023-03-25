@@ -33,6 +33,7 @@ augroup END
 
 packadd vim-matchup
 packadd gruvbox-material
+packadd everforest
 packadd nvim-autopairs
 packadd vim-sandwich
 
@@ -85,10 +86,11 @@ let g:gruvbox_material_better_performance = 1
 let g:gruvbox_material_enable_italic = 1
 
 " everforest
- let g:everforest_background = 'hard'
- let g:everforest_better_performance = 1
+let g:everforest_background = 'hard'
+let g:everforest_better_performance = 1
 
-colorscheme gruvbox-material
+" colorscheme gruvbox-material
+colorscheme everforest
 
 " let g:indent_blankline_char_list = ['¦', '┆', '┊']
 set autoread
@@ -100,3 +102,5 @@ autocmd User TelescopePreviewerLoaded setlocal wrap
 autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js silent! EslintFixAll
 
 runtime OPT packs.vim
+
+lua require('user-settings')

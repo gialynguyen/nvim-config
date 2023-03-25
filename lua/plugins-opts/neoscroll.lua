@@ -1,1 +1,3 @@
-require("neoscroll").setup {}
+require("neoscroll").setup {
+  performance_mode = true
+}

@@ -1,5 +1,3 @@
-vim.g.indentLine_char_list = { "|", "¦", "┆", "┊" }
-
 local indent_blankline = require "indent_blankline"
 
 indent_blankline.setup {
@@ -15,4 +13,7 @@ indent_blankline.setup {
   show_first_indent_level = true,
   use_treesitter = true,
   show_current_context = true,
+  char = "",
+  context_char = "│",
+  show_current_context_start = true,
 }

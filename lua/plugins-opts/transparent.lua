@@ -1,5 +1,30 @@
+vim.g.transparent_enabled = true
+
 require("transparent").setup {
-  enable = true,
+  groups = { -- table: default groups
+    "Normal",
+    "NormalNC",
+    "Comment",
+    "Constant",
+    "Special",
+    "Identifier",
+    "Statement",
+    "PreProc",
+    "Type",
+    "Underlined",
+    "Todo",
+    "String",
+    "Function",
+    "Conditional",
+    "Repeat",
+    "Operator",
+    "Structure",
+    "LineNr",
+    "NonText",
+    "SignColumn",
+    "CursorLineNr",
+    "EndOfBuffer",
+  },
   extra_groups = {
     "VertSplit",
     "BufferLineFill",
@@ -83,24 +108,72 @@ require("transparent").setup {
     "NvimTreeWinSeparator",
     "NvimTreeStatuslineNc",
     "NvimTreeEndOfBuffer",
+
+    -- -- general
+    -- "TitleString",
+    -- "TitleIcon",
+    -- "SagaBorder",
+    -- "SagaNormal",
+    -- "SagaExpand",
+    -- "SagaCollapse",
+    -- "SagaCount",
+    -- "SagaBeacon",
+    -- -- code action
+    -- "ActionPreviewNormal",
+    -- "ActionPreviewBorder",
+    -- "ActionPreviewTitle",
+    -- "CodeActionNormal",
+    -- "CodeActionBorder",
+    -- "CodeActionText",
+    -- "CodeActionNumber",
+    -- -- finder
+    -- "FinderSelection",
+    -- "FinderFileName",
+    -- "FinderCount",
+    -- "FinderIcon",
+    -- "FinderType",
+    -- --finder spinner
+    -- "FinderSpinnerTitle",
+    -- "FinderSpinner",
+    -- "FinderPreviewSearch",
+    -- "FinderVirtText",
+    -- "FinderNormal",
+    -- "FinderBorder",
+    -- "FinderPreviewBorder",
+    -- -- definition
+    -- "DefinitionBorder",
+    -- "DefinitionNormal",
+    -- "DefinitionSearch",
+    -- -- hover
+    -- "HoverNormal",
+    -- "HoverBorder",
+    -- -- rename
+    -- "RenameBorder",
+    -- "RenameNormal",
+    -- "RenameMatch",
+    -- -- diagnostic
+    -- "DiagnosticBorder",
+    -- "DiagnosticSource",
+    -- "DiagnosticNormal",
+    -- "DiagnosticPos",
+    -- "DiagnosticWord",
+    -- "DiagnosticHead",
+    -- -- Call Hierachry
+    -- "CallHierarchyNormal",
+    -- "CallHierarchyBorder",
+    -- "CallHierarchyIcon",
+    -- "CallHierarchyTitle",
+    -- -- lightbulb
+    -- "SagaLightBulb",
+    -- -- shadow
+    -- "SagaShadow",
+    -- -- Outline
+    -- "OutlineIndent",
+    -- "OutlinePreviewBorder",
+    -- "OutlinePreviewNormal",
+    -- -- Float term
+    -- "TerminalBorder",
+    -- "TerminalNormal",
   },
-  exclude = {},
+  exclude_groups = {},
 }
-
-local transparent_enabled
-
-local function init_transparent()
-  if vim.g.transparent_enabled == transparent_enabled then
-    return
-  end
-
-  if vim.g.transparent_enabled == true then
-    vim.cmd "TransparentEnable"
-  else
-    vim.cmd "TransparentDisable"
-  end
-
-  transparent_enabled = vim.g.transparent_enabled
-end
-
-vim.api.nvim_create_autocmd({ "BufEnter" }, { callback = init_transparent })
