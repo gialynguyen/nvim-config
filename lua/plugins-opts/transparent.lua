@@ -109,71 +109,20 @@ require("transparent").setup {
     "NvimTreeStatuslineNc",
     "NvimTreeEndOfBuffer",
 
-    -- -- general
-    -- "TitleString",
-    -- "TitleIcon",
-    -- "SagaBorder",
-    -- "SagaNormal",
-    -- "SagaExpand",
-    -- "SagaCollapse",
-    -- "SagaCount",
-    -- "SagaBeacon",
-    -- -- code action
-    -- "ActionPreviewNormal",
-    -- "ActionPreviewBorder",
-    -- "ActionPreviewTitle",
-    -- "CodeActionNormal",
-    -- "CodeActionBorder",
-    -- "CodeActionText",
-    -- "CodeActionNumber",
-    -- -- finder
-    -- "FinderSelection",
-    -- "FinderFileName",
-    -- "FinderCount",
-    -- "FinderIcon",
-    -- "FinderType",
-    -- --finder spinner
-    -- "FinderSpinnerTitle",
-    -- "FinderSpinner",
-    -- "FinderPreviewSearch",
-    -- "FinderVirtText",
-    -- "FinderNormal",
-    -- "FinderBorder",
-    -- "FinderPreviewBorder",
-    -- -- definition
-    -- "DefinitionBorder",
-    -- "DefinitionNormal",
-    -- "DefinitionSearch",
-    -- -- hover
-    -- "HoverNormal",
-    -- "HoverBorder",
-    -- -- rename
-    -- "RenameBorder",
-    -- "RenameNormal",
-    -- "RenameMatch",
-    -- -- diagnostic
-    -- "DiagnosticBorder",
-    -- "DiagnosticSource",
-    -- "DiagnosticNormal",
-    -- "DiagnosticPos",
-    -- "DiagnosticWord",
-    -- "DiagnosticHead",
-    -- -- Call Hierachry
-    -- "CallHierarchyNormal",
-    -- "CallHierarchyBorder",
-    -- "CallHierarchyIcon",
-    -- "CallHierarchyTitle",
-    -- -- lightbulb
-    -- "SagaLightBulb",
-    -- -- shadow
-    -- "SagaShadow",
-    -- -- Outline
-    -- "OutlineIndent",
-    -- "OutlinePreviewBorder",
-    -- "OutlinePreviewNormal",
-    -- -- Float term
-    -- "TerminalBorder",
-    -- "TerminalNormal",
+    "TerminalBorder",
+    "TerminalNormal",
+    "FloatermBorder",
+    "Floaterm",
+
+    "LspFloatWinNormal",
+    "Normal",
+    "NormalFloat",
+    "FloatBorder",
+    "TelescopeNormal",
+    "TelescopeBorder",
+    "TelescopePromptBorder",
+    "SagaBorder",
+    "SagaNormal",
   },
   exclude_groups = {},
 }
