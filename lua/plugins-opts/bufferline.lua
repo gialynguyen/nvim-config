@@ -1,24 +1,5 @@
 local bufferline = require "bufferline"
 
-local highlights = {
-  background = {
-    fg = "NONE",
-    bg = "NONE",
-  },
-  buffer = {
-    fg = "NONE",
-    bg = "NONE",
-  },
-  buffer_visible = {
-    fg = "NONE",
-    bg = "NONE",
-  },
-  buffer_selected = {
-    fg = "#d8a657",
-    bg = "NONE",
-  },
-}
-
 local close_func = function(bufnum)
   local bufdelete_avail, bufdelete = pcall(require, "bufdelete")
   if bufdelete_avail then
@@ -28,12 +9,309 @@ local close_func = function(bufnum)
   end
 end
 
+local refresh_ui = function()
+  if vim.g.transparent_enabled == true then
+    vim.cmd [[
+      hi BufferLineFill guibg=NONE guifg=NONE
+      hi BufferLineBackground guibg=NONE guifg=NONE
+
+      hi BufferLineTab guibg=NONE guifg=NONE
+      hi BufferLineTabSelected guibg=NONE guifg=NONE
+      hi BufferLineTabClose guibg=NONE guifg=NONE
+      hi BufferLineTabSeparator guibg=NONE guifg=NONE
+      hi BufferLineTabSelected guibg=NONE guifg=NONE
+
+      hi BufferLineNumbers guibg=NONE guifg=NONE
+
+      hi BufferLineDuplicate guibg=NONE guifg=NONE
+
+      hi BufferLineDiagnostic guibg=NONE guifg=NONE
+      hi BufferLineDiagnosticVisble guibg=NONE guifg=NONE
+      hi BufferLineDiagnosticSelected guibg=NONE guifg=NONE
+
+      hi BufferLineError guibg=NONE guifg=NONE
+      hi BufferLineErrorVisible guibg=NONE guifg=NONE
+      hi BufferLineErrorSelected guibg=NONE guifg=NONE
+      hi BufferLineErrorDiagnostic guibg=NONE guifg=NONE
+      hi BufferLineErrorDiagnosticSelected guibg=NONE guifg=NONE
+      hi BufferLineErrorDiagnosticVisible guibg=NONE guifg=NONE
+
+      hi BufferLineWarning guibg=NONE guifg=NONE
+      hi BufferLineWarningVisible guibg=NONE guifg=NONE
+      hi BufferLineWarningSelected guibg=NONE guifg=NONE
+      hi BufferLineWarningDiagnostic guibg=NONE guifg=NONE
+      hi BufferLineWarningDiagnosticSelected guibg=NONE guifg=NONE
+      hi BufferLineWarningDiagnosticVisible guibg=NONE guifg=NONE
+
+      hi BufferLineInfo guibg=NONE guifg=NONE
+      hi BufferLineInfoVisible guibg=NONE guifg=NONE
+      hi BufferLineInfoSelected guibg=NONE guifg=NONE
+      hi BufferLineInfoDiagnostic guibg=NONE guifg=NONE
+      hi BufferLineInfoDiagnosticSelected guibg=NONE guifg=NONE
+      hi BufferLineInfoDiagnosticVisible guibg=NONE guifg=NONE
+
+      hi BufferLineHint guibg=NONE guifg=NONE
+      hi BufferLineHintVisible guibg=NONE guifg=NONE
+      hi BufferLineHintSelected guibg=NONE guifg=NONE
+      hi BufferLineHintDiagnostic guibg=NONE guifg=NONE
+      hi BufferLineHintDiagnosticSelected guibg=NONE guifg=NONE
+      hi BufferLineHintDiagnosticVisible guibg=NONE guifg=NONE
+
+      hi BufferLineCloseButton guibg=NONE guifg=NONE
+      hi BufferLineCloseButtonVisible guibg=NONE guifg=NONE
+      hi BufferLineCloseButtonSelected guibg=NONE guifg=NONE
+
+      hi BufferLineBuffer guibg=NONE guifg=NONE
+      hi BufferLineBufferVisible guibg=NONE guifg=NONE
+      hi BufferLineBufferSelected guibg=NONE guifg=NONE
+
+      hi BufferLineNumbers guibg=NONE guifg=NONE
+      hi BufferLineNumbersVisible guibg=NONE guifg=NONE
+      hi BufferLineNumbersSelected guibg=NONE guifg=NONE
+
+      hi BufferLineModified guibg=NONE guifg=NONE
+      hi BufferLineModifiedSelected guibg=NONE guifg=NONE
+      hi BufferLineModifiedVisible guibg=NONE guifg=NONE
+
+      hi BufferLineIndicator guibg=NONE guifg=NONE
+      hi BufferLineIndicatorSelected guibg=NONE guifg=NONE
+
+      hi BufferLineSeparator guibg=NONE guifg=NONE
+      hi BufferLineSeparatorSelected guibg=NONE guifg=NONE
+      hi BufferLineSeparatorVisible guibg=NONE guifg=NONE
+      hi BufferLineOffsetSeparator guibg=NONE guifg=NONE
+      hi BufferLineGroupSeparator guibg=NONE guifg=NONE
+
+      hi BufferLineDuplicate guibg=NONE guifg=NONE
+      hi BufferLineDuplicateVisible guibg=NONE guifg=NONE
+      hi BufferLineDuplicateSelected guibg=NONE guifg=NONE
+      ]]
+
+    return {
+      fill = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      background = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      tab = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      tab_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      tab_close = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      close_button = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      close_button_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      close_button_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      buffer_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      buffer_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      numbers = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      numbers_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      numbers_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      diagnostic = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      diagnostic_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      diagnostic_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      hint = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      hint_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      hint_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      hint_diagnostic = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      hint_diagnostic_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      hint_diagnostic_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      info = {
+        fg = "NONE",
+        sp = "NONE",
+        bg = "NONE",
+      },
+      info_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      info_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      info_diagnostic = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      info_diagnostic_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      info_diagnostic_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      warning = {
+        fg = "NONE",
+        sp = "NONE",
+        bg = "NONE",
+      },
+      warning_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      warning_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      warning_diagnostic = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      warning_diagnostic_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      warning_diagnostic_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      error = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      error_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      error_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      error_diagnostic = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      error_diagnostic_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      error_diagnostic_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      modified = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      modified_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      modified_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      duplicate_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      duplicate_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      duplicate = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      separator_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      separator_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      separator = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      indicator_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      pick_selected = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      pick_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+      pick = {
+        fg = "NONE",
+        bg = "NONE",
+      },
+    }
+  end
+end
+
 bufferline.setup {
   options = {
     offsets = {
       { filetype = "NvimTree", text = "", padding = 1 },
       { filetype = "neo-tree", text = "", padding = 1 },
-      { filetype = "Outline",  text = "", padding = 1 },
+      { filetype = "Outline", text = "", padding = 1 },
     },
     numbers = "ordinal",
     buffer_close_icon = "",
@@ -44,7 +322,6 @@ bufferline.setup {
     -- max_name_length = 14,
     -- max_prefix_length = 13,
     -- tab_size = 20,
-    separator_style = "thin",
     diagnostics = "nvim_lsp",
     diagnostics_update_in_insert = false,
     diagnostics_indicator = function(_, _, diagnostics, _)
@@ -65,99 +342,15 @@ bufferline.setup {
       return #result > 0 and result_string or ""
     end,
   },
-  highlights = highlights,
+  highlights = function()
+    return refresh_ui()
+  end,
 }
-
-local refresh_ui = function()
-  if vim.g.transparent_enabled == true then
-    -- vim.api.nvim_set_hl(0, "BufferLineFill", { bg = "NONE", fg = "NONE" })
-    -- vim.api.nvim_set_hl(0, "BufferLineBackcrust", { bg = "NONE", fg = "NONE" })
-    -- vim.api.nvim_set_hl(0, "BufferLineBufferVisible", { bg = "NONE", fg = "NONE" })
-    -- vim.api.nvim_set_hl(0, "BufferLineTabClose", { bg = "NONE", fg = "NONE" })
-    -- vim.api.nvim_set_hl(0, "BufferLineSeparator", { fg = "NONE", bg = "NONE" })
-    -- vim.api.nvim_set_hl(0, "BufferLineSeparatorVisible", { fg = "NONE", bg = "NONE" })
-    -- vim.api.nvim_set_hl(0, "BufferLineSeparatorSelected", { fg = "NONE", bg = "NONE" })
-    -- vim.api.nvim_set_hl(0, "BufferLineCloseButton", { bg = "NONE", fg = "NONE" })
-    -- vim.api.nvim_set_hl(0, "BufferLineCloseButtonVisible", { bg = "NONE", fg = "NONE" })
-    -- vim.api.nvim_set_hl(0, "BufferLineOffsetSeparator", { bg = "NONE", fg = "NONE" })
-    local inactive_bg = "NONE"
-    local active_bg = "NONE"
-    local separator_fg = "NONE"
-    local bg_highlight = "NONE"
-
-    highlights = {
-      background = { bg = inactive_bg },
-      buffer_visible = { bg = inactive_bg },
-      buffer_selected = { bg = active_bg }, -- current
-      -- Duplicate
-      duplicate_selected = { bg = active_bg },
-      duplicate_visible = { bg = inactive_bg, },
-      duplicate = { bg = inactive_bg },
-      -- tabs
-      tab = { bg = inactive_bg },
-      tab_selected = { bg = active_bg },
-      tab_close = { bg = inactive_bg },
-      indicator_selected = { bg = active_bg, },
-      -- separators
-      separator = { fg = separator_fg, bg = inactive_bg },
-      separator_visible = { fg = separator_fg, bg = inactive_bg },
-      separator_selected = { fg = separator_fg, bg = active_bg },
-      offset_separator = { fg = separator_fg, bg = active_bg },
-      -- close buttons
-      close_button = { bg = inactive_bg },
-      close_button_visible = { bg = inactive_bg },
-      close_button_selected = { bg = active_bg },
-      -- Empty fill
-      fill = { bg = bg_highlight },
-      -- Numbers
-      numbers = { bg = inactive_bg },
-      numbers_visible = { bg = inactive_bg },
-      numbers_selected = { bg = active_bg },
-      -- Errors
-      error = { bg = inactive_bg },
-      error_visible = { bg = inactive_bg },
-      error_selected = { bg = active_bg },
-      error_diagnostic = { bg = inactive_bg },
-      error_diagnostic_visible = { bg = inactive_bg },
-      error_diagnostic_selected = { bg = active_bg },
-      -- Warnings
-      warning = { bg = inactive_bg },
-      warning_visible = { bg = inactive_bg },
-      warning_selected = { bg = active_bg, },
-      warning_diagnostic = { bg = inactive_bg },
-      warning_diagnostic_visible = { bg = inactive_bg },
-      warning_diagnostic_selected = { bg = active_bg },
-      -- Infos
-      info = { bg = inactive_bg },
-      info_visible = { bg = inactive_bg },
-      info_selected = { bg = active_bg, },
-      info_diagnostic = { bg = inactive_bg },
-      info_diagnostic_visible = { bg = inactive_bg },
-      info_diagnostic_selected = { bg = active_bg },
-      -- Hint
-      hint = { bg = inactive_bg },
-      hint_visible = { bg = inactive_bg },
-      hint_selected = { bg = active_bg, },
-      hint_diagnostic = { bg = inactive_bg },
-      hint_diagnostic_visible = { bg = inactive_bg },
-      hint_diagnostic_selected = { bg = active_bg },
-      -- Diagnostics
-      diagnostic = { bg = inactive_bg },
-      diagnostic_visible = { bg = inactive_bg },
-      diagnostic_selected = { bg = active_bg, },
-      -- Modified
-      modified = { bg = inactive_bg },
-      modified_selected = { bg = active_bg },
-    }
-
-    require('bufferline.ui').refresh()
-  end
-end
 
 vim.api.nvim_create_user_command("BufferLineRefreshUI", refresh_ui, {})
 
--- vim.cmd [[
---  autocmd ColorScheme * highlight BufferLineFill guibg=none
---  autocmd ColorScheme * highlight BufferLineBackground guifg=none
---  autocmd ColorScheme * highlight BufferLineBufferSelected guifg=none gui=none
---  ]]
+vim.api.nvim_create_autocmd("BufReadPost", {
+  callback = function()
+    refresh_ui()
+  end,
+})

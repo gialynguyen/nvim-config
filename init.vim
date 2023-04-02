@@ -37,14 +37,6 @@ packadd everforest
 packadd nvim-autopairs
 packadd vim-sandwich
 
-let g:floaterm_autoclose = 1
-let g:floaterm_width = 0.9
-let g:floaterm_height = 0.9
-let g:floaterm_keymap_toggle = '<F3>'
-let g:floaterm_keymap_new    = '<F2>'
-let g:floaterm_keymap_prev   = '<F4>'
-let g:floaterm_keymap_next   = '<F5>'
-
 nnoremap <silent><leader>gt <Cmd>FloatermNew --title=lazy-git lazygit<CR>
 inoremap <silent><leader>gt <Cmd>FloatermNew --title=lazy-git lazygit<CR>
 

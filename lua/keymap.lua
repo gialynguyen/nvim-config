@@ -3,7 +3,7 @@ local builtin = require "telescope.builtin"
 
 vim.keymap.set("n", "<leader>tt", "<cmd>Telescope<CR>")
 vim.keymap.set("n", "<leader>ff", builtin.find_files)
-vim.keymap.set("n", "<leader>fd", builtin.fd)
+vim.keymap.set("n", "<leader>fd", ":lua require('telescope.builtin').find_files({ hidden = true })<CR>")
 vim.keymap.set("n", "<leader>gs", builtin.git_status)
 vim.keymap.set("n", "<leader>gf", builtin.git_files)
 vim.keymap.set("n", "<leader>ts", builtin.treesitter)
@@ -114,11 +114,11 @@ local closeHiddenBuffers = function()
     local filetype = vim.fn.getbufvar(buffer, "&buftype")
     print(vim.api.nvim_buf_get_name(buffer))
     if
-      vim.api.nvim_buf_is_valid(buffer)
-      and vim.api.nvim_buf_get_option(buffer, "buflisted")
-      and not vim.api.nvim_buf_get_option(buffer, "modified")
-      and non_hidden_buffer[buffer] == nil
-      and filetype ~= "terminal"
+        vim.api.nvim_buf_is_valid(buffer)
+        and vim.api.nvim_buf_get_option(buffer, "buflisted")
+        and not vim.api.nvim_buf_get_option(buffer, "modified")
+        and non_hidden_buffer[buffer] == nil
+        and filetype ~= "terminal"
     then
       vim.cmd["bdelete!"](buffer)
     end

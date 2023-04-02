@@ -46,7 +46,7 @@ packer.startup(function()
   }
 
   use {
-    "kyazdani42/nvim-web-devicons",
+    "nvim-tree/nvim-web-devicons",
     config = function()
       require "plugins-opts.devicons"
     end,
@@ -67,6 +67,8 @@ packer.startup(function()
   use { "nyoom-engineering/oxocarbon.nvim" }
 
   use { "sainnhe/everforest" }
+
+  use "AlexvZyl/nordic.nvim"
 
   use {
     "nvim-treesitter/nvim-treesitter",
