@@ -73,8 +73,9 @@ local refresh_ui = function()
       hi BufferLineModifiedSelected guibg=NONE guifg=NONE
       hi BufferLineModifiedVisible guibg=NONE guifg=NONE
 
-      hi BufferLineIndicator guibg=NONE guifg=NONE
       hi BufferLineIndicatorSelected guibg=NONE guifg=NONE
+      hi BufferLineIndicatorVisible guibg=NONE guifg=NONE
+
 
       hi BufferLineSeparator guibg=NONE guifg=NONE
       hi BufferLineSeparatorSelected guibg=NONE guifg=NONE
@@ -290,6 +291,10 @@ local refresh_ui = function()
         fg = "NONE",
         bg = "NONE",
       },
+      indicator_visible = {
+        fg = "NONE",
+        bg = "NONE",
+      },
       pick_selected = {
         fg = "NONE",
         bg = "NONE",
@@ -311,7 +316,7 @@ bufferline.setup {
     offsets = {
       { filetype = "NvimTree", text = "", padding = 1 },
       { filetype = "neo-tree", text = "", padding = 1 },
-      { filetype = "Outline", text = "", padding = 1 },
+      { filetype = "Outline",  text = "", padding = 1 },
     },
     numbers = "ordinal",
     buffer_close_icon = "",
