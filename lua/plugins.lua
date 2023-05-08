@@ -21,7 +21,7 @@ packer.init {
     opt_default = true,
     open_fn = function()
       return require("packer.util").float { border = "rounded" }
-    end, -- An optional function to open a window for packer's display
+    end,               -- An optional function to open a window for packer's display
     working_sym = "🛠", -- The symbol for a plugin being installed/updated
     error_sym = "🧨", -- The symbol for a plugin with an error in installation/updating
     done_sym = "🎉", -- The symbol for a plugin which has completed installation/updating
@@ -292,10 +292,17 @@ packer.startup(function()
     end,
   }
 
+  -- use {
+  --   "karb94/neoscroll.nvim",
+  --   config = function()
+  --     require "plugins-opts.neoscroll"
+  --   end,
+  -- }
+
   use {
-    "karb94/neoscroll.nvim",
+    "declancm/cinnamon.nvim",
     config = function()
-      require "plugins-opts.neoscroll"
+      require("cinnamon").setup()
     end,
   }
 
