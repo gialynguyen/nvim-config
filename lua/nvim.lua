@@ -9,12 +9,12 @@ vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.tabstop = 2
 vim.o.updatetime = 100
-vim.o.autoindent = true
+vim.o.autoindent = false
 vim.o.smartindent = true
 vim.o.smarttab = true
 vim.o.expandtab = true
+vim.o.foldlevel = 99
 vim.o.fillchars = "eob: "
-vim.o.foldenable = false
 vim.o.foldmethod = "expr"
 vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 vim.wo.wrap = true
@@ -28,8 +28,6 @@ vim.o.inccommand = "nosplit"
 
 vim.g.VM_set_statusline = 0
 vim.g.VM_silent_exit = 1
-
-vim.api.nvim_create_autocmd({ "BufReadPost", "FileReadPost" }, { command = "normal zR" })
 
 local aug = vim.api.nvim_create_augroup("buf_large", { clear = true })
 

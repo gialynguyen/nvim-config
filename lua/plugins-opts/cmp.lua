@@ -86,8 +86,8 @@ cmp.setup {
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable( -1) then
-        luasnip.jump( -1)
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -100,15 +100,15 @@ cmp.setup {
       end
     end, { "i", "s" }),
     ["<C-b>"] = cmp.mapping(function(fallback)
-      if luasnip.jumpable( -1) then
-        luasnip.jump( -1)
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
     end, { "i", "s" }),
     ["<C-c>"] = cmp.mapping.abort(),
     ["<C-e>"] = cmp.mapping.close(),
-    ["<C-u>"] = cmp.mapping.scroll_docs( -4),
+    ["<C-u>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
   },
   confirmation = {

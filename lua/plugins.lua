@@ -68,6 +68,8 @@ packer.startup(function()
 
   use { "sainnhe/everforest" }
 
+  use "shaunsingh/solarized.nvim"
+
   use "AlexvZyl/nordic.nvim"
 
   use {
@@ -301,6 +303,7 @@ packer.startup(function()
 
   use {
     "declancm/cinnamon.nvim",
+    disable = true,
     config = function()
       require("cinnamon").setup()
     end,
