@@ -1,4 +1,4 @@
-vim.g.transparent_enabled = true
+vim.g.transparent_enabled = false
 
 require("transparent").setup {
   groups = { -- table: default groups

@@ -53,7 +53,7 @@ packer.startup(function()
   }
 
   use {
-    "glepnir/dashboard-nvim",
+    "nvimdev/dashboard-nvim",
     event = "VimEnter",
     config = function()
       require "plugins-opts.dashboard"
@@ -63,6 +63,8 @@ packer.startup(function()
   use {
     "sainnhe/gruvbox-material",
   }
+
+  use "rebelot/kanagawa.nvim"
 
   use { "nyoom-engineering/oxocarbon.nvim" }
 
@@ -196,7 +198,7 @@ packer.startup(function()
   }
 
   use {
-    "glepnir/lspsaga.nvim",
+    "nvimdev/lspsaga.nvim",
     -- commit = "fb5ec294f833ce5563fc5abce4eb9725d7809652",
     config = function()
       require "plugins-opts.saga"
@@ -294,18 +296,10 @@ packer.startup(function()
     end,
   }
 
-  -- use {
-  --   "karb94/neoscroll.nvim",
-  --   config = function()
-  --     require "plugins-opts.neoscroll"
-  --   end,
-  -- }
-
   use {
-    "declancm/cinnamon.nvim",
-    disable = true,
+    "karb94/neoscroll.nvim",
     config = function()
-      require("cinnamon").setup()
+      require "plugins-opts.neoscroll"
     end,
   }
 
