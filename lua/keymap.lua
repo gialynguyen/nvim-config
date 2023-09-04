@@ -26,7 +26,7 @@ vim.keymap.set("n", "<leader>gH", "<cmd>DiffviewFileHistory<CR>")
 local opts = { noremap = true, silent = true }
 vim.keymap.set("n", "K", "<Cmd>Lspsaga hover_doc<CR>", opts)
 vim.keymap.set("n", "gd", "<Cmd>Lspsaga peek_definition<CR>", opts)
-vim.keymap.set("n", "gr", "<Cmd>Lspsaga lsp_finder<CR>", opts)
+vim.keymap.set("n", "gr", "<Cmd>Lspsaga finder<CR>", opts)
 vim.keymap.set("n", "<leader>rn", "<Cmd>Lspsaga rename<CR>", opts)
 vim.keymap.set("n", "<leader>ac", "<Cmd>Lspsaga code_action<CR>", opts)
 
@@ -114,11 +114,11 @@ local closeHiddenBuffers = function()
     local filetype = vim.fn.getbufvar(buffer, "&buftype")
     print(vim.api.nvim_buf_get_name(buffer))
     if
-        vim.api.nvim_buf_is_valid(buffer)
-        and vim.api.nvim_buf_get_option(buffer, "buflisted")
-        and not vim.api.nvim_buf_get_option(buffer, "modified")
-        and non_hidden_buffer[buffer] == nil
-        and filetype ~= "terminal"
+      vim.api.nvim_buf_is_valid(buffer)
+      and vim.api.nvim_buf_get_option(buffer, "buflisted")
+      and not vim.api.nvim_buf_get_option(buffer, "modified")
+      and non_hidden_buffer[buffer] == nil
+      and filetype ~= "terminal"
     then
       vim.cmd["bdelete!"](buffer)
     end
