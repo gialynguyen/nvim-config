@@ -64,18 +64,18 @@ require("mason-lspconfig").setup_handlers {
         vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
         if client.server_capabilities.documentSymbolProvider then
-          vim.wo.winbar = require("lspsaga.symbolwinbar"):get_winbar()
+          vim.wo.winbar = require("lspsaga.symbol.winbar"):get_bar()
         end
 
-        require("lsp_signature").on_attach({
-          bind = true, -- This is mandatory, otherwise border config won't get registered.
-          handler_opts = {
-            border = "rounded",
-          },
-          transparency = 1,
-          toggle_key = "≈",
-          hint_enable = false,
-        }, bufnr)
+        -- require("lsp_signature").on_attach({
+        --   bind = true, -- This is mandatory, otherwise border config won't get registered.
+        --   handler_opts = {
+        --     border = "rounded",
+        --   },
+        --   transparency = 1,
+        --   toggle_key = "≈",
+        --   hint_enable = false,
+        -- }, bufnr)
       end,
       autostart = true,
       capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),

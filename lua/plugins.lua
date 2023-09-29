@@ -21,7 +21,7 @@ packer.init {
     opt_default = true,
     open_fn = function()
       return require("packer.util").float { border = "rounded" }
-    end,               -- An optional function to open a window for packer's display
+    end, -- An optional function to open a window for packer's display
     working_sym = "🛠", -- The symbol for a plugin being installed/updated
     error_sym = "🧨", -- The symbol for a plugin with an error in installation/updating
     done_sym = "🎉", -- The symbol for a plugin which has completed installation/updating
@@ -74,6 +74,12 @@ packer.startup(function()
 
   use "AlexvZyl/nordic.nvim"
 
+  use "projekt0n/caret.nvim"
+
+  use {
+    "folke/tokyonight.nvim",
+  }
+
   use {
     "nvim-treesitter/nvim-treesitter",
     config = function()
@@ -115,6 +121,11 @@ packer.startup(function()
   use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
   use "nvim-telescope/telescope-live-grep-args.nvim"
   use "nvim-telescope/telescope-file-browser.nvim"
+
+  use {
+    "renerocksai/telekasten.nvim",
+    requires = { "nvim-telescope/telescope.nvim" },
+  }
 
   use {
     "Shatur/neovim-session-manager",
@@ -166,10 +177,6 @@ packer.startup(function()
   use "hrsh7th/cmp-path"
   use "hrsh7th/cmp-buffer"
   use "lukas-reineke/cmp-under-comparator"
-  use {
-    "jackieaskins/cmp-emmet",
-    run = "npm run release",
-  }
 
   use {
     "kyazdani42/nvim-tree.lua",
@@ -195,6 +202,10 @@ packer.startup(function()
 
   use {
     "ray-x/lsp_signature.nvim",
+  }
+
+  use {
+    "hrsh7th/cmp-nvim-lsp-signature-help",
   }
 
   use {

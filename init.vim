@@ -83,8 +83,9 @@ let g:everforest_better_performance = 1
 
 " colorscheme gruvbox-material
 " colorscheme oxocarbon
+" colorscheme caret
 
-colorscheme nordic
+colorscheme tokyonight-night
 
 " let g:indent_blankline_char_list = ['¦', '┆', '┊']
 set autoread

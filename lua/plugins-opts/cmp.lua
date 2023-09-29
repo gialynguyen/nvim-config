@@ -137,10 +137,10 @@ cmp.setup {
     native_menu = false,
   },
   sources = {
-    { name = "luasnip", max_item_count = 4 },
+    { name = "luasnip",                max_item_count = 4 },
     { name = "nvim_lsp" },
     { name = "buffer" },
-    { name = "path",    max_item_count = 4 },
-    { name = "emmet" },
+    { name = "path",                   max_item_count = 4 },
+    { name = "nvim_lsp_signature_help" }
   },
 }

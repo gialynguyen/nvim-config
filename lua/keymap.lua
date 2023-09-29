@@ -33,6 +33,8 @@ vim.keymap.set("n", "<leader>ac", "<Cmd>Lspsaga code_action<CR>", opts)
 vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations)
 vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions)
 
+vim.keymap.set("n", "<F8>", "<Cmd>Lspsaga outline<CR>")
+
 vim.keymap.set("n", "<leader>da", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
 vim.keymap.set("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
@@ -120,7 +122,7 @@ local closeHiddenBuffers = function()
       and non_hidden_buffer[buffer] == nil
       and filetype ~= "terminal"
     then
-      vim.cmd["bdelete!"](buffer)
+      vim.cmd.bdelete { count = buffer }
     end
   end
   require("bufferline.ui").refresh()
@@ -169,7 +171,6 @@ end
 vim.api.nvim_create_user_command("Wrapline", Wrapline, {})
 vim.api.nvim_create_user_command("Nowrapline", Nowrapline, {})
 
-vim.keymap.set("n", "<F8>", "<Cmd>SymbolsOutline<CR>")
 vim.keymap.set("n", "<leader>db", "<cmd>Dashboard<CR>")
 vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>", { noremap = true, silent = true })
 
@@ -178,12 +179,6 @@ vim.keymap.set("n", "<leader>Q", "<cmd>tabc<CR>", { noremap = true, silent = tru
 vim.keymap.set("n", "<leader>za", "<cmd>ZenMode<CR>", { noremap = true, silent = true })
 
 --- illuminate keymap for MacOS (stupid) ---
-vim.keymap.set("n", "˜", require("illuminate").goto_next_reference, { desc = "Move to next reference" })
-vim.keymap.set("n", "π", require("illuminate").goto_prev_reference, { desc = "Move to previous reference" })
-
---- illuminate keymap for MacOS (stupid) ---
-vim.keymap.set("n", "˜", require("illuminate").goto_next_reference, { desc = "Move to next reference" })
-vim.keymap.set("n", "π", require("illuminate").goto_prev_reference, { desc = "Move to previous reference" })
 vim.keymap.set("n", "˜", require("illuminate").goto_next_reference, { desc = "Move to next reference" })
 vim.keymap.set("n", "π", require("illuminate").goto_prev_reference, { desc = "Move to previous reference" })
 
