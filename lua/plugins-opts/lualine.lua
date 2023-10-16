@@ -77,7 +77,7 @@ ins_left {
   function()
     return "▊"
   end,
-  color = { fg = colors.blue }, -- Sets highlighting of component
+  color = { fg = colors.blue },      -- Sets highlighting of component
   padding = { left = 0, right = 1 }, -- We don't need space before this
 }
 
@@ -139,7 +139,7 @@ ins_left {
 
 ins_left {
   "diff",
-  symbols = { added = " ", modified = "柳 ", removed = " " },
+  symbols = { added = " ", modified = "󰝤 ", removed = " " },
   diff_color = {
     added = { fg = colors.green },
     modified = { fg = colors.orange },

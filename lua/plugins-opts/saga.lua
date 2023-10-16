@@ -11,6 +11,9 @@ saga.setup {
       title_bg = "NONE",
     },
   },
+  symbol_in_winbar = {
+    enable = false,
+  },
   diagnostic = {
     on_insert = false,
   },

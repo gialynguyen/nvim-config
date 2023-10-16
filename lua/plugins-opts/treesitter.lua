@@ -46,7 +46,7 @@ require("nvim-treesitter.configs").setup {
     default_fallback = "auto",
   },
   indent = {
-    enable = true,
+    enable = false,
   },
   textobjects = {
     select = {
@@ -62,7 +62,7 @@ require("nvim-treesitter.configs").setup {
       },
       selection_modes = {
         ["@parameter.outer"] = "v", -- charwise
-        ["@function.outer"] = "V", -- linewise
+        ["@function.outer"] = "V",  -- linewise
         ["@class.outer"] = "<c-v>", -- blockwise
       },
       include_surrounding_whitespace = true,

@@ -18,8 +18,7 @@ autopairs.setup {
   check_ts = true,
   ts_config = {
     lua = { "string", "source" },
-    javascript = { "string", "template_string" },
-    java = false,
+    javascript = { "template_string" },
   },
   disable_filetype = { "TelescopePrompt", "spectre_panel" },
   ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""),
@@ -47,6 +46,7 @@ autopairs.setup {
     highlight_grey = "Comment",
   },
 }
+
 local ts_conds = require "nvim-autopairs.ts-conds"
 
 -- TODO: can these rules be safely added from "config.lua" ?

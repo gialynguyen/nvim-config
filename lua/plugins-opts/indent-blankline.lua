@@ -14,11 +14,13 @@ indent_blankline.setup {
       "nofile",
     },
   },
+  debounce = 500,
+  enabled = false,
   indent = {
     char = "",
   },
   scope = {
     enabled = true,
-    char = "│",
+    char = "▎",
   },
 }

@@ -21,12 +21,12 @@ dashboard.setup {
     },
     center = {
       {
-        icon = " ",
+        icon = " ",
         desc = "Recently latest session      ",
         action = "SessionManager load_session",
       },
       {
-        icon = " ",
+        icon = " ",
         desc = "Recently opened files    ",
         action = "Telescope oldfiles",
         shortcut = ", re",

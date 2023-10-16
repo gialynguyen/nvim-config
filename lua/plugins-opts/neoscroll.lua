@@ -1,3 +1,3 @@
 require("neoscroll").setup {
-  performance_mode = true
+  performance_mode = false
 }

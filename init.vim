@@ -1,5 +1,12 @@
 syntax on
 
+set termguicolors
+
+if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
 " For MacOS Ventura
 if filereadable("/opt/homebrew/bin/fish")
   set shell=/opt/homebrew/bin/fish
@@ -15,27 +22,18 @@ runtime OPT general.vim
 runtime OPT mapping.vim
 runtime OPT abbreviation.vim
 runtime OPT colors.vim
+runtime OPT packs.vim
 
 lua require('nvim')
 lua require('plugins')
 lua require('lsp')
 lua require('keymap')
 
-runtime OPT nvim-treesitter.vim
-runtime OPT telescope.nvim
-runtime OPT telescope-file-browser.nvim
-runtime OPT lualine.nvim
+" augroup matchup_matchparen_highlight
+"   autocmd!
+"   autocmd ColorScheme * hi MatchParen guifg=#f6f3e8 guibg=#857b6f gui=none
+" augroup END
 
-augroup matchup_matchparen_highlight
-  autocmd!
-  autocmd ColorScheme * hi MatchParen guifg=#f6f3e8 guibg=#857b6f gui=none
-augroup END
-
-packadd vim-matchup
-packadd gruvbox-material
-packadd everforest
-packadd nvim-autopairs
-packadd vim-sandwich
 
 nnoremap <silent><leader>gt <Cmd>FloatermNew --title=lazy-git lazygit<CR>
 inoremap <silent><leader>gt <Cmd>FloatermNew --title=lazy-git lazygit<CR>
@@ -73,21 +71,16 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set background=dark
 
 " gruvbox-material
-let g:gruvbox_material_background = 'medium'
-let g:gruvbox_material_better_performance = 1
-let g:gruvbox_material_enable_italic = 1
+" let g:gruvbox_material_background = 'medium'
+" let g:gruvbox_material_better_performance = 1
+" let g:gruvbox_material_enable_italic = 1
 
 " everforest
-let g:everforest_background = 'hard'
-let g:everforest_better_performance = 1
-
-" colorscheme gruvbox-material
-" colorscheme oxocarbon
-" colorscheme caret
+" let g:everforest_background = 'hard'
+" let g:everforest_better_performance = 1
 
 colorscheme tokyonight-night
 
-" let g:indent_blankline_char_list = ['¦', '┆', '┊']
 set autoread
 au CursorHold * checktime
 autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc
@@ -95,7 +88,5 @@ autocmd BufNewFile,BufRead *.astro setlocal filetype=astro
 autocmd BufNewFile,BufRead *.mdx setlocal filetype=markdown
 autocmd User TelescopePreviewerLoaded setlocal wrap
 autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js silent! EslintFixAll
-
-runtime OPT packs.vim
 
 lua require('user-settings')

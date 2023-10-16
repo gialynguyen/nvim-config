@@ -70,11 +70,11 @@ packer.startup(function()
 
   use { "sainnhe/everforest" }
 
-  use "shaunsingh/solarized.nvim"
+  -- use "shaunsingh/solarized.nvim"
 
-  use "AlexvZyl/nordic.nvim"
+  -- use "AlexvZyl/nordic.nvim"
 
-  use "projekt0n/caret.nvim"
+  -- use "projekt0n/caret.nvim"
 
   use {
     "folke/tokyonight.nvim",
@@ -85,6 +85,7 @@ packer.startup(function()
     config = function()
       require "plugins-opts.treesitter"
     end,
+    run = ":TSUpdate",
   }
 
   use "nvim-treesitter/nvim-treesitter-textobjects"
@@ -96,7 +97,13 @@ packer.startup(function()
     end,
   }
 
-  use "andymass/vim-matchup"
+  use {
+    "andymass/vim-matchup",
+    setup = function()
+      require "plugins-opts.matchup"
+    end,
+    disable = true,
+  }
 
   use "machakann/vim-sandwich"
 
@@ -117,6 +124,7 @@ packer.startup(function()
       require "plugins-opts.telescope"
     end,
   }
+
   use { "nvim-telescope/telescope-ui-select.nvim" }
   use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
   use "nvim-telescope/telescope-live-grep-args.nvim"
@@ -148,7 +156,9 @@ packer.startup(function()
     end,
   }
 
-  use "windwp/nvim-ts-autotag"
+  use {
+    "windwp/nvim-ts-autotag",
+  }
 
   use {
     "nvim-lualine/lualine.nvim",
@@ -173,10 +183,13 @@ packer.startup(function()
     end,
   }
 
-  use "saadparwaiz1/cmp_luasnip"
   use "hrsh7th/cmp-path"
   use "hrsh7th/cmp-buffer"
+  use {
+    "hrsh7th/cmp-nvim-lsp-signature-help",
+  }
   use "lukas-reineke/cmp-under-comparator"
+  use "saadparwaiz1/cmp_luasnip"
 
   use {
     "kyazdani42/nvim-tree.lua",
@@ -202,15 +215,11 @@ packer.startup(function()
 
   use {
     "ray-x/lsp_signature.nvim",
-  }
-
-  use {
-    "hrsh7th/cmp-nvim-lsp-signature-help",
+    disable = true,
   }
 
   use {
     "nvimdev/lspsaga.nvim",
-    -- commit = "fb5ec294f833ce5563fc5abce4eb9725d7809652",
     config = function()
       require "plugins-opts.saga"
     end,
@@ -225,7 +234,18 @@ packer.startup(function()
 
   use "tpope/vim-fugitive"
 
-  use "jose-elias-alvarez/typescript.nvim"
+  use {
+    "jose-elias-alvarez/typescript.nvim",
+    config = function()
+      require("typescript").setup {
+        disable_commands = false,
+        debug = false,
+        go_to_source_definition = {
+          fallback = true,
+        },
+      }
+    end,
+  }
 
   use {
     "jose-elias-alvarez/null-ls.nvim",
@@ -254,6 +274,7 @@ packer.startup(function()
     config = function()
       require "plugins-opts.transparent"
     end,
+    disable = true,
   }
 
   use {
@@ -287,8 +308,8 @@ packer.startup(function()
     run = function()
       vim.fn["mkdp#util#install"]()
     end,
-    config = function()
-      vim.g.mkdp_theme = "light"
+    setup = function()
+      vim.g.mkdp_theme = "dark"
     end,
   }
 
@@ -323,6 +344,18 @@ packer.startup(function()
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     config = function()
       require "plugins-opts.lsp_lines"
+    end,
+  }
+
+  use {
+    "kevinhwang91/nvim-ufo",
+    requires = {
+      "neovim/nvim-lspconfig",
+      "kevinhwang91/promise-async",
+    },
+
+    config = function()
+      require "plugins-opts.ufo"
     end,
   }
 

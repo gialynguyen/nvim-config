@@ -1,5 +1,8 @@
 local illuminate = require "illuminate"
 illuminate.configure {
+  should_enable = function()
+    return true
+  end,
   providers = {
     "lsp",
     "treesitter",

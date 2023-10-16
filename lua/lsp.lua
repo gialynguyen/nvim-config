@@ -28,6 +28,10 @@ require("mason-lspconfig").setup_handlers {
 
     local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
     capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.foldingRange = {
+      dynamicRegistration = false,
+      lineFoldingOnly = true,
+    }
 
     local setup_server = {
       tailwindcss = function(opts)
@@ -63,10 +67,6 @@ require("mason-lspconfig").setup_handlers {
       on_attach = function(client, bufnr)
         vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-        if client.server_capabilities.documentSymbolProvider then
-          vim.wo.winbar = require("lspsaga.symbol.winbar"):get_bar()
-        end
-
         -- require("lsp_signature").on_attach({
         --   bind = true, -- This is mandatory, otherwise border config won't get registered.
         --   handler_opts = {
@@ -78,7 +78,7 @@ require("mason-lspconfig").setup_handlers {
         -- }, bufnr)
       end,
       autostart = true,
-      capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
+      capabilities = capabilities,
       settings = {
         Lua = {
           diagnostics = {
