@@ -34,63 +34,44 @@ require("mason-lspconfig").setup_handlers {
     }
 
     local setup_server = {
-      tailwindcss = function(opts)
-        opts.autostart = false
-      end,
-      cssmodules_ls = function(opts)
-        opts.autostart = false
-      end,
-      tsserver = function(opts)
-        opts.root_dir = function(fname)
-          return lspconfig.util.root_pattern "tsconfig.json" (fname)
-              or not lspconfig.util.root_pattern ".flowconfig" (fname)
-              and lspconfig.util.root_pattern("package.json", "jsconfig.json", ".git")(fname)
-        end
-
-        opts.capabilities = capabilities
-      end,
-      volar = function(opts)
-        opts.filetypes = {
+      tailwindcss = {
+        autostart = false,
+      },
+      cssmodules_ls = {
+        autostart = false,
+      },
+      volar = {
+        filetypes = {
           "vue",
-        }
-      end,
-      eslint = function(opts)
-        opts.handlers = {
+        },
+      },
+      eslint = {
+        handlers = {
           ["window/showMessageRequest"] = function(_, result, params)
             return result
           end,
-        }
-      end,
+        },
+      },
+      lua_ls = {
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "vim" },
+            },
+          },
+        },
+      }
     }
 
-    local opts = {
+    local default_opts = {
       on_attach = function(client, bufnr)
         vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-        -- require("lsp_signature").on_attach({
-        --   bind = true, -- This is mandatory, otherwise border config won't get registered.
-        --   handler_opts = {
-        --     border = "rounded",
-        --   },
-        --   transparency = 1,
-        --   toggle_key = "≈",
-        --   hint_enable = false,
-        -- }, bufnr)
       end,
       autostart = true,
       capabilities = capabilities,
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { "vim" },
-          },
-        },
-      },
     }
 
-    if setup_server[server_name] then
-      setup_server[server_name](opts)
-    end
+    local opts = vim.tbl_deep_extend("force", default_opts, setup_server[server_name] or {})
 
     lspconfig[server_name].setup(opts)
   end,

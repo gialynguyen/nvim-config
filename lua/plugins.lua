@@ -214,11 +214,6 @@ packer.startup(function()
   use "onsails/lspkind-nvim"
 
   use {
-    "ray-x/lsp_signature.nvim",
-    disable = true,
-  }
-
-  use {
     "nvimdev/lspsaga.nvim",
     config = function()
       require "plugins-opts.saga"
@@ -242,6 +237,12 @@ packer.startup(function()
         debug = false,
         go_to_source_definition = {
           fallback = true,
+        },
+        server = {
+          root_dir = function(fname)
+            local lspconfig = require "lspconfig"
+            return lspconfig.util.root_pattern ".git" (fname)
+          end,
         },
       }
     end,
