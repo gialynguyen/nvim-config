@@ -32,7 +32,9 @@ local conditions = {
 
 -- Config
 local config = {
+  extensions = { "nvim-tree" },
   options = {
+    disabled_filetypes = {},
     -- Disable sections and component separators
     component_separators = "",
     section_separators = "",
@@ -77,7 +79,7 @@ ins_left {
   function()
     return "▊"
   end,
-  color = { fg = colors.blue },      -- Sets highlighting of component
+  color = { fg = colors.blue }, -- Sets highlighting of component
   padding = { left = 0, right = 1 }, -- We don't need space before this
 }
 

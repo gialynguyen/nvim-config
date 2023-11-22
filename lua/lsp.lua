@@ -27,6 +27,7 @@ require("mason-lspconfig").setup_handlers {
     local lspconfig = require "lspconfig"
 
     local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
     capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities.textDocument.foldingRange = {
       dynamicRegistration = false,
@@ -60,7 +61,7 @@ require("mason-lspconfig").setup_handlers {
             },
           },
         },
-      }
+      },
     }
 
     local default_opts = {
@@ -70,6 +71,28 @@ require("mason-lspconfig").setup_handlers {
       autostart = true,
       capabilities = capabilities,
     }
+
+    if server_name == 'tsserver' then
+      require("typescript").setup {
+        disable_commands = false,
+        debug = false,
+        go_to_source_definition = {
+          fallback = true,
+        },
+        server = {
+          on_attach = function(client, bufnr)
+            vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+          end,
+          autostart = true,
+          capabilities = capabilities,
+          root_dir = function(fname)
+            local lspconfig = require "lspconfig"
+            return lspconfig.util.root_pattern ".git" (fname)
+          end,
+        },
+      }
+      return
+    end
 
     local opts = vim.tbl_deep_extend("force", default_opts, setup_server[server_name] or {})
 

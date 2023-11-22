@@ -25,14 +25,15 @@ runtime OPT colors.vim
 runtime OPT packs.vim
 
 lua require('nvim')
-lua require('plugins')
+" lua require('plugins')
+lua require('lazy-pkg-m')
 lua require('lsp')
 lua require('keymap')
 
-" augroup matchup_matchparen_highlight
-"   autocmd!
-"   autocmd ColorScheme * hi MatchParen guifg=#f6f3e8 guibg=#857b6f gui=none
-" augroup END
+augroup matchup_matchparen_highlight
+  autocmd!
+  autocmd ColorScheme * hi MatchParen guifg=#f6f3e8 guibg=#857b6f gui=none
+augroup END
 
 
 nnoremap <silent><leader>gt <Cmd>FloatermNew --title=lazy-git lazygit<CR>
@@ -78,8 +79,6 @@ set background=dark
 " everforest
 " let g:everforest_background = 'hard'
 " let g:everforest_better_performance = 1
-
-colorscheme tokyonight-night
 
 set autoread
 au CursorHold * checktime

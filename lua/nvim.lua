@@ -1,4 +1,4 @@
-vim.o.cursorline = true
+vim.o.cursorline = false
 vim.o.clipboard = "unnamedplus"
 vim.o.ignorecase = true
 vim.o.lazyredraw = true
@@ -14,6 +14,7 @@ vim.o.autoindent = false
 vim.o.smartindent = true
 vim.o.smarttab = true
 vim.o.expandtab = true
+vim.o.laststatus = 3
 vim.wo.wrap = true
 vim.wo.list = false
 vim.wo.linebreak = true

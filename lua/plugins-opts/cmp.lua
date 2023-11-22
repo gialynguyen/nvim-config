@@ -136,11 +136,11 @@ cmp.setup {
     ghost_text = true,
     native_menu = false,
   },
-  sources = {
-    { name = "luasnip",                max_item_count = 4 },
+  sources = cmp.config.sources({
     { name = "nvim_lsp" },
+    { name = "luasnip",                max_item_count = 4 },
     { name = "buffer" },
     { name = "path",                   max_item_count = 4 },
     { name = "nvim_lsp_signature_help" }
-  },
+  }),
 }

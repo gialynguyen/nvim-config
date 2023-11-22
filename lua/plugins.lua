@@ -70,12 +70,6 @@ packer.startup(function()
 
   use { "sainnhe/everforest" }
 
-  -- use "shaunsingh/solarized.nvim"
-
-  -- use "AlexvZyl/nordic.nvim"
-
-  -- use "projekt0n/caret.nvim"
-
   use {
     "folke/tokyonight.nvim",
   }
@@ -231,21 +225,6 @@ packer.startup(function()
 
   use {
     "jose-elias-alvarez/typescript.nvim",
-    config = function()
-      require("typescript").setup {
-        disable_commands = false,
-        debug = false,
-        go_to_source_definition = {
-          fallback = true,
-        },
-        server = {
-          root_dir = function(fname)
-            local lspconfig = require "lspconfig"
-            return lspconfig.util.root_pattern ".git" (fname)
-          end,
-        },
-      }
-    end,
   }
 
   use {
