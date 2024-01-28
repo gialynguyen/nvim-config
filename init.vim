@@ -89,6 +89,6 @@ autocmd BufNewFile,BufRead *.mdx setlocal filetype=markdown
 autocmd User TelescopePreviewerLoaded setlocal wrap
 autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js silent! EslintFixAll
 
-if !empty(expand(glob("user-settings")))
+if filereadable(glob("~/.config/nvim/user-settings.lua"))
   lua require('user-settings')
 endif
