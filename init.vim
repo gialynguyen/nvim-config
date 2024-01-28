@@ -88,4 +88,6 @@ autocmd BufNewFile,BufRead *.mdx setlocal filetype=markdown
 autocmd User TelescopePreviewerLoaded setlocal wrap
 autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js silent! EslintFixAll
 
-lua require('user-settings')
+if !empty(expand(glob("user-settings")))
+  lua require('user-settings')
+endif
