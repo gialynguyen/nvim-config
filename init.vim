@@ -71,6 +71,7 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 set background=dark
 
+colorscheme tokyonight
 " gruvbox-material
 " let g:gruvbox_material_background = 'medium'
 " let g:gruvbox_material_better_performance = 1
