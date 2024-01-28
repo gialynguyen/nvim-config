@@ -20,7 +20,7 @@ vim.wo.list = false
 vim.wo.linebreak = true
 
 vim.g.mapleader = "\\"
-vim.g.loaded_matchparen = false
+vim.g.loaded_matchparen = true
 
 vim.o.mouse = "a"
 vim.o.inccommand = "nosplit"
@@ -40,6 +40,7 @@ vim.api.nvim_create_autocmd({ "BufReadPre" }, {
       vim.cmd "IlluminatePauseBuf"
       vim.opt_local.foldmethod = "manual"
       vim.opt_local.spell = false
+      vim.g.loaded_matchparen = false
     else
       vim.b.large_buf = false
     end

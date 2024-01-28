@@ -41,6 +41,9 @@ require("mason-lspconfig").setup_handlers {
       cssmodules_ls = {
         autostart = false,
       },
+      denols = {
+        root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+      },
       volar = {
         filetypes = {
           "vue",
@@ -72,7 +75,7 @@ require("mason-lspconfig").setup_handlers {
       capabilities = capabilities,
     }
 
-    if server_name == 'tsserver' then
+    if server_name == "tsserver" then
       require("typescript").setup {
         disable_commands = false,
         debug = false,
@@ -86,8 +89,7 @@ require("mason-lspconfig").setup_handlers {
           autostart = true,
           capabilities = capabilities,
           root_dir = function(fname)
-            local lspconfig = require "lspconfig"
-            return lspconfig.util.root_pattern ".git" (fname)
+            return lspconfig.util.root_pattern ".git"(fname)
           end,
         },
       }

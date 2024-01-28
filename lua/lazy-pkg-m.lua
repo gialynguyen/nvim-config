@@ -23,6 +23,7 @@ local lazy_opts = {
   },
   checker = {
     enabled = true,
+    frequency = 86400,
   },
 }
 
@@ -59,9 +60,9 @@ require("lazy").setup({
 
   {
     "folke/tokyonight.nvim",
-    lazy = true,
+    lazy = false,
+    priority = 1000,
   },
-  --
 
   {
     "nvim-treesitter/nvim-treesitter",
@@ -96,7 +97,8 @@ require("lazy").setup({
   --   setup = function()
   --     require "plugins-opts.matchup"
   --   end,
-  --   disable = true,
+  --   event = "VeryLazy",
+  --   disable = false,
   -- },
 
   {
@@ -185,7 +187,18 @@ require("lazy").setup({
     },
     event = "InsertEnter",
   },
-
+  {
+    "Exafunction/codeium.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
+    },
+    enabled = false,
+    event = "InsertEnter",
+    config = function()
+      require("codeium").setup {}
+    end,
+  },
   {
     "rafamadriz/friendly-snippets",
     event = "InsertEnter",
@@ -244,6 +257,7 @@ require("lazy").setup({
     config = function()
       require "plugins-opts.gitsign"
     end,
+    cmd = "Gitsigns",
   },
 
   {
@@ -281,7 +295,7 @@ require("lazy").setup({
     config = function()
       require "plugins-opts.transparent"
     end,
-    enabled = false,
+    lazy = true,
   },
 
   {

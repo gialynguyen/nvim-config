@@ -96,7 +96,7 @@ packer.startup(function()
     setup = function()
       require "plugins-opts.matchup"
     end,
-    disable = true,
+    disable = false,
   }
 
   use "machakann/vim-sandwich"

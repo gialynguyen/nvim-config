@@ -15,7 +15,7 @@ indent_blankline.setup {
     },
   },
   debounce = 500,
-  enabled = false,
+  enabled = true,
   indent = {
     char = "",
   },

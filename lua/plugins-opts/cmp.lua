@@ -59,6 +59,7 @@ cmp.setup {
         Event = "",
         Operator = "󰆕",
         TypeParameter = "",
+        -- Codeium = "",
       },
 
       maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
@@ -136,11 +137,12 @@ cmp.setup {
     ghost_text = true,
     native_menu = false,
   },
-  sources = cmp.config.sources({
+  sources = cmp.config.sources {
     { name = "nvim_lsp" },
-    { name = "luasnip",                max_item_count = 4 },
+    { name = "codeium", max_item_count = 6 },
+    { name = "luasnip", max_item_count = 4 },
     { name = "buffer" },
-    { name = "path",                   max_item_count = 4 },
-    { name = "nvim_lsp_signature_help" }
-  }),
+    { name = "path", max_item_count = 4 },
+    { name = "nvim_lsp_signature_help" },
+  },
 }
