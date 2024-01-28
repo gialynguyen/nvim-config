@@ -1,3 +1,5 @@
 /plugin
 
+./setup/node_modules
+
 **/**/user-settings.lua
