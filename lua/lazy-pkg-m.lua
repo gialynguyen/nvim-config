@@ -319,6 +319,7 @@ require("lazy").setup({
     config = function()
       require "plugins-opts.sad"
     end,
+    enabled = false,
     dependencies = {
       "ray-x/guihua.lua",
     },
