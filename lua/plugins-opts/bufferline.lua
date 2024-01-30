@@ -5,7 +5,7 @@ local close_func = function(bufnum)
   if bufdelete_avail then
     bufdelete.bufdelete(bufnum, true)
   else
-    vim.cmd["bdelete!"] { args = { bufnum } }
+    vim.api.nvim_buf_delete(bufnum, { force = true })
   end
 end
 
