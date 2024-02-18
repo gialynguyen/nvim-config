@@ -133,11 +133,11 @@ require("lazy").setup({
     event = "VeryLazy",
   },
 
-  {
-    "renerocksai/telekasten.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim" },
-    cmd = "Telekasten",
-  },
+  -- {
+  --   "renerocksai/telekasten.nvim",
+  --   dependencies = { "nvim-telescope/telescope.nvim" },
+  --   cmd = "Telekasten",
+  -- },
 
   {
     "Shatur/neovim-session-manager",
@@ -380,5 +380,13 @@ require("lazy").setup({
       "kevinhwang91/promise-async",
     },
     event = "BufEnter",
+  },
+
+  {
+    "JellyApple102/flote.nvim",
+    config = function()
+      require "plugins-opts.flote"
+    end,
+    lazy = false
   },
 }, lazy_opts)

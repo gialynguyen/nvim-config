@@ -1,17 +1,4 @@
 require("nvim-treesitter.configs").setup {
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-    config = {
-      typescript = "// %s",
-      css = "/* %s */",
-      scss = "/* %s */",
-      html = "<!-- %s -->",
-      svelte = "<!-- %s -->",
-      vue = "<!-- %s -->",
-      json = "",
-    },
-  },
   autopairs = { enable = true },
   autotag = { enable = true },
   ensure_installed = {
@@ -62,7 +49,7 @@ require("nvim-treesitter.configs").setup {
       },
       selection_modes = {
         ["@parameter.outer"] = "v", -- charwise
-        ["@function.outer"] = "V",  -- linewise
+        ["@function.outer"] = "V", -- linewise
         ["@class.outer"] = "<c-v>", -- blockwise
       },
       include_surrounding_whitespace = true,
@@ -87,5 +74,18 @@ require("nvim-treesitter.configs").setup {
         ["[]"] = "@class.outer",
       },
     },
+  },
+}
+
+require("ts_context_commentstring").setup {
+  enable_autocmd = false,
+  config = {
+    typescript = "// %s",
+    css = "/* %s */",
+    scss = "/* %s */",
+    html = "<!-- %s -->",
+    svelte = "<!-- %s -->",
+    vue = "<!-- %s -->",
+    json = "",
   },
 }
