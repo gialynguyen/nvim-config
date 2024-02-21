@@ -139,10 +139,10 @@ cmp.setup {
   },
   sources = cmp.config.sources {
     { name = "nvim_lsp" },
-    { name = "codeium", max_item_count = 6 },
-    { name = "luasnip", max_item_count = 4 },
+    { name = "codeium",                max_item_count = 6 },
+    { name = "luasnip",                max_item_count = 4 },
     { name = "buffer" },
-    { name = "path", max_item_count = 4 },
+    { name = "path" },
     { name = "nvim_lsp_signature_help" },
   },
 }

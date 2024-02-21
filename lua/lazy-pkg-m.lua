@@ -184,6 +184,7 @@ require("lazy").setup({
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "lukas-reineke/cmp-under-comparator",
       "saadparwaiz1/cmp_luasnip",
+      "L3MON4D3/LuaSnip"
     },
     event = "InsertEnter",
   },
@@ -194,22 +195,24 @@ require("lazy").setup({
       "hrsh7th/nvim-cmp",
     },
     enabled = false,
-    event = "InsertEnter",
     config = function()
       require("codeium").setup {}
     end,
   },
   {
     "rafamadriz/friendly-snippets",
-    event = "InsertEnter",
+    config = function()
+      require "plugins-opts.snippets"
+    end,
+    dependencies = {
+      "saadparwaiz1/cmp_luasnip",
+    },
   },
 
   {
     "L3MON4D3/LuaSnip",
-    config = function()
-      require "plugins-opts.snippets"
-    end,
-    event = "InsertEnter",
+    version = "v2.*",
+    dependencies = { "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets" },
   },
 
   {
@@ -387,6 +390,6 @@ require("lazy").setup({
     config = function()
       require "plugins-opts.flote"
     end,
-    lazy = false
+    lazy = false,
   },
 }, lazy_opts)
