@@ -184,7 +184,7 @@ require("lazy").setup({
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "lukas-reineke/cmp-under-comparator",
       "saadparwaiz1/cmp_luasnip",
-      "L3MON4D3/LuaSnip"
+      "L3MON4D3/LuaSnip",
     },
     event = "InsertEnter",
   },
@@ -290,6 +290,9 @@ require("lazy").setup({
     config = function()
       require "plugins-opts.bufferline"
     end,
+    dependencies = {
+      "famiu/bufdelete.nvim"
+    },
     event = { "BufEnter" },
   },
 
@@ -391,5 +394,9 @@ require("lazy").setup({
       require "plugins-opts.flote"
     end,
     lazy = false,
+  },
+
+  {
+    "famiu/bufdelete.nvim",
   },
 }, lazy_opts)

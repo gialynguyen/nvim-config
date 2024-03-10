@@ -46,8 +46,31 @@ null_ls.setup {
     null_ls.builtins.formatting.rustfmt,
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.code_actions.gitsigns,
-    null_ls.builtins.diagnostics.stylelint,
-    null_ls.builtins.formatting.stylelint,
+    null_ls.builtins.diagnostics.stylelint.with {
+      condition = function(utils)
+        return utils.root_has_file {
+          "stylelint.config.js",
+          ".stylelintrc.js",
+          ".stylelintrc",
+          ".stylelintrc.json",
+          ".stylelintrc.yml",
+          ".stylelintrc.yaml",
+        }
+      end,
+    },
+    null_ls.builtins.formatting.stylelint.with {
+      condition = function(utils)
+        return utils.root_has_file {
+          "stylelint.config.js",
+          ".stylelintrc.js",
+          ".stylelintrc",
+          ".stylelintrc.json",
+          ".stylelintrc.yml",
+          ".stylelintrc.yaml",
+        }
+      end,
+    },
+
     null_ls.builtins.diagnostics.cspell.with {
       filetypes = {
         "html",
@@ -59,6 +82,7 @@ null_ls.setup {
         "typescript",
         "typescriptreact",
         "javascriptreact",
+        "liquid",
       },
       diagnostics_postprocess = function(diagnostic)
         diagnostic.severity = vim.diagnostic.severity.INFO
@@ -75,6 +99,7 @@ null_ls.setup {
         "typescript",
         "typescriptreact",
         "javascriptreact",
+        "liquid",
       },
     },
     require "typescript.extensions.null-ls.code-actions",
