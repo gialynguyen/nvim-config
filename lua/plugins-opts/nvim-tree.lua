@@ -83,7 +83,9 @@ require("nvim-tree").setup {
     show_on_dirs = true,
     timeout = 400,
   },
-
+  update_focused_file = {
+    enable = true,
+  },
   actions = {
     open_file = {
       resize_window = false,
