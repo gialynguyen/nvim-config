@@ -56,12 +56,12 @@ require("lazy").setup({
 
   { "nyoom-engineering/oxocarbon.nvim", lazy = true },
 
-  { "sainnhe/everforest",               lazy = true },
+  { "sainnhe/everforest", lazy = true },
 
   {
-    'navarasu/onedark.nvim',
+    "navarasu/onedark.nvim",
     lazy = true,
-    priority = 1000
+    priority = 1000,
   },
 
   {
@@ -77,10 +77,6 @@ require("lazy").setup({
     end,
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
-      "JoosepAlviste/nvim-ts-context-commentstring",
-      {
-        "yioneko/nvim-yati",
-      },
       {
         "windwp/nvim-ts-autotag",
         event = "InsertEnter",
@@ -118,10 +114,24 @@ require("lazy").setup({
   },
 
   {
-    "numToStr/Comment.nvim",
+    "JoosepAlviste/nvim-ts-context-commentstring",
     config = function()
-      require "plugins-opts.comment"
+      require("ts_context_commentstring").setup {
+        enable_autocmd = false,
+      }
     end,
+  },
+
+  {
+    "echasnovski/mini.comment",
+    opts = {
+      options = {
+        custom_commentstring = function()
+          return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
+        end,
+      },
+    },
+    version = false,
     event = "VeryLazy",
   },
 
@@ -266,14 +276,18 @@ require("lazy").setup({
     config = function()
       require "plugins-opts.gitsign"
     end,
-    cmd = "Gitsigns",
+    event = {
+      "BufEnter",
+    },
   },
 
   {
     "tpope/vim-fugitive",
-    event = "User InGitRepo",
+    cmd = {
+      "G",
+      "Git",
+    },
   },
-
   {
     "jose-elias-alvarez/null-ls.nvim",
     config = function()
@@ -297,7 +311,7 @@ require("lazy").setup({
       require "plugins-opts.bufferline"
     end,
     dependencies = {
-      "famiu/bufdelete.nvim"
+      "famiu/bufdelete.nvim",
     },
     event = { "BufEnter" },
   },
