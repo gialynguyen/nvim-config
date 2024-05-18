@@ -52,7 +52,7 @@ dashboard.setup {
       {
         icon = " ",
         desc = "Configure Neovim          ",
-        action = "edit ~/.config/nvim/init.vim",
+        action = "edit ~/.config/nvim/init.lua",
         shortcut = ", v",
       },
       {
