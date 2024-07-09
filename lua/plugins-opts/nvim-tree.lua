@@ -74,7 +74,7 @@ require("nvim-tree").setup {
     adaptive_size = true,
     preserve_window_proportions = true,
     width = {
-      padding = 5
+      padding = 5,
     },
     float = {
       enable = true,
@@ -93,7 +93,8 @@ require("nvim-tree").setup {
         local center_x = (screen_w - window_w) / 2
         local center_y = ((vim.opt.lines:get() - window_h) / 2) - vim.opt.cmdheight:get()
         return {
-          border = "rounded",
+          border = "single",
+          style = "minimal",
           relative = "editor",
           row = center_y,
           col = center_x,

@@ -1,56 +1,16 @@
-vim.g.transparent_enabled = false
+vim.g.transparent_enabled = true
 
-require("transparent").setup {
-  groups = { -- table: default groups
-    "Normal",
-    "NormalNC",
-    "Comment",
-    "Constant",
-    "Special",
-    "Identifier",
-    "Statement",
-    "PreProc",
-    "Type",
-    "Underlined",
-    "Todo",
-    "String",
-    "Function",
-    "Conditional",
-    "Repeat",
-    "Operator",
-    "Structure",
-    "LineNr",
-    "NonText",
-    "SignColumn",
-    "CursorLineNr",
-    "EndOfBuffer",
-  },
+local transparent = require "transparent"
+transparent.setup {
   extra_groups = {
-    "VertSplit",
-
-    "toggleterm",
-    "ZenBg",
-    "MasonNormal",
-
-    "NvimTreeNormal",
-    "NvimTreeWinSeparator",
-    "NvimTreeStatuslineNc",
-    "NvimTreeEndOfBuffer",
-
-    "TerminalBorder",
-    "TerminalNormal",
-    "FloatermBorder",
-    "Floaterm",
-
-    "LspFloatWinNormal",
-    "Normal",
     "NormalFloat",
+    "NvimTreeNormal",
     "FloatBorder",
-    "TelescopeNormal",
-    "TelescopeBorder",
-    "TelescopePromptBorder",
-    "SagaBorder",
-    "SagaNormal",
   },
-  exclude_groups = {},
 }
+
+transparent.clear_prefix "BufferLine"
+transparent.clear_prefix "NvimTree"
+transparent.clear_prefix "lualine"
+transparent.clear_prefix "Ufo"
+transparent.clear_prefix "Fold"

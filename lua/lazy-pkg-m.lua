@@ -51,23 +51,37 @@ require("lazy").setup({
 
   {
     "sainnhe/gruvbox-material",
-    lazy = true,
-  },
-
-  { "nyoom-engineering/oxocarbon.nvim", lazy = true },
-
-  { "sainnhe/everforest", lazy = true },
-
-  {
-    "navarasu/onedark.nvim",
-    lazy = true,
+    lazy = false,
     priority = 1000,
   },
+
+  -- { "nyoom-engineering/oxocarbon.nvim", lazy = false, priority = 1000 },
+
+  -- {
+  --   "sainnhe/everforest",
+  --   priority = 1000,
+  --   lazy = false,
+  -- },
+
+  -- {
+  --   "navarasu/onedark.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  -- },
 
   {
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
+  },
+
+  {
+    "baliestri/aura-theme",
+    lazy = false,
+    priority = 1000,
+    config = function(plugin)
+      vim.opt.rtp:append(plugin.dir .. "/packages/neovim")
+    end,
   },
 
   {
@@ -77,13 +91,23 @@ require("lazy").setup({
     end,
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
-      {
-        "windwp/nvim-ts-autotag",
-        event = "InsertEnter",
-      },
     },
     event = "VeryLazy",
     build = ":TSUpdate",
+  },
+
+  {
+    "windwp/nvim-ts-autotag",
+    config = function()
+      require("nvim-ts-autotag").setup {
+        opts = {
+          enable_close = true,           -- Auto close tags
+          enable_rename = true,          -- Auto rename pairs of tags
+          enable_close_on_slash = false, -- Auto close on trailing </
+        },
+      }
+    end,
+    event = "InsertEnter",
   },
 
   {
@@ -91,7 +115,7 @@ require("lazy").setup({
     config = function()
       require "plugins-opts.hop"
     end,
-    event = "VeryLazy",
+    event = "BufReadPost",
   },
 
   -- {
@@ -105,12 +129,25 @@ require("lazy").setup({
 
   {
     "machakann/vim-sandwich",
-    event = "BufRead",
+    event = "BufReadPost",
   },
 
   {
-    "mg979/vim-visual-multi",
-    event = "BufRead",
+    "smoka7/multicursors.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "nvimtools/hydra.nvim",
+    },
+    opts = {},
+    cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
+    keys = {
+      {
+        mode = { "v", "n" },
+        "<C-n>",
+        "<cmd>MCstart<cr>",
+        desc = "Create a selection for selected text or word under the cursor",
+      },
+    },
   },
 
   {
@@ -168,7 +205,7 @@ require("lazy").setup({
     config = function()
       require "plugins-opts.indent-blankline"
     end,
-    event = "VeryLazy",
+    event = { "BufReadPost" },
     main = "ibl",
   },
 
@@ -189,6 +226,35 @@ require("lazy").setup({
   },
 
   {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    build = ":Copilot auth",
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+      filetypes = {
+        markdown = true,
+        help = true,
+      },
+    },
+  },
+
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "canary",
+    dependencies = {
+      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+      { "nvim-lua/plenary.nvim" },  -- for curl, log wrapper
+    },
+    opts = {
+      debug = false, -- Enable debugging
+      -- See Configuration section for rest
+    },
+    event = "InsertEnter",
+    -- See Commands section for default commands if you want to lazy load on them
+  },
+
+  {
     "hrsh7th/nvim-cmp",
     config = function()
       require "plugins-opts.cmp"
@@ -201,20 +267,30 @@ require("lazy").setup({
       "lukas-reineke/cmp-under-comparator",
       "saadparwaiz1/cmp_luasnip",
       "L3MON4D3/LuaSnip",
+      {
+        "zbirenbaum/copilot-cmp",
+        dependencies = "copilot.lua",
+        opts = {},
+        config = function(_, opts)
+          require("copilot_cmp").setup()
+        end,
+      },
     },
     event = "InsertEnter",
   },
-  {
-    "Exafunction/codeium.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "hrsh7th/nvim-cmp",
-    },
-    enabled = false,
-    config = function()
-      require("codeium").setup {}
-    end,
-  },
+
+  -- {
+  --   "Exafunction/codeium.nvim",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "hrsh7th/nvim-cmp",
+  --   },
+  --   enabled = false,
+  --   config = function()
+  --     require("codeium").setup {}
+  --   end,
+  -- },
+
   {
     "rafamadriz/friendly-snippets",
     config = function()
@@ -241,11 +317,24 @@ require("lazy").setup({
 
   {
     "neovim/nvim-lspconfig",
-    event = { "BufRead", "BufNewFile" },
+    event = { "BufReadPost", "BufNewFile" },
     dependencies = {
       "onsails/lspkind-nvim",
-      "jose-elias-alvarez/typescript.nvim",
     },
+  },
+
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    config = function()
+      require("typescript-tools").setup {
+        settings = {
+          expose_as_code_action = "all",
+        },
+      }
+    end,
+    opts = {},
+    lazy = false,
   },
 
   {
@@ -277,7 +366,7 @@ require("lazy").setup({
       require "plugins-opts.gitsign"
     end,
     event = {
-      "BufEnter",
+      "BufReadPost",
     },
   },
 
@@ -289,11 +378,12 @@ require("lazy").setup({
     },
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
+    dependencies = { "davidmh/cspell.nvim" },
+    event = { "BufReadPost", "BufNewFile" },
     config = function()
-      require "plugins-opts.null-ls"
+      require "plugins-opts.none-ls"
     end,
-    event = "VeryLazy",
   },
 
   {
@@ -313,7 +403,7 @@ require("lazy").setup({
     dependencies = {
       "famiu/bufdelete.nvim",
     },
-    event = { "BufEnter" },
+    event = { "BufReadPost" },
   },
 
   {
@@ -321,7 +411,7 @@ require("lazy").setup({
     config = function()
       require "plugins-opts.transparent"
     end,
-    lazy = true,
+    lazy = false,
   },
 
   {
@@ -340,37 +430,42 @@ require("lazy").setup({
     cmd = "ZenMode",
   },
 
-  {
-    "ray-x/sad.nvim",
-    config = function()
-      require "plugins-opts.sad"
-    end,
-    enabled = false,
-    dependencies = {
-      "ray-x/guihua.lua",
-    },
-    event = "VeryLazy",
-  },
-
-  {
-    "iamcco/markdown-preview.nvim",
-    run = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-    setup = function()
-      vim.g.mkdp_theme = "dark"
-    end,
-    event = "VeryLazy",
-  },
+  -- {
+  --   "ray-x/sad.nvim",
+  --   config = function()
+  --     require "plugins-opts.sad"
+  --   end,
+  --   enabled = false,
+  --   dependencies = {
+  --     "ray-x/guihua.lua",
+  --   },
+  --   event = "VeryLazy",
+  -- },
+  --
+  -- {
+  --   "iamcco/markdown-preview.nvim",
+  --   run = function()
+  --     vim.fn["mkdp#util#install"]()
+  --   end,
+  --   enabled = false,
+  --   setup = function()
+  --     vim.g.mkdp_theme = "dark"
+  --   end,
+  --   event = "VeryLazy",
+  -- },
 
   {
     "johann2357/nvim-smartbufs",
-    event = "BufEnter",
+    event = "BufReadPost",
   },
 
   {
     "ton/vim-bufsurf",
-    event = "BufEnter",
+    event = "BufReadPost",
+  },
+
+  {
+    "famiu/bufdelete.nvim",
   },
 
   {
@@ -378,7 +473,7 @@ require("lazy").setup({
     config = function()
       require "plugins-opts.illuminate"
     end,
-    event = "BufEnter",
+    event = "BufReadPost",
   },
 
   {
@@ -396,6 +491,7 @@ require("lazy").setup({
     end,
     event = "VeryLazy",
   },
+
   {
     "kevinhwang91/nvim-ufo",
     config = function()
@@ -405,18 +501,7 @@ require("lazy").setup({
       "neovim/nvim-lspconfig",
       "kevinhwang91/promise-async",
     },
-    event = "BufEnter",
-  },
-
-  {
-    "JellyApple102/flote.nvim",
-    config = function()
-      require "plugins-opts.flote"
-    end,
-    lazy = false,
-  },
-
-  {
-    "famiu/bufdelete.nvim",
+    -- enabled = false,
+    event = "VeryLazy",
   },
 }, lazy_opts)

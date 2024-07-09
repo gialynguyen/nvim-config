@@ -1,5 +1,15 @@
+local function is_js_ts_jsx_tsx_file(bufnr)
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
+  local extension = bufname:match "^.+(%..+)$"
+  return extension == ".js" or extension == ".ts" or extension == ".jsx" or extension == ".tsx"
+end
+
 local async_formatting = function(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
+
+  if is_js_ts_jsx_tsx_file(bufnr) then
+    vim.cmd "TSToolsOrganizeImports sync"
+  end
 
   vim.lsp.buf_request(bufnr, "textDocument/formatting", vim.lsp.util.make_formatting_params {}, function(err, res, ctx)
     if err then
@@ -23,32 +33,43 @@ local async_formatting = function(bufnr)
   end)
 end
 
-local is_disable_null_ls = 0
+local is_disable_none_ls = 0
 
-local disable_null_ls = function()
-  is_disable_null_ls = 1
+local disable_none_ls = function()
+  is_disable_none_ls = 1
 end
 
-local enable_null_ls = function()
-  is_disable_null_ls = 0
+local enable_none_ls = function()
+  is_disable_none_ls = 0
 end
 
-vim.api.nvim_create_user_command("NullLsDisable", disable_null_ls, {})
-vim.api.nvim_create_user_command("NullLsEnable", enable_null_ls, {})
+vim.api.nvim_create_user_command("NoneLsDisable", disable_none_ls, {})
+vim.api.nvim_create_user_command("NoneLsEnable", enable_none_ls, {})
 
-local null_ls = require "null-ls"
+local none_ls = require "null-ls"
+local cspell = require "cspell"
+
 local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
-
-null_ls.setup {
+local cspell_config = {
+  diagnostics_postprocess = function(diagnostic)
+    diagnostic.severity = vim.diagnostic.severity["INFO"] -- ERROR, WARN, INFO, HINT
+  end,
+  config = {
+    find_json = function(_)
+      return vim.fn.expand "~/.config/cspell.json"
+    end,
+  },
+}
+none_ls.setup {
   sources = {
-    null_ls.builtins.formatting.gofmt,
-    null_ls.builtins.formatting.prettier.with {
+    none_ls.builtins.formatting.gofmt,
+    none_ls.builtins.formatting.prettier.with {
       extra_filetypes = { "svelte" },
     },
-    null_ls.builtins.formatting.rustfmt,
-    null_ls.builtins.formatting.stylua,
-    null_ls.builtins.code_actions.gitsigns,
-    null_ls.builtins.diagnostics.stylelint.with {
+    -- none_ls.builtins.formatting.rustfmt,
+    none_ls.builtins.formatting.stylua,
+    none_ls.builtins.code_actions.gitsigns,
+    none_ls.builtins.diagnostics.stylelint.with {
       condition = function(utils)
         return utils.root_has_file {
           "stylelint.config.js",
@@ -60,7 +81,7 @@ null_ls.setup {
         }
       end,
     },
-    null_ls.builtins.formatting.stylelint.with {
+    none_ls.builtins.formatting.stylelint.with {
       condition = function(utils)
         return utils.root_has_file {
           "stylelint.config.js",
@@ -72,8 +93,7 @@ null_ls.setup {
         }
       end,
     },
-
-    null_ls.builtins.diagnostics.cspell.with {
+    cspell.diagnostics.with {
       filetypes = {
         "html",
         "css",
@@ -87,10 +107,10 @@ null_ls.setup {
         "liquid",
       },
       diagnostics_postprocess = function(diagnostic)
-        diagnostic.severity = vim.diagnostic.severity.INFO
+        diagnostic.severity = vim.diagnostic.severity.HINT
       end,
     },
-    null_ls.builtins.code_actions.cspell.with {
+    cspell.code_actions.with {
       filetypes = {
         "html",
         "css",
@@ -104,7 +124,6 @@ null_ls.setup {
         "liquid",
       },
     },
-    require "typescript.extensions.null-ls.code-actions",
   },
   on_attach = function(client, bufnr)
     if client.supports_method "textDocument/formatting" then
@@ -113,7 +132,7 @@ null_ls.setup {
         group = augroup,
         buffer = bufnr,
         callback = function()
-          if is_disable_null_ls == 0 then
+          if is_disable_none_ls == 0 then
             async_formatting(bufnr)
           end
         end,

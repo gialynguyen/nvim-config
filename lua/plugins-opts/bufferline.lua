@@ -313,10 +313,15 @@ end
 
 bufferline.setup {
   options = {
+    tab_size = 20,
     offsets = {
       { filetype = "NvimTree", text = "", padding = 1 },
-      { filetype = "neo-tree", text = "", padding = 1 },
       { filetype = "Outline", text = "", padding = 1 },
+    },
+    separator_style = { "    ", "    " },
+    indicator = {
+      icon = "   ",
+      style = "icon",
     },
     numbers = "ordinal",
     buffer_close_icon = "󰅚",

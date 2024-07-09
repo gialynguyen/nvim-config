@@ -1,16 +1,16 @@
 -- Telescope keymap
 local builtin = require "telescope.builtin"
 
-vim.keymap.set("n", "<leader>tt", "<cmd>Telescope<CR>")
-vim.keymap.set("n", "<leader>ff", builtin.find_files)
-vim.keymap.set("n", "<leader>fd", ":lua require('telescope.builtin').find_files({ hidden = true })<CR>")
-vim.keymap.set("n", "<leader>gs", builtin.git_status)
-vim.keymap.set("n", "<leader>gf", builtin.git_files)
-vim.keymap.set("n", "<leader>ts", builtin.treesitter)
-vim.keymap.set("n", "<leader>b", builtin.buffers)
-vim.keymap.set("n", "<leader>rg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
-vim.keymap.set("n", "<leader>rr", builtin.resume)
-vim.keymap.set("n", "<leader>re", ":lua require('telescope.builtin').oldfiles({ only_cwd = true })<CR>")
+vim.keymap.set("n", ",tt", "<cmd>Telescope<CR>")
+vim.keymap.set("n", ",ff", builtin.find_files)
+vim.keymap.set("n", ",fd", ":lua require('telescope.builtin').find_files({ hidden = true })<CR>")
+vim.keymap.set("n", ",gs", builtin.git_status)
+vim.keymap.set("n", ",gf", builtin.git_files)
+vim.keymap.set("n", ",ts", builtin.treesitter)
+vim.keymap.set("n", ",b", builtin.buffers)
+vim.keymap.set("n", ",rg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
+vim.keymap.set("n", ",rr", builtin.resume)
+vim.keymap.set("n", ",re", ":lua require('telescope.builtin').oldfiles({ only_cwd = true })<CR>")
 
 --- Git Keymap
 
@@ -27,8 +27,8 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set("n", "K", "<Cmd>Lspsaga hover_doc<CR>", opts)
 vim.keymap.set("n", "gd", "<Cmd>Lspsaga peek_definition<CR>", opts)
 vim.keymap.set("n", "gr", "<Cmd>Lspsaga finder<CR>", opts)
-vim.keymap.set("n", "<leader>rn", "<Cmd>Lspsaga rename<CR>", opts)
-vim.keymap.set("n", "<leader>ac", "<Cmd>Lspsaga code_action<CR>", opts)
+vim.keymap.set("n", ",rn", "<Cmd>Lspsaga rename<CR>", opts)
+vim.keymap.set("n", ",ac", "<Cmd>Lspsaga code_action<CR>", opts)
 
 vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations)
 vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions)
@@ -116,11 +116,11 @@ local closeHiddenBuffers = function()
     local filetype = vim.fn.getbufvar(buffer, "&buftype")
     print(vim.api.nvim_buf_get_name(buffer))
     if
-      vim.api.nvim_buf_is_valid(buffer)
-      and vim.api.nvim_buf_get_option(buffer, "buflisted")
-      and not vim.api.nvim_buf_get_option(buffer, "modified")
-      and non_hidden_buffer[buffer] == nil
-      and filetype ~= "terminal"
+        vim.api.nvim_buf_is_valid(buffer)
+        and vim.api.nvim_buf_get_option(buffer, "buflisted")
+        and not vim.api.nvim_buf_get_option(buffer, "modified")
+        and non_hidden_buffer[buffer] == nil
+        and filetype ~= "terminal"
     then
       vim.cmd.bdelete { count = buffer }
     end
@@ -135,8 +135,8 @@ vim.keymap.set("n", "[b", goBackBuffer)
 
 vim.keymap.set("n", "<leader>q", "<cmd>bp<CR><cmd>bd #<CR>")
 vim.keymap.set("n", "<leader>x", "<cmd>bp<CR><cmd>bd #<CR><cmd>q<CR>")
-vim.keymap.set("n", "<leader>h", "<cmd>bprevious<CR>")
-vim.keymap.set("n", "<leader>l", "<cmd>bnext<CR>")
+vim.keymap.set("n", ",[", "<cmd>bprevious<CR>")
+vim.keymap.set("n", ",]", "<cmd>bnext<CR>")
 
 function GotoBuffer(index)
   require("nvim-smartbufs").goto_buffer(index)

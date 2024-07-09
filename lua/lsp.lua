@@ -38,6 +38,9 @@ require("mason-lspconfig").setup_handlers {
       tailwindcss = {
         autostart = false,
       },
+      tsserver = {
+        autostart = false,
+      },
       cssmodules_ls = {
         autostart = false,
       },
@@ -74,28 +77,28 @@ require("mason-lspconfig").setup_handlers {
       autostart = true,
       capabilities = capabilities,
     }
-
-    if server_name == "tsserver" then
-      require("typescript").setup {
-        disable_commands = false,
-        debug = false,
-        go_to_source_definition = {
-          fallback = true,
-        },
-        server = {
-          on_attach = function(client, bufnr)
-            vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-          end,
-          autostart = true,
-          capabilities = capabilities,
-          root_dir = function(fname)
-            return lspconfig.util.root_pattern ".git"(fname)
-          end,
-        },
-      }
-      return
-    end
-
+    --
+    -- if server_name == "tsserver" then
+    --   require("typescript").setup {
+    --     disable_commands = false,
+    --     debug = false,
+    --     go_to_source_definition = {
+    --       fallback = true,
+    --     },
+    --     server = {
+    --       on_attach = function(client, bufnr)
+    --         vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+    --       end,
+    --       autostart = true,
+    --       capabilities = capabilities,
+    --       root_dir = function(fname)
+    --         return lspconfig.util.root_pattern ".git"(fname)
+    --       end,
+    --     },
+    --   }
+    --   return
+    -- end
+    --
     local opts = vim.tbl_deep_extend("force", default_opts, setup_server[server_name] or {})
 
     lspconfig[server_name].setup(opts)

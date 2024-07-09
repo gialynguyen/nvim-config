@@ -17,8 +17,9 @@ cmp.setup {
     end,
   },
   sorting = {
-    priority_weight = 1,
+    priority_weight = 2,
     comparators = {
+      require("copilot_cmp.comparators").prioritize,
       cmp.config.compare.offset,
       cmp.config.compare.exact,
       cmp.config.compare.score,
@@ -59,6 +60,7 @@ cmp.setup {
         Event = "",
         Operator = "󰆕",
         TypeParameter = "",
+        Copilot = "",
         -- Codeium = "",
       },
 
@@ -74,7 +76,7 @@ cmp.setup {
     ["<CR>"] = cmp.mapping.confirm { select = false },
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_next_item()
+        cmp.select_next_item { behavior = cmp.SelectBehavior }
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       elseif has_words_before() then
@@ -120,7 +122,7 @@ cmp.setup {
     end,
   },
   completion = {
-    keyword_length = 2,
+    -- keyword_length = 2,
     completeopt = "menu,noselect",
     autocomplete = {
       cmp.TriggerEvent.TextChanged,
@@ -137,12 +139,15 @@ cmp.setup {
     ghost_text = true,
     native_menu = false,
   },
+  performance = {
+    fetching_timeout = 500,
+  },
   sources = cmp.config.sources {
-    { name = "nvim_lsp" },
-    { name = "codeium",                max_item_count = 6 },
-    { name = "luasnip",                max_item_count = 4 },
-    { name = "buffer" },
-    { name = "path" },
+    { name = "nvim_lsp",               group_index = 1 },
+    { name = "copilot",                group_index = 2 },
+    { name = "luasnip",                group_index = 2, max_item_count = 4 },
+    { name = "buffer",                 group_index = 2 },
+    { name = "path",                   group_index = 2 },
     { name = "nvim_lsp_signature_help" },
   },
 }
