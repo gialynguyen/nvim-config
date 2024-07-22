@@ -55,6 +55,12 @@ require("lazy").setup({
     priority = 1000,
   },
 
+  {
+    "scottmckendry/cyberdream.nvim",
+    lazy = false,
+    priority = 1000,
+  },
+
   -- { "nyoom-engineering/oxocarbon.nvim", lazy = false, priority = 1000 },
 
   -- {
