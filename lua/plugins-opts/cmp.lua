@@ -73,7 +73,7 @@ cmp.setup {
   },
   mapping = cmp.mapping.preset.insert {
     ["<C-s>"] = cmp.mapping.complete(),
-    ["<CR>"] = cmp.mapping.confirm { select = false },
+    ["<CR>"] = cmp.mapping.confirm { select = false, behavior = cmp.ConfirmBehavior.Replace },
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item { behavior = cmp.SelectBehavior }
@@ -88,7 +88,7 @@ cmp.setup {
 
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_prev_item()
+        cmp.select_prev_item { behavior = cmp.SelectBehavior }
       elseif luasnip.jumpable(-1) then
         luasnip.jump(-1)
       else
@@ -113,8 +113,30 @@ cmp.setup {
     ["<C-e>"] = cmp.mapping.close(),
     ["<C-u>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-n>"] = {
+      i = function()
+        if cmp.visible() then
+          cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
+        else
+          cmp.complete()
+        end
+      end,
+    },
+    ["<C-p>"] = {
+      i = function()
+        if cmp.visible() then
+          cmp.select_prev_item { behavior = cmp.SelectBehavior.Select }
+        else
+          cmp.complete()
+        end
+      end,
+    },
+    ["<C-y>"] = {
+      i = cmp.confirm { select = false },
+    },
   },
   confirmation = {
+    default_behavior = cmp.ConfirmBehavior.Replace,
     get_commit_characters = function(commit_characters)
       return vim.tbl_filter(function(char)
         return char ~= ","

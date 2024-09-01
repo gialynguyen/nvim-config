@@ -1,16 +1,20 @@
-vim.g.transparent_enabled = true
+vim.g.transparent_enabled = false
 
-local transparent = require "transparent"
-transparent.setup {
-  extra_groups = {
-    "NormalFloat",
-    "NvimTreeNormal",
-    "FloatBorder",
-  },
-}
 
-transparent.clear_prefix "BufferLine"
-transparent.clear_prefix "NvimTree"
-transparent.clear_prefix "lualine"
-transparent.clear_prefix "Ufo"
-transparent.clear_prefix "Fold"
+if vim.g.transparent_enabled == true then
+  local transparent = require "transparent"
+
+  transparent.setup {
+    extra_groups = {
+      "NormalFloat",
+      "NvimTreeNormal",
+      "FloatBorder",
+    },
+  }
+
+  transparent.clear_prefix "BufferLine"
+  transparent.clear_prefix "NvimTree"
+  transparent.clear_prefix "lualine"
+  transparent.clear_prefix "Ufo"
+  transparent.clear_prefix "Fold"
+end

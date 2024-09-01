@@ -7,10 +7,6 @@ end
 local async_formatting = function(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
 
-  if is_js_ts_jsx_tsx_file(bufnr) then
-    vim.cmd "TSToolsOrganizeImports sync"
-  end
-
   vim.lsp.buf_request(bufnr, "textDocument/formatting", vim.lsp.util.make_formatting_params {}, function(err, res, ctx)
     if err then
       local err_msg = type(err) == "string" and err or err.message
@@ -62,11 +58,13 @@ local cspell_config = {
 }
 none_ls.setup {
   sources = {
+    require("none-ls.code_actions.eslint"),
+
     none_ls.builtins.formatting.gofmt,
     none_ls.builtins.formatting.prettier.with {
       extra_filetypes = { "svelte" },
     },
-    -- none_ls.builtins.formatting.rustfmt,
+
     none_ls.builtins.formatting.stylua,
     none_ls.builtins.code_actions.gitsigns,
     none_ls.builtins.diagnostics.stylelint.with {

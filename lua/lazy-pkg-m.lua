@@ -55,13 +55,15 @@ require("lazy").setup({
     priority = 1000,
   },
 
+  { "projekt0n/github-nvim-theme", lazy = false, priority = 1000 },
+
   {
-    "scottmckendry/cyberdream.nvim",
-    lazy = false,
-    priority = 1000,
+    "oxfist/night-owl.nvim",
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
   },
 
-  -- { "nyoom-engineering/oxocarbon.nvim", lazy = false, priority = 1000 },
+  { "nyoom-engineering/oxocarbon.nvim", lazy = false, priority = 1000 },
 
   -- {
   --   "sainnhe/everforest",
@@ -91,6 +93,17 @@ require("lazy").setup({
   },
 
   {
+    "AlexvZyl/nordic.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("nordic").setup {
+        transparent_bg = true,
+      }
+    end,
+  },
+
+  {
     "nvim-treesitter/nvim-treesitter",
     config = function()
       require "plugins-opts.treesitter"
@@ -107,8 +120,8 @@ require("lazy").setup({
     config = function()
       require("nvim-ts-autotag").setup {
         opts = {
-          enable_close = true,           -- Auto close tags
-          enable_rename = true,          -- Auto rename pairs of tags
+          enable_close = true, -- Auto close tags
+          enable_rename = true, -- Auto rename pairs of tags
           enable_close_on_slash = false, -- Auto close on trailing </
         },
       }
@@ -250,7 +263,7 @@ require("lazy").setup({
     branch = "canary",
     dependencies = {
       { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-      { "nvim-lua/plenary.nvim" },  -- for curl, log wrapper
+      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
     },
     opts = {
       debug = false, -- Enable debugging
@@ -330,18 +343,26 @@ require("lazy").setup({
   },
 
   {
-    "pmizio/typescript-tools.nvim",
-    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-    config = function()
-      require("typescript-tools").setup {
-        settings = {
-          expose_as_code_action = "all",
-        },
-      }
-    end,
-    opts = {},
+    "yioneko/nvim-vtsls",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
     lazy = false,
   },
+  --
+  -- {
+  --   "pmizio/typescript-tools.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  --   config = function()
+  --     require("typescript-tools").setup {
+  --       settings = {
+  --         expose_as_code_action = "all",
+  --       },
+  --     }
+  --   end,
+  --   opts = {},
+  --   lazy = false,
+  -- },
 
   {
     "williamboman/mason.nvim",
@@ -352,6 +373,36 @@ require("lazy").setup({
       { "williamboman/mason-lspconfig.nvim", event = "VeryLazy" },
     },
     event = "VeryLazy",
+  },
+
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^5", -- Recommended
+    lazy = false, -- This plugin is already lazy
+    init = function()
+      vim.g.rustaceanvim = {
+        -- Plugin configuration
+        tools = {},
+        -- LSP configuration
+        server = {
+          on_attach = function(client, bufnr)
+            local format_sync_grp = vim.api.nvim_create_augroup("RustaceanFormat", {})
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              buffer = bufnr,
+              callback = function()
+                vim.lsp.buf.format()
+              end,
+              group = format_sync_grp,
+            })
+          end,
+          default_settings = {
+            ["rust-analyzer"] = {},
+          },
+        },
+        -- DAP configuration
+        dap = {},
+      }
+    end,
   },
 
   {
@@ -385,7 +436,7 @@ require("lazy").setup({
   },
   {
     "nvimtools/none-ls.nvim",
-    dependencies = { "davidmh/cspell.nvim" },
+    dependencies = { "davidmh/cspell.nvim", "nvimtools/none-ls-extras.nvim" },
     event = { "BufReadPost", "BufNewFile" },
     config = function()
       require "plugins-opts.none-ls"
@@ -459,7 +510,15 @@ require("lazy").setup({
   --   end,
   --   event = "VeryLazy",
   -- },
-
+  {
+    "leath-dub/snipe.nvim",
+    config = function()
+      local snipe = require "snipe"
+      snipe.setup()
+      vim.keymap.set("n", "gb", snipe.create_buffer_menu_toggler())
+    end,
+    lazy = false,
+  },
   {
     "johann2357/nvim-smartbufs",
     event = "BufReadPost",
@@ -504,7 +563,6 @@ require("lazy").setup({
       require "plugins-opts.ufo"
     end,
     dependencies = {
-      "neovim/nvim-lspconfig",
       "kevinhwang91/promise-async",
     },
     -- enabled = false,
