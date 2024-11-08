@@ -1,5 +1,4 @@
-vim.g.transparent_enabled = false
-
+vim.g.transparent_enabled = true
 
 if vim.g.transparent_enabled == true then
   local transparent = require "transparent"

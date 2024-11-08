@@ -57,9 +57,8 @@ local function setup_keymaps()
   -- Close popup
   vim.api.nvim_set_keymap("n", "Q", "<C-w><C-w>q", { silent = true })
 
-  -- Cursor movement at start/end of line
-  vim.api.nvim_set_keymap("i", "<C-a>", "<Esc>la", { silent = true })
-  vim.api.nvim_set_keymap("i", "<C-d>", "<Esc>ha", { silent = true })
+  vim.api.nvim_set_keymap("i", "<C-f>", "<Esc>la", { silent = true })
+  vim.api.nvim_set_keymap("i", "<C-b>", "<Esc>ha", { silent = true })
 
   -- Yank/delete to black hole register
   vim.api.nvim_set_keymap("n", "<leader>d", '"_d', { silent = true })

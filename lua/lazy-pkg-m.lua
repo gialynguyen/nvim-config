@@ -55,11 +55,11 @@ require("lazy").setup({
     priority = 1000,
   },
 
-  { "projekt0n/github-nvim-theme", lazy = false, priority = 1000 },
+  { "projekt0n/github-nvim-theme",      lazy = false, priority = 1000 },
 
   {
     "oxfist/night-owl.nvim",
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
   },
 
@@ -98,7 +98,7 @@ require("lazy").setup({
     priority = 1000,
     config = function()
       require("nordic").setup {
-        transparent_bg = true,
+        -- transparent_bg = true,
       }
     end,
   },
@@ -120,8 +120,8 @@ require("lazy").setup({
     config = function()
       require("nvim-ts-autotag").setup {
         opts = {
-          enable_close = true, -- Auto close tags
-          enable_rename = true, -- Auto rename pairs of tags
+          enable_close = true,           -- Auto close tags
+          enable_rename = true,          -- Auto rename pairs of tags
           enable_close_on_slash = false, -- Auto close on trailing </
         },
       }
@@ -259,18 +259,49 @@ require("lazy").setup({
   },
 
   {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    branch = "canary",
-    dependencies = {
-      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-    },
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    version = false, -- set this if you want to always pull the latest change
     opts = {
-      debug = false, -- Enable debugging
-      -- See Configuration section for rest
+      provider = 'copilot'
     },
-    event = "InsertEnter",
-    -- See Commands section for default commands if you want to lazy load on them
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    build = "make",
+    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below dependencies are optional,
+      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      "zbirenbaum/copilot.lua",      -- for providers='copilot'
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+    },
   },
 
   {
@@ -297,18 +328,6 @@ require("lazy").setup({
     },
     event = "InsertEnter",
   },
-
-  -- {
-  --   "Exafunction/codeium.nvim",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "hrsh7th/nvim-cmp",
-  --   },
-  --   enabled = false,
-  --   config = function()
-  --     require("codeium").setup {}
-  --   end,
-  -- },
 
   {
     "rafamadriz/friendly-snippets",
@@ -378,7 +397,7 @@ require("lazy").setup({
   {
     "mrcjkb/rustaceanvim",
     version = "^5", -- Recommended
-    lazy = false, -- This plugin is already lazy
+    lazy = false,   -- This plugin is already lazy
     init = function()
       vim.g.rustaceanvim = {
         -- Plugin configuration
@@ -510,15 +529,13 @@ require("lazy").setup({
   --   end,
   --   event = "VeryLazy",
   -- },
-  {
-    "leath-dub/snipe.nvim",
-    config = function()
-      local snipe = require "snipe"
-      snipe.setup()
-      vim.keymap.set("n", "gb", snipe.create_buffer_menu_toggler())
-    end,
-    lazy = false,
-  },
+  -- {
+  --   "leath-dub/snipe.nvim",
+  --   keys = {
+  --     { "gb", function() require("snipe").open_buffer_menu() end, desc = "Open Snipe buffer menu" }
+  --   },
+  --   opts = {}
+  -- },
   {
     "johann2357/nvim-smartbufs",
     event = "BufReadPost",

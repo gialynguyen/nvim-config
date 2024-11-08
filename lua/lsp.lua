@@ -15,11 +15,10 @@ require("mason-lspconfig").setup {
     "eslint",
     "pyright",
     "tailwindcss",
-    "tsserver",
     "astro",
     "vtsls",
   },
-  automatic_installation = false,
+  automatic_installation = true,
 }
 
 require("mason-lspconfig").setup_handlers {
@@ -38,7 +37,7 @@ require("mason-lspconfig").setup_handlers {
       tailwindcss = {
         autostart = false,
       },
-      tsserver = {
+      ['ts_ls'] = {
         enabled = false,
         autostart = false,
       },
