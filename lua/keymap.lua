@@ -7,6 +7,7 @@ vim.keymap.set("n", ",fd", ":lua require('telescope.builtin').find_files({ hidde
 vim.keymap.set("n", ",gs", builtin.git_status)
 vim.keymap.set("n", ",gf", builtin.git_files)
 vim.keymap.set("n", ",ts", builtin.treesitter)
+vim.keymap.set("n", ",ws", builtin.lsp_dynamic_workspace_symbols)
 vim.keymap.set("n", ",b", builtin.buffers)
 vim.keymap.set("n", ",rg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 vim.keymap.set("n", ",rr", builtin.resume)
@@ -22,39 +23,47 @@ vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory %<CR>")
 vim.keymap.set("n", "<leader>gH", "<cmd>DiffviewFileHistory<CR>")
 
 --- LSP keymap
+vim.api.nvim_create_autocmd("LspAttach", {
+  desc = "LSP actions",
+  callback = function(event)
+    local opts = { noremap = true, silent = true, buffer = event.buf }
 
-local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "K", "<Cmd>Lspsaga hover_doc<CR>", opts)
-vim.keymap.set("n", "gd", "<Cmd>Lspsaga peek_definition<CR>", opts)
-vim.keymap.set("n", "gr", "<Cmd>Lspsaga finder<CR>", opts)
-vim.keymap.set("n", ",rn", "<Cmd>Lspsaga rename<CR>", opts)
-vim.keymap.set("n", ",ac", "<Cmd>Lspsaga code_action<CR>", opts)
+    vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
+    vim.keymap.set("n", "gd", require("telescope.builtin").lsp_definitions, opts)
+    vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, opts)
+    vim.keymap.set("n", ",rn", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+    vim.keymap.set(
+      "n",
+      ",ac",
+      "<cmd>lua vim.lsp.buf.code_action({ context = { only = { 'source', 'refactor', 'quickfix' } } })<cr>",
+      opts
+    )
 
-vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations)
-vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions)
+    vim.keymap.set("n", "gi", require("telescope.builtin").lsp_implementations)
+    vim.keymap.set("n", "gt", require("telescope.builtin").lsp_type_definitions)
 
-vim.keymap.set("n", "<F8>", "<Cmd>Lspsaga outline<CR>")
+    vim.keymap.set("n", "<leader>da", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
+    vim.keymap.set("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
-vim.keymap.set("n", "<leader>da", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
-vim.keymap.set("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+    vim.keymap.set("n", "<leader>[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 
-vim.keymap.set("n", "<leader>[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+    vim.keymap.set("n", "<leader>]", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 
-vim.keymap.set("n", "<leader>]", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+    vim.keymap.set(
+      "n",
+      "[e",
+      "<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
+      opts
+    )
 
-vim.keymap.set(
-  "n",
-  "[e",
-  "<cmd>lua vim.diagnostic.goto_prev({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
-  opts
-)
-
-vim.keymap.set(
-  "n",
-  "]e",
-  "<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
-  opts
-)
+    vim.keymap.set(
+      "n",
+      "]e",
+      "<cmd>lua vim.diagnostic.goto_next({ severity = { min = vim.diagnostic.severity.ERROR, max = vim.diagnostic.severity.ERROR } })<CR>",
+      opts
+    )
+  end,
+})
 
 vim.keymap.set("", "<c-k>", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
 
@@ -116,11 +125,11 @@ local closeHiddenBuffers = function()
     local filetype = vim.fn.getbufvar(buffer, "&buftype")
     print(vim.api.nvim_buf_get_name(buffer))
     if
-        vim.api.nvim_buf_is_valid(buffer)
-        and vim.api.nvim_buf_get_option(buffer, "buflisted")
-        and not vim.api.nvim_buf_get_option(buffer, "modified")
-        and non_hidden_buffer[buffer] == nil
-        and filetype ~= "terminal"
+      vim.api.nvim_buf_is_valid(buffer)
+      and vim.api.nvim_buf_get_option(buffer, "buflisted")
+      and not vim.api.nvim_buf_get_option(buffer, "modified")
+      and non_hidden_buffer[buffer] == nil
+      and filetype ~= "terminal"
     then
       vim.cmd.bdelete { count = buffer }
     end
@@ -179,6 +188,10 @@ vim.keymap.set("n", "<leader>Q", "<cmd>tabc<CR>", { noremap = true, silent = tru
 vim.keymap.set("n", "<leader>za", "<cmd>ZenMode<CR>", { noremap = true, silent = true })
 
 --- illuminate keymap for MacOS (stupid) ---
+vim.keymap.set("n", "˜", require("illuminate").goto_next_reference, { desc = "Move to next reference" })
+vim.keymap.set("n", "π", require("illuminate").goto_prev_reference, { desc = "Move to previous reference" })
+
+vim.keymap.set("n", "<Leader>o", ":DashboardNewFile<CR>", { silent = true })
 vim.keymap.set("n", "˜", require("illuminate").goto_next_reference, { desc = "Move to next reference" })
 vim.keymap.set("n", "π", require("illuminate").goto_prev_reference, { desc = "Move to previous reference" })
 

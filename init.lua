@@ -46,8 +46,12 @@ end
 
 local function setup_keymaps()
   -- Leader + gt to open lazygit
-  vim.api.nvim_set_keymap("n", "<leader>gt", ":FloatermNew --title=eftersom-git lazygit<CR>", { silent = true })
-  vim.api.nvim_set_keymap("i", "<leader>gt", ":FloatermNew --title=eftersom-git lazygit<CR>", { silent = true })
+  vim.api.nvim_set_keymap("n", "<leader>gt", ":FloatermNew --title=lazy-git lazygit<CR>", { silent = true })
+  vim.api.nvim_set_keymap("i", "<leader>gt", ":FloatermNew --title=lazy-git lazygit<CR>", { silent = true })
+
+  -- Leader + sr to open serpl
+  vim.api.nvim_set_keymap("n", "<leader>sr", ":FloatermNew --title=search-&-replace serpl<CR>", { silent = true })
+  vim.api.nvim_set_keymap("i", "<leader>sr", ":FloatermNew --title=search-&-replace serpl<CR>", { silent = true })
 
   -- ToggleTermToggleAll mappings (normal and insert mode)
   vim.api.nvim_set_keymap("t", "<C-\\>", "<C-e>:ToggleTermToggleAll<CR>", { silent = true })

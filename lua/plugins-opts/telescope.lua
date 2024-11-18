@@ -40,14 +40,14 @@ telescope.setup {
     },
   },
   extensions = {
-    ["ui-select"] = {
-      require("telescope.themes").get_dropdown {},
-    },
+    -- ["ui-select"] = {
+    --   require("telescope.themes").get_dropdown {},
+    -- },
     fzf = {
-      fuzzy = true, -- false will only do exact matching
+      fuzzy = true,                   -- false will only do exact matching
       override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true, -- override the file sorter
-      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+      override_file_sorter = true,    -- override the file sorter
+      case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
     },
     live_grep_raw = {
       vimgrep_argument = {
@@ -57,7 +57,7 @@ telescope.setup {
   },
 }
 
+-- telescope.load_extension "ui-select"
 telescope.load_extension "fzf"
-telescope.load_extension "ui-select"
 telescope.load_extension "live_grep_args"
 telescope.load_extension "file_browser"

@@ -55,7 +55,9 @@ require("lazy").setup({
     priority = 1000,
   },
 
-  { "projekt0n/github-nvim-theme",      lazy = false, priority = 1000 },
+  { "projekt0n/github-nvim-theme", lazy = false, priority = 1000 },
+
+  { "navarasu/onedark.nvim",       lazy = false, priority = 1000 },
 
   {
     "oxfist/night-owl.nvim",
@@ -205,6 +207,15 @@ require("lazy").setup({
     event = "VeryLazy",
   },
 
+  {
+    "stevearc/dressing.nvim",
+    opts = {},
+    lazy = false,
+    config = function()
+      require "plugins-opts.dressing"
+    end,
+  },
+
   -- {
   --   "renerocksai/telekasten.nvim",
   --   dependencies = { "nvim-telescope/telescope.nvim" },
@@ -259,11 +270,21 @@ require("lazy").setup({
   },
 
   {
+    "OXY2DEV/markview.nvim",
+    ft = "markdown",
+
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+  },
+
+  {
     "yetone/avante.nvim",
     event = "VeryLazy",
     version = false, -- set this if you want to always pull the latest change
     opts = {
-      provider = 'copilot'
+      provider = "copilot",
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",
@@ -295,7 +316,7 @@ require("lazy").setup({
       },
       {
         -- Make sure to set this up properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
+        "MeanderingProgrammer/render-markdown.nvim",
         opts = {
           file_types = { "markdown", "Avante" },
         },
@@ -423,18 +444,17 @@ require("lazy").setup({
       }
     end,
   },
-
-  {
-    "nvimdev/lspsaga.nvim",
-    config = function()
-      require "plugins-opts.saga"
-    end,
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons",
-    },
-    event = "VeryLazy",
-  },
+  -- {
+  --   "nvimdev/lspsaga.nvim",
+  --   config = function()
+  --     require "plugins-opts.saga"
+  --   end,
+  --   dependencies = {
+  --     "nvim-treesitter/nvim-treesitter",
+  --     "nvim-tree/nvim-web-devicons",
+  --   },
+  --   event = "VeryLazy",
+  -- },
 
   {
     "lewis6991/gitsigns.nvim",
